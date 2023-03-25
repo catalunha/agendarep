@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "agendarep"
+    },
+    "agendarep": {
+      "applicationId": "VtcsOwYidKPYKz4gTXbLELZXEiu0s5xbo4JGu3wJ"
+    }
+  }
+}
