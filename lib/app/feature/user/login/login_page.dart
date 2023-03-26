@@ -65,6 +65,9 @@ class _LoginViewState extends State<LoginView> {
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
+                context
+                    .read<AuthenticationBloc>()
+                    .add(AuthenticationEventLogoutRequested());
               }
               if (state.status == LoginStateStatus.success) {
                 context

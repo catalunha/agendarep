@@ -13,14 +13,29 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, state) {
-            if (state.status == AuthenticationStatus.databaseError) {
-              return Text(state.error);
-            }
-            return const CircularProgressIndicator();
-          },
+      body: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listenWhen: (previous, current) {
+          return previous.status != current.status;
+        },
+        listener: (context, state) {
+          if (state.status == AuthenticationStatus.unauthenticated) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text(state.error)));
+            context
+                .read<AuthenticationBloc>()
+                .add(AuthenticationEventLogoutRequested());
+          }
+        },
+        child: Center(
+          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state.status == AuthenticationStatus.databaseError) {
+                return Text(state.error);
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
         ),
       ),
     );

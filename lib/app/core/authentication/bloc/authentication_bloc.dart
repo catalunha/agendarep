@@ -31,11 +31,11 @@ class AuthenticationBloc
     try {
       bool logout = await _userRepository.logout();
       if (logout) {
-        return emit(const AuthenticationState.unauthenticated());
+        emit(const AuthenticationState.unauthenticated());
       }
-      return emit(const AuthenticationState.unauthenticated());
+      emit(const AuthenticationState.unauthenticated());
     } catch (_) {
-      return emit(const AuthenticationState.unauthenticated());
+      emit(const AuthenticationState.unauthenticated());
     }
   }
 
@@ -54,10 +54,19 @@ class AuthenticationBloc
       if (initParse) {
         final user = await _userRepository.hasUserLogged();
         if (user != null) {
-          emit(AuthenticationState.authenticated(user));
+          if (user.userProfile?.isActive == true) {
+            emit(AuthenticationState.authenticated(user));
+          } else {
+            emit(state.copyWith(
+                status: AuthenticationStatus.unauthenticated,
+                error:
+                    'Sua conta ainda esta em análise. Tente login mais tarde.'));
+            add(AuthenticationEventLogoutRequested());
+          }
         } else {
-          await Future.delayed(const Duration(seconds: 2));
-          emit(const AuthenticationState.unauthenticated());
+          emit(state.copyWith(
+              status: AuthenticationStatus.unauthenticated,
+              error: 'Faça login novamente.'));
         }
       }
     } on B4aException catch (e) {
