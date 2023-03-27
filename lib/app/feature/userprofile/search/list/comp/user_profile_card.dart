@@ -41,16 +41,16 @@ class UserProfileCard extends StatelessWidget {
                     //   title: 'Id: ',
                     //   value: userProfile.id,
                     // ),
-                    // AppTextTitleValue(
-                    //   title: 'Email: ',
-                    //   value: userProfile.email,
-                    // ),
+                    AppTextTitleValue(
+                      title: 'Email: ',
+                      value: userProfile.email,
+                    ),
                     // AppTextTitleValue(
                     //   title: 'Nome: ',
                     //   value: '${userProfile.name}',
                     // ),
                     AppTextTitleValue(
-                      title: 'Nome em tropa: ',
+                      title: 'Nome profissional: ',
                       value: '${userProfile.nickname}',
                     ),
                     AppTextTitleValue(

@@ -19,7 +19,7 @@ class HomeCardModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (GetModuleAllowedAccess.consultFor(access)) {
+    if (GetModuleAllowedAccess.consultFor(access, context)) {
       return InkWell(
         onTap: onAction,
         child: Padding(

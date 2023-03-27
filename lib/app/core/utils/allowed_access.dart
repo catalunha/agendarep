@@ -1,8 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../authentication/authentication.dart';
+import '../models/user_model.dart';
+
 class GetModuleAllowedAccess {
-  static bool consultFor(List<String> officeIdListAutorized) {
-    // final splashController = Get.find<SplashController>();
-    // return splashController.userModel!.userProfile!.routes!
-    //     .any((element) => officeIdListAutorized.contains(element));
-    return true;
+  static bool consultFor(
+      List<String> officeIdListAutorized, BuildContext context) {
+    UserModel user = context.read<AuthenticationBloc>().state.user!;
+    return user.userProfile!.access!
+        .any((element) => officeIdListAutorized.contains(element));
+    // return true;
   }
 }
