@@ -13,6 +13,13 @@ class SecretarySearchEventUpdateList extends SecretarySearchEvent {
   );
 }
 
+class SecretarySearchEventRemoveFromList extends SecretarySearchEvent {
+  final String modelId;
+  SecretarySearchEventRemoveFromList(
+    this.modelId,
+  );
+}
+
 class SecretarySearchEventFormSubmitted extends SecretarySearchEvent {
   final bool emailEqualsToBool;
   final String emailEqualsToString;

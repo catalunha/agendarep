@@ -64,15 +64,15 @@ class SecretaryB4a {
   //   }
   // }
 
-  Future<String> update(SecretaryModel SecretaryModel) async {
-    final SecretaryParse = await SecretaryEntity().toParse(SecretaryModel);
+  Future<String> update(SecretaryModel secretaryModel) async {
+    final secretaryParse = await SecretaryEntity().toParse(secretaryModel);
     ParseResponse? response;
     try {
-      response = await SecretaryParse.save();
+      response = await secretaryParse.save();
 
       if (response.success && response.results != null) {
-        ParseObject Secretary = response.results!.first as ParseObject;
-        return Secretary.objectId!;
+        ParseObject secretary = response.results!.first as ParseObject;
+        return secretary.objectId!;
       } else {
         throw Exception();
       }
@@ -86,6 +86,28 @@ class SecretaryB4a {
     }
   }
 
+  Future<bool> delete(String modelId) async {
+    final parseObject = ParseObject(SecretaryEntity.className);
+    parseObject.objectId = modelId;
+    parseObject.set(SecretaryEntity.isDeleted, true);
+    ParseResponse? response;
+
+    try {
+      response = await parseObject.save();
+      if (response.success && response.results != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } on Exception {
+      var errorTranslated = ParseErrorTranslate.translate(response!.error!);
+      throw B4aException(
+        errorTranslated,
+        where: 'SecretaryRepositoryB4a.update',
+        originalError: '${response.error!.code} -${response.error!.message}',
+      );
+    }
+  }
   // Future<SecretaryModel?> readByCPF(String? value) async {
   //   QueryBuilder<ParseObject> query =
   //       QueryBuilder<ParseObject>(ParseObject(SecretaryEntity.className));

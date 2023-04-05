@@ -14,6 +14,7 @@ class SecretaryRepository {
   ) =>
       secretaryB4a.list(query, pagination);
   Future<String> update(SecretaryModel model) => secretaryB4a.update(model);
+  Future<bool> delete(String modelId) => secretaryB4a.delete(modelId);
   // Future<SecretaryModel?> readById(String id) => SecretaryB4a.readById(id);
   // Future<SecretaryModel?> readByCPF(String? value) =>
   //     SecretaryB4a.readByCPF(value);

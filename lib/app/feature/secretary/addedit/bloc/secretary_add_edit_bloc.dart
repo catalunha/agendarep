@@ -21,6 +21,7 @@ class SecretaryAddEditBloc
         super(SecretaryAddEditState.initial(secretaryModel)) {
     on<SecretaryAddEditEventFormSubmitted>(
         _onSecretaryAddEditEventFormSubmitted);
+    on<SecretaryAddEditEventDelete>(_onSecretaryAddEditEventDelete);
   }
 
   FutureOr<void> _onSecretaryAddEditEventFormSubmitted(
@@ -55,6 +56,20 @@ class SecretaryAddEditBloc
       emit(state.copyWith(
           secretaryModel: secretaryModel,
           status: SecretaryAddEditStateStatus.success));
+    } catch (e) {
+      emit(state.copyWith(
+          status: SecretaryAddEditStateStatus.error,
+          error: 'Erro ao salvar secretary'));
+    }
+  }
+
+  FutureOr<void> _onSecretaryAddEditEventDelete(
+      SecretaryAddEditEventDelete event,
+      Emitter<SecretaryAddEditState> emit) async {
+    try {
+      emit(state.copyWith(status: SecretaryAddEditStateStatus.loading));
+      await _secretaryRepository.delete(state.secretaryModel!.id!);
+      emit(state.copyWith(status: SecretaryAddEditStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
           status: SecretaryAddEditStateStatus.error,

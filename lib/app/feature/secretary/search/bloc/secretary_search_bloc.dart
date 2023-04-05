@@ -24,6 +24,8 @@ class SecretarySearchBloc
     on<SecretarySearchEventPreviousPage>(_onSecretarySearchEventPreviousPage);
     on<SecretarySearchEventNextPage>(_onUserProfileSearchEventNextPage);
     on<SecretarySearchEventUpdateList>(_onSecretarySearchEventUpdateList);
+    on<SecretarySearchEventRemoveFromList>(
+        _onSecretarySearchEventRemoveFromList);
   }
 
   FutureOr<void> _onSecretarySearchEventFormSubmitted(
@@ -161,6 +163,20 @@ class SecretarySearchBloc
       ];
       secretaryModelListTemp
           .replaceRange(index, index + 1, [event.secretaryModel]);
+      emit(state.copyWith(secretaryModelList: secretaryModelListTemp));
+    }
+  }
+
+  FutureOr<void> _onSecretarySearchEventRemoveFromList(
+      SecretarySearchEventRemoveFromList event,
+      Emitter<SecretarySearchState> emit) {
+    int index = state.secretaryModelList
+        .indexWhere((model) => model.id == event.modelId);
+    if (index >= 0) {
+      List<SecretaryModel> secretaryModelListTemp = [
+        ...state.secretaryModelList
+      ];
+      secretaryModelListTemp.removeAt(index);
       emit(state.copyWith(secretaryModelList: secretaryModelListTemp));
     }
   }

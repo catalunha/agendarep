@@ -58,6 +58,7 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
   final _phoneTEC = TextEditingController();
   final _descriptionTEC = TextEditingController();
   DateTime _birthday = DateTime.now();
+  bool delete = false;
   @override
   void initState() {
     super.initState();
@@ -77,17 +78,23 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.cloud_upload),
         onPressed: () async {
-          final formValid = _formKey.currentState?.validate() ?? false;
-          if (formValid) {
+          if (delete) {
             context.read<SecretaryAddEditBloc>().add(
-                  SecretaryAddEditEventFormSubmitted(
-                    email: _emailTEC.text,
-                    name: _nameTEC.text,
-                    phone: _phoneTEC.text,
-                    birthday: _birthday,
-                    description: _descriptionTEC.text,
-                  ),
+                  SecretaryAddEditEventDelete(),
                 );
+          } else {
+            final formValid = _formKey.currentState?.validate() ?? false;
+            if (formValid) {
+              context.read<SecretaryAddEditBloc>().add(
+                    SecretaryAddEditEventFormSubmitted(
+                      email: _emailTEC.text,
+                      name: _nameTEC.text,
+                      phone: _phoneTEC.text,
+                      birthday: _birthday,
+                      description: _descriptionTEC.text,
+                    ),
+                  );
+            }
           }
         },
       ),
@@ -105,9 +112,15 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
           if (state.status == SecretaryAddEditStateStatus.success) {
             Navigator.of(context).pop();
             if (widget.secretaryModel != null) {
-              context
-                  .read<SecretarySearchBloc>()
-                  .add(SecretarySearchEventUpdateList(state.secretaryModel!));
+              if (delete) {
+                context.read<SecretarySearchBloc>().add(
+                    SecretarySearchEventRemoveFromList(
+                        state.secretaryModel!.id!));
+              } else {
+                context
+                    .read<SecretarySearchBloc>()
+                    .add(SecretarySearchEventUpdateList(state.secretaryModel!));
+              }
             }
             Navigator.of(context).pop();
           }
@@ -141,8 +154,9 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
                         validator: Validatorless.required('Nome é obrigatório'),
                       ),
                       AppTextFormField(
-                        label: 'Telefone',
+                        label: 'Telefone. Formato DDDNUMERO',
                         controller: _phoneTEC,
+                        validator: Validatorless.number('Apenas números.'),
                       ),
                       const SizedBox(height: 5),
                       const Text('Aniversário'),
@@ -161,6 +175,17 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
                         label: 'Descrição',
                         controller: _descriptionTEC,
                       ),
+                      if (widget.secretaryModel != null)
+                        CheckboxListTile(
+                          tileColor: delete ? Colors.red : null,
+                          title: const Text("Apagar este cadastro ?"),
+                          onChanged: (value) {
+                            setState(() {
+                              delete = value ?? false;
+                            });
+                          },
+                          value: delete,
+                        ),
                       const SizedBox(height: 70),
                     ],
                   ),

@@ -1,5 +1,7 @@
 abstract class SecretaryAddEditEvent {}
 
+class SecretaryAddEditEventDelete extends SecretaryAddEditEvent {}
+
 class SecretaryAddEditEventFormSubmitted extends SecretaryAddEditEvent {
   final String? email;
   final String? name;

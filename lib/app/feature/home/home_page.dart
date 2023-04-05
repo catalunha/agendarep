@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                 onAction: () {
                   Navigator.of(context).pushNamed('/secretary/addedit');
                 },
-                icon: Icons.people,
+                icon: Icons.person_2_outlined,
                 color: Colors.black87,
               ),
               HomeCardModule(
