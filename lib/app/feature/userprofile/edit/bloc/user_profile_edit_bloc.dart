@@ -30,7 +30,6 @@ class UserProfileEditBloc
     emit(state.copyWith(status: UserProfileEditStateStatus.loading));
     try {
       UserProfileModel userProfileModel = state.user.userProfile!.copyWith(
-        nickname: event.nickname,
         name: event.name,
         cpf: event.cpf,
         phone: event.phone,

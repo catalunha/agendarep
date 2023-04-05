@@ -6,6 +6,8 @@ import 'app/core/models/user_model.dart';
 import 'app/core/repositories/user_repository.dart';
 import 'app/data/b4a/table/user_b4a.dart';
 import 'app/feature/home/home_page.dart';
+import 'app/feature/secretary/addedit/secretary_addedit_page.dart';
+import 'app/feature/secretary/search/secretary_search_page.dart';
 import 'app/feature/splash/splash_page.dart';
 import 'app/feature/user/login/login_page.dart';
 import 'app/feature/user/register/email/user_register_email.page.dart';
@@ -94,6 +96,8 @@ class _AppViewState extends State<AppView> {
           );
         },
         '/userProfile/search': (_) => const UserProfileSearchPage(),
+        '/secretary/addedit': (_) => const SecretaryAddEditPage(),
+        '/secretary/search': (_) => const SecretarySearchPage(),
       },
       initialRoute: '/',
     );

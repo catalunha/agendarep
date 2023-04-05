@@ -126,13 +126,8 @@ class _UserProfileAccessViewState extends State<UserProfileAccessView> {
                       ),
                       AppTextTitleValue(
                         inColumn: true,
-                        title: 'Nome completo: ',
+                        title: 'Nome: ',
                         value: '${widget.userProfileModel.name}',
-                      ),
-                      AppTextTitleValue(
-                        inColumn: true,
-                        title: 'Nome em tropa: ',
-                        value: '${widget.userProfileModel.nickname}',
                       ),
                       AppTextTitleValue(
                         title: 'Telefone: ',
@@ -161,7 +156,7 @@ class _UserProfileAccessViewState extends State<UserProfileAccessView> {
                         children: [
                           accessSelect('Admin', 'admin'),
                           accessSelect('Representante', 'representante'),
-                          accessSelect('Secretaria', 'secretaria'),
+                          // accessSelect('Secretaria', 'secretaria'),
                         ],
                       ),
 

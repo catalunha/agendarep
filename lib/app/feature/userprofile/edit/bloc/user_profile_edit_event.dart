@@ -10,12 +10,10 @@ class UserProfileEditEventSendXFile extends UserProfileEditEvent {
 }
 
 class UserProfileEditEventFormSubmitted extends UserProfileEditEvent {
-  final String nickname;
   final String name;
   final String cpf;
   final String phone;
   UserProfileEditEventFormSubmitted({
-    required this.nickname,
     required this.name,
     required this.cpf,
     required this.phone,
@@ -28,7 +26,6 @@ class UserProfileEditEventFormSubmitted extends UserProfileEditEvent {
     String? phone,
   }) {
     return UserProfileEditEventFormSubmitted(
-      nickname: nickname ?? this.nickname,
       name: name ?? this.name,
       cpf: cpf ?? this.cpf,
       phone: phone ?? this.phone,
@@ -40,7 +37,6 @@ class UserProfileEditEventFormSubmitted extends UserProfileEditEvent {
     if (identical(this, other)) return true;
 
     return other is UserProfileEditEventFormSubmitted &&
-        other.nickname == nickname &&
         other.name == name &&
         other.cpf == cpf &&
         other.phone == phone;
@@ -48,6 +44,6 @@ class UserProfileEditEventFormSubmitted extends UserProfileEditEvent {
 
   @override
   int get hashCode {
-    return nickname.hashCode ^ name.hashCode ^ cpf.hashCode ^ phone.hashCode;
+    return name.hashCode ^ cpf.hashCode ^ phone.hashCode;
   }
 }

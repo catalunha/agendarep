@@ -8,7 +8,6 @@ class UserProfileEntity {
   static const String id = 'objectId';
   static const String email = 'email';
   static const String name = 'name';
-  static const String nickname = 'nickname';
   static const String cpf = 'cpf';
   static const String phone = 'phone';
   static const String photo = 'photo';
@@ -20,7 +19,6 @@ class UserProfileEntity {
       id: parseObject.objectId!,
       email: parseObject.get(UserProfileEntity.email),
       name: parseObject.get(UserProfileEntity.name),
-      nickname: parseObject.get(UserProfileEntity.nickname),
       cpf: parseObject.get(UserProfileEntity.cpf),
       phone: parseObject.get(UserProfileEntity.phone),
       photo: parseObject.get(UserProfileEntity.photo)?.get('url'),
@@ -40,9 +38,6 @@ class UserProfileEntity {
     profileParseObject.objectId = profileModel.id;
     if (profileModel.name != null) {
       profileParseObject.set(UserProfileEntity.name, profileModel.name);
-    }
-    if (profileModel.nickname != null) {
-      profileParseObject.set(UserProfileEntity.nickname, profileModel.nickname);
     }
 
     if (profileModel.phone != null) {

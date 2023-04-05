@@ -5,7 +5,7 @@ import '../../../../../core/models/user_profile_model.dart';
 import '../../../../utils/app_text_title_value.dart';
 import '../../../access/user_profile_access_page.dart';
 import '../../bloc/user_profile_search_bloc.dart';
-import '../view/user_profile_view_page.dart';
+import '../../../view/user_profile_view_page.dart';
 
 class UserProfileCard extends StatelessWidget {
   final UserProfileModel userProfile;
@@ -45,13 +45,9 @@ class UserProfileCard extends StatelessWidget {
                       title: 'Email: ',
                       value: userProfile.email,
                     ),
-                    // AppTextTitleValue(
-                    //   title: 'Nome: ',
-                    //   value: '${userProfile.name}',
-                    // ),
                     AppTextTitleValue(
-                      title: 'Nome profissional: ',
-                      value: '${userProfile.nickname}',
+                      title: 'Nome: ',
+                      value: '${userProfile.name}',
                     ),
                     AppTextTitleValue(
                       title: 'Telefone: ',

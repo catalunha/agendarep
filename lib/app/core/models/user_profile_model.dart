@@ -6,18 +6,16 @@ import 'package:flutter/foundation.dart';
 class UserProfileModel {
   final String id;
   final String email;
-  final String? nickname;
   final String? name;
   final String? cpf;
   final String? phone;
   final String? photo;
-  final List<String>? access; //admin, representante, secretaria
+  final List<String>? access; //admin, representante
   final bool isActive;
 
   UserProfileModel({
     required this.id,
     required this.email,
-    this.nickname,
     this.name,
     this.cpf,
     this.phone,
@@ -29,7 +27,6 @@ class UserProfileModel {
   UserProfileModel copyWith({
     String? id,
     String? email,
-    String? nickname,
     String? name,
     String? cpf,
     String? phone,
@@ -40,7 +37,6 @@ class UserProfileModel {
     return UserProfileModel(
       id: id ?? this.id,
       email: email ?? this.email,
-      nickname: nickname ?? this.nickname,
       name: name ?? this.name,
       cpf: cpf ?? this.cpf,
       phone: phone ?? this.phone,
@@ -55,9 +51,6 @@ class UserProfileModel {
 
     result.addAll({'id': id});
     result.addAll({'email': email});
-    if (nickname != null) {
-      result.addAll({'nickname': nickname});
-    }
     if (name != null) {
       result.addAll({'name': name});
     }
@@ -82,7 +75,6 @@ class UserProfileModel {
     return UserProfileModel(
       id: map['id'] ?? '',
       email: map['email'] ?? '',
-      nickname: map['nickname'],
       name: map['name'],
       cpf: map['cpf'],
       phone: map['phone'],
@@ -99,7 +91,7 @@ class UserProfileModel {
 
   @override
   String toString() {
-    return 'UserProfileModel(id: $id, email: $email, nickname: $nickname, name: $name, cpf: $cpf, phone: $phone, photo: $photo, access: $access, isActive: $isActive)';
+    return 'UserProfileModel(id: $id, email: $email, name: $name, cpf: $cpf, phone: $phone, photo: $photo, access: $access, isActive: $isActive)';
   }
 
   @override
@@ -109,7 +101,6 @@ class UserProfileModel {
     return other is UserProfileModel &&
         other.id == id &&
         other.email == email &&
-        other.nickname == nickname &&
         other.name == name &&
         other.cpf == cpf &&
         other.phone == phone &&
@@ -122,7 +113,6 @@ class UserProfileModel {
   int get hashCode {
     return id.hashCode ^
         email.hashCode ^
-        nickname.hashCode ^
         name.hashCode ^
         cpf.hashCode ^
         phone.hashCode ^

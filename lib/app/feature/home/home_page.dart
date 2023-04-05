@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
         title: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
             return Text(
-                "Olá, ${state.user?.userProfile?.nickname ?? 'Atualize seu perfil.'}.");
+                "Olá, ${state.user?.userProfile?.name ?? 'Atualize seu perfil.'}.");
           },
         ),
         actions: const [
@@ -37,6 +37,24 @@ class HomePage extends StatelessWidget {
                   Navigator.of(context).pushNamed('/userProfile/search');
                 },
                 icon: Icons.people,
+                color: Colors.black87,
+              ),
+              HomeCardModule(
+                title: 'Adicionar Secretária',
+                access: const ['representante'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/secretary/addedit');
+                },
+                icon: Icons.people,
+                color: Colors.black87,
+              ),
+              HomeCardModule(
+                title: 'Buscar Secretária',
+                access: const ['representante'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/secretary/search');
+                },
+                icon: Icons.search,
                 color: Colors.black87,
               ),
             ],

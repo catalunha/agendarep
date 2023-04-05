@@ -49,14 +49,12 @@ class _UserProfileEditViewState extends State<UserProfileEditView> {
   final dateFormat = DateFormat('dd/MM/y');
 
   final _formKey = GlobalKey<FormState>();
-  final _nicknameTec = TextEditingController();
   final _nameTec = TextEditingController();
   final _phoneTec = TextEditingController();
   final _cpfTec = TextEditingController();
   @override
   void initState() {
     super.initState();
-    _nicknameTec.text = widget.userModel.userProfile?.nickname ?? "";
     _nameTec.text = widget.userModel.userProfile?.name ?? "";
     _phoneTec.text = widget.userModel.userProfile?.phone ?? "";
     _cpfTec.text = widget.userModel.userProfile?.cpf ?? "";
@@ -75,7 +73,6 @@ class _UserProfileEditViewState extends State<UserProfileEditView> {
           if (formValid) {
             context.read<UserProfileEditBloc>().add(
                   UserProfileEditEventFormSubmitted(
-                    nickname: _nicknameTec.text,
                     name: _nameTec.text,
                     cpf: _cpfTec.text,
                     phone: _phoneTec.text,
@@ -129,13 +126,7 @@ class _UserProfileEditViewState extends State<UserProfileEditView> {
                       ),
                       const SizedBox(height: 5),
                       AppTextFormField(
-                        label: '* Seu nome em profissional.',
-                        controller: _nicknameTec,
-                        validator: Validatorless.required(
-                            'Nome profissional é obrigatório'),
-                      ),
-                      AppTextFormField(
-                        label: '* Seu nome completo.',
+                        label: '* Seu nome',
                         controller: _nameTec,
                         validator: Validatorless.required(
                             'Nome completo é obrigatório'),
