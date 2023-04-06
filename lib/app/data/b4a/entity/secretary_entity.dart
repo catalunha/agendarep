@@ -11,7 +11,6 @@ class SecretaryEntity {
   static const String email = 'email';
   static const String name = 'name';
   static const String phone = 'phone';
-  static const String cpf = 'cpf';
   static const String birthday = 'birthday';
   static const String description = 'description';
   static const String isDeleted = 'isDeleted';

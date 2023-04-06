@@ -10,7 +10,7 @@ class UserProfileModel {
   final String? cpf;
   final String? phone;
   final String? photo;
-  final List<String>? access; //admin, representante
+  final List<String>? access; //admin, seller
   final bool isActive;
 
   UserProfileModel({

@@ -52,9 +52,6 @@ class SecretarySearchBloc
       if (event.phoneEqualsToBool) {
         query.whereEqualTo(SecretaryEntity.phone, event.phoneEqualsToString);
       }
-      if (event.cpfEqualsToBool) {
-        query.whereEqualTo(SecretaryEntity.cpf, event.cpfEqualsToString);
-      }
       if (event.birthdayEqualsToBool) {
         query.whereEqualTo(SecretaryEntity.birthday, event.birthdayEqualsTo);
       }

@@ -27,8 +27,6 @@ class SecretarySearchEventFormSubmitted extends SecretarySearchEvent {
   final String nameContainsString;
   final bool phoneEqualsToBool;
   final String phoneEqualsToString;
-  final bool cpfEqualsToBool;
-  final String cpfEqualsToString;
   final bool birthdayEqualsToBool;
   final DateTime birthdayEqualsTo;
   SecretarySearchEventFormSubmitted({
@@ -38,8 +36,6 @@ class SecretarySearchEventFormSubmitted extends SecretarySearchEvent {
     required this.nameContainsString,
     required this.phoneEqualsToBool,
     required this.phoneEqualsToString,
-    required this.cpfEqualsToBool,
-    required this.cpfEqualsToString,
     required this.birthdayEqualsToBool,
     required this.birthdayEqualsTo,
   });

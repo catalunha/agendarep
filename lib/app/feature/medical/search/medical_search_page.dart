@@ -4,55 +4,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/authentication/authentication.dart';
-import '../../../core/repositories/secretary_repository.dart';
+import '../../../core/repositories/medical_repository.dart';
 import '../../utils/app_icon.dart';
 import '../../utils/app_textformfield.dart';
-import 'bloc/secretary_search_bloc.dart';
-import 'bloc/secretary_search_event.dart';
-import 'bloc/secretary_search_state.dart';
-import 'list/secretary_search_list_page.dart';
+import 'bloc/medical_search_bloc.dart';
+import 'bloc/medical_search_event.dart';
+import 'bloc/medical_search_state.dart';
+import 'list/medical_search_list_page.dart';
 
-class SecretarySearchPage extends StatelessWidget {
-  const SecretarySearchPage({
+class MedicalSearchPage extends StatelessWidget {
+  const MedicalSearchPage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => SecretaryRepository(),
+      create: (context) => MedicalRepository(),
       child: BlocProvider(
         create: (context) {
           UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
-          return SecretarySearchBloc(
-            secretaryRepository:
-                RepositoryProvider.of<SecretaryRepository>(context),
+          return MedicalSearchBloc(
+            medicalRepository:
+                RepositoryProvider.of<MedicalRepository>(context),
             seller: userProfile,
           );
         },
-        child: const SecretarySearchView(),
+        child: const MedicalSearchView(),
       ),
     );
   }
 }
 
-class SecretarySearchView extends StatefulWidget {
-  const SecretarySearchView({Key? key}) : super(key: key);
+class MedicalSearchView extends StatefulWidget {
+  const MedicalSearchView({Key? key}) : super(key: key);
 
   @override
-  State<SecretarySearchView> createState() => _SearchPageState();
+  State<MedicalSearchView> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SecretarySearchView> {
+class _SearchPageState extends State<MedicalSearchView> {
   final _formKey = GlobalKey<FormState>();
   bool _emailEqualsToBool = false;
   bool _nameContainsBool = false;
   bool _phoneEqualsToBool = false;
+  bool _crmEqualsToBool = false;
+  bool _isBlockedBool = false;
   bool _birthdayDtSelected = false;
   final _emailEqualsToTEC = TextEditingController();
   final _nameContainsTEC = TextEditingController();
   final _phoneEqualsToTEC = TextEditingController();
+  final _crmEqualsToTEC = TextEditingController();
+  bool _isBlockedSelected = false;
   DateTime _birthdayDtValue = DateTime.now();
 
   @override
@@ -60,6 +64,7 @@ class _SearchPageState extends State<SecretarySearchView> {
     _emailEqualsToTEC.text = '';
     _nameContainsTEC.text = '';
     _phoneEqualsToTEC.text = '';
+    _crmEqualsToTEC.text = '';
     super.initState();
   }
 
@@ -67,23 +72,23 @@ class _SearchPageState extends State<SecretarySearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Buscando Secretária'),
+        title: const Text('Buscando Médico'),
       ),
-      body: BlocListener<SecretarySearchBloc, SecretarySearchState>(
+      body: BlocListener<MedicalSearchBloc, MedicalSearchState>(
         listenWhen: (previous, current) {
           return previous.status != current.status;
         },
         listener: (context, state) async {
-          if (state.status == SecretarySearchStateStatus.error) {
+          if (state.status == MedicalSearchStateStatus.error) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
           }
-          if (state.status == SecretarySearchStateStatus.success) {
+          if (state.status == MedicalSearchStateStatus.success) {
             Navigator.of(context).pop();
           }
-          if (state.status == SecretarySearchStateStatus.loading) {
+          if (state.status == MedicalSearchStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,
               context: context,
@@ -179,6 +184,63 @@ class _SearchPageState extends State<SecretarySearchView> {
                     Card(
                       child: Column(
                         children: [
+                          const Text('por CRM'),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _crmEqualsToBool,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _crmEqualsToBool = value!;
+                                  });
+                                },
+                              ),
+                              Expanded(
+                                child: AppTextFormField(
+                                  label: 'igual a',
+                                  controller: _crmEqualsToTEC,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Card(
+                      child: Column(
+                        children: [
+                          const Text('por Bloqueio'),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _isBlockedBool,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isBlockedBool = value!;
+                                  });
+                                },
+                              ),
+                              Expanded(
+                                child: CheckboxListTile(
+                                  tileColor:
+                                      _isBlockedSelected ? Colors.red : null,
+                                  title: const Text("Bloquear este cadastro ?"),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _isBlockedSelected = value ?? false;
+                                    });
+                                  },
+                                  value: _isBlockedSelected,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Card(
+                      child: Column(
+                        children: [
                           const Text('por Data de aniversário'),
                           Row(
                             children: [
@@ -224,22 +286,26 @@ class _SearchPageState extends State<SecretarySearchView> {
           final formValid = _formKey.currentState?.validate() ?? false;
           if (formValid) {
             context
-                .read<SecretarySearchBloc>()
-                .add(SecretarySearchEventFormSubmitted(
+                .read<MedicalSearchBloc>()
+                .add(MedicalSearchEventFormSubmitted(
                   emailEqualsToBool: _emailEqualsToBool,
                   emailEqualsToString: _emailEqualsToTEC.text,
                   nameContainsBool: _nameContainsBool,
                   nameContainsString: _nameContainsTEC.text,
                   phoneEqualsToBool: _phoneEqualsToBool,
                   phoneEqualsToString: _phoneEqualsToTEC.text,
+                  crmEqualsToBool: _crmEqualsToBool,
+                  crmEqualsToString: _crmEqualsToTEC.text,
+                  isBlockedBool: _isBlockedBool,
+                  isBlockedSelected: _isBlockedSelected,
                   birthdayEqualsToBool: _birthdayDtSelected,
                   birthdayEqualsTo: _birthdayDtValue,
                 ));
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<SecretarySearchBloc>(context),
-                  child: const SecretarySearchListPage(),
+                  value: BlocProvider.of<MedicalSearchBloc>(context),
+                  child: const MedicalSearchListPage(),
                 ),
               ),
             );

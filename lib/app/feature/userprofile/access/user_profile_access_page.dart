@@ -155,8 +155,7 @@ class _UserProfileAccessViewState extends State<UserProfileAccessView> {
                       Wrap(
                         children: [
                           accessSelect('Admin', 'admin'),
-                          accessSelect('Representante', 'representante'),
-                          // accessSelect('Secretaria', 'secretaria'),
+                          accessSelect('Representante', 'seller'),
                         ],
                       ),
 

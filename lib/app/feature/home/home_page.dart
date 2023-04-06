@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
               ),
               HomeCardModule(
                 title: 'Adicionar Secretária',
-                access: const ['representante'],
+                access: const ['seller'],
                 onAction: () {
                   Navigator.of(context).pushNamed('/secretary/addedit');
                 },
@@ -50,11 +50,29 @@ class HomePage extends StatelessWidget {
               ),
               HomeCardModule(
                 title: 'Buscar Secretária',
-                access: const ['representante'],
+                access: const ['seller'],
                 onAction: () {
                   Navigator.of(context).pushNamed('/secretary/search');
                 },
                 icon: Icons.search,
+                color: Colors.black87,
+              ),
+              HomeCardModule(
+                title: 'Adicionar Médico',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/medical/addedit');
+                },
+                icon: Icons.medical_information,
+                color: Colors.black87,
+              ),
+              HomeCardModule(
+                title: 'Buscar Médico',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/medical/search');
+                },
+                icon: Icons.medication_liquid_sharp,
                 color: Colors.black87,
               ),
             ],
