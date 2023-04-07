@@ -28,7 +28,7 @@ class MedicalB4a {
       List<MedicalModel> listTemp = <MedicalModel>[];
       if (parseResponse.success && parseResponse.results != null) {
         for (var element in parseResponse.results!) {
-          listTemp.add(MedicalEntity().toModel(element));
+          listTemp.add(await MedicalEntity().toModel(element));
         }
         return listTemp;
       } else {
@@ -93,6 +93,17 @@ class MedicalB4a {
         originalError:
             '${parseResponse.error!.code} -${parseResponse.error!.message}',
       );
+    }
+  }
+
+  Future<void> updateRelationExpertise(
+      {required String objectId,
+      required List<String> ids,
+      required bool add}) async {
+    final parseObject = MedicalEntity()
+        .toParseRelationExpertise(objectId: objectId, ids: ids, add: add);
+    if (parseObject != null) {
+      await parseObject.save();
     }
   }
 }

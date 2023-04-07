@@ -1,3 +1,4 @@
+import 'package:agendarep/app/core/models/expertise_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -192,6 +193,68 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
                       AppTextFormField(
                         label: 'Descrição',
                         controller: _descriptionTEC,
+                      ),
+                      const Text('Selecione uma Especialidade'),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () async {
+                                var contextTemp =
+                                    context.read<MedicalAddEditBloc>();
+                                ExpertiseModel? result =
+                                    await Navigator.of(context)
+                                            .pushNamed('/expertise/list')
+                                        as ExpertiseModel?;
+                                if (result != null) {
+                                  contextTemp.add(
+                                      MedicalAddEditEventAddExpertise(result));
+                                }
+                              },
+                              icon: const Icon(Icons.search)),
+                          BlocBuilder<MedicalAddEditBloc, MedicalAddEditState>(
+                            builder: (context, state) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: state.expertisesUpdated
+                                    .map(
+                                      (e) => Row(
+                                        children: [
+                                          Text('${e.name}'),
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () {
+                                              context
+                                                  .read<MedicalAddEditBloc>()
+                                                  .add(
+                                                      MedicalAddEditEventRemoveExpertise(
+                                                          e));
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      // (e) => SizedBox(
+                                      //   width: 200,
+                                      //   child: ListTile(
+                                      //     title: Text('${e.name}'),
+                                      //     trailing: IconButton(
+                                      //       icon: const Icon(Icons.delete),
+                                      //       onPressed: () {
+                                      //         context
+                                      //             .read<MedicalAddEditBloc>()
+                                      //             .add(
+                                      //                 MedicalAddEditEventRemoveExpertise(
+                                      //                     e));
+                                      //       },
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                    )
+                                    .toList(),
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 15)
+                        ],
                       ),
                       if (widget.medicalModel != null)
                         CheckboxListTile(

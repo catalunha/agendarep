@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
+import 'package:agendarep/app/core/models/expertise_model.dart';
+
 import 'user_profile_model.dart';
 
 class MedicalModel {
@@ -12,6 +16,8 @@ class MedicalModel {
   final DateTime? birthday;
   final String? description;
   final bool? isBlocked;
+  final List<ExpertiseModel>? expertises;
+
   MedicalModel({
     this.id,
     this.seller,
@@ -22,6 +28,7 @@ class MedicalModel {
     this.birthday,
     this.description,
     this.isBlocked,
+    this.expertises,
   });
 
   MedicalModel copyWith({
@@ -34,6 +41,7 @@ class MedicalModel {
     DateTime? birthday,
     String? description,
     bool? isBlocked,
+    List<ExpertiseModel>? expertises,
   }) {
     return MedicalModel(
       id: id ?? this.id,
@@ -45,6 +53,7 @@ class MedicalModel {
       birthday: birthday ?? this.birthday,
       description: description ?? this.description,
       isBlocked: isBlocked ?? this.isBlocked,
+      expertises: expertises ?? this.expertises,
     );
   }
 
@@ -78,6 +87,9 @@ class MedicalModel {
     if (isBlocked != null) {
       result.addAll({'isBlocked': isBlocked});
     }
+    if (expertises != null) {
+      result.addAll({'expertises': expertises!.map((x) => x.toMap()).toList()});
+    }
 
     return result;
   }
@@ -97,6 +109,10 @@ class MedicalModel {
           : null,
       description: map['description'],
       isBlocked: map['isBlocked'],
+      expertises: map['expertises'] != null
+          ? List<ExpertiseModel>.from(
+              map['expertises']?.map((x) => ExpertiseModel.fromMap(x)))
+          : null,
     );
   }
 
@@ -107,7 +123,7 @@ class MedicalModel {
 
   @override
   String toString() {
-    return 'MedicalModel(id: $id, seller: $seller, email: $email, name: $name, phone: $phone, crm: $crm, birthday: $birthday, description: $description, isBlocked: $isBlocked)';
+    return 'MedicalModel(id: $id, seller: $seller, email: $email, name: $name, phone: $phone, crm: $crm, birthday: $birthday, description: $description, isBlocked: $isBlocked, expertises: $expertises)';
   }
 
   @override
@@ -123,7 +139,8 @@ class MedicalModel {
         other.crm == crm &&
         other.birthday == birthday &&
         other.description == description &&
-        other.isBlocked == isBlocked;
+        other.isBlocked == isBlocked &&
+        listEquals(other.expertises, expertises);
   }
 
   @override
@@ -136,6 +153,7 @@ class MedicalModel {
         crm.hashCode ^
         birthday.hashCode ^
         description.hashCode ^
-        isBlocked.hashCode;
+        isBlocked.hashCode ^
+        expertises.hashCode;
   }
 }

@@ -15,4 +15,8 @@ class MedicalRepository {
       secretaryB4a.list(query, pagination);
   Future<String> update(MedicalModel model) => secretaryB4a.update(model);
   Future<bool> delete(String modelId) => secretaryB4a.delete(modelId);
+  Future<void> updateRelationExpertise(
+          String objectId, List<String> ids, bool add) =>
+      secretaryB4a.updateRelationExpertise(
+          objectId: objectId, ids: ids, add: add);
 }

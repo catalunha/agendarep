@@ -58,6 +58,11 @@ class MedicalCard extends StatelessWidget {
             title: 'Descrição: ',
             value: medicalModel.description,
           ),
+          AppTextTitleValue(
+            title: 'Descrição: ',
+            value:
+                medicalModel.expertises?.map((e) => e.name).toList().join(', '),
+          ),
           Wrap(
             children: [
               IconButton(

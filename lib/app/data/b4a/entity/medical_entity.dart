@@ -1,6 +1,8 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
+import '../../../core/models/expertise_model.dart';
 import '../../../core/models/medical_model.dart';
+import 'expertise_entity.dart';
 import 'user_profile_entity.dart';
 
 class MedicalEntity {
@@ -17,7 +19,21 @@ class MedicalEntity {
   static const String isBlocked = 'isBlocked';
   static const String isDeleted = 'isDeleted';
 
-  MedicalModel toModel(ParseObject parseObject) {
+  Future<MedicalModel> toModel(ParseObject parseObject) async {
+    //+++ get expertise
+    List<ExpertiseModel> expertiseList = [];
+    QueryBuilder<ParseObject> queryExpertise =
+        QueryBuilder<ParseObject>(ParseObject(ExpertiseEntity.className));
+    queryExpertise.whereRelatedTo(
+        'expertises', 'Medical', parseObject.objectId!);
+    final ParseResponse parseResponse = await queryExpertise.query();
+    if (parseResponse.success && parseResponse.results != null) {
+      for (var e in parseResponse.results!) {
+        expertiseList.add(ExpertiseEntity().toModel(e as ParseObject));
+      }
+    }
+    //--- get expertise
+
     MedicalModel model = MedicalModel(
       id: parseObject.objectId!,
       seller: parseObject.get(MedicalEntity.seller) != null
@@ -30,6 +46,7 @@ class MedicalEntity {
       birthday: parseObject.get<DateTime>(MedicalEntity.birthday)?.toLocal(),
       description: parseObject.get(MedicalEntity.description),
       isBlocked: parseObject.get(MedicalEntity.isBlocked),
+      expertises: expertiseList,
     );
     return model;
   }
@@ -67,6 +84,38 @@ class MedicalEntity {
     }
     if (model.isBlocked != null) {
       parseObject.set(MedicalEntity.isBlocked, model.isBlocked);
+    }
+    return parseObject;
+  }
+
+  ParseObject? toParseRelationExpertise({
+    required String objectId,
+    required List<String> ids,
+    required bool add,
+  }) {
+    final parseObject = ParseObject(MedicalEntity.className);
+    parseObject.objectId = objectId;
+    if (ids.isEmpty) {
+      parseObject.unset('expertises');
+      return parseObject;
+    }
+    if (add) {
+      parseObject.addRelation(
+        'expertises',
+        ids
+            .map(
+              (element) =>
+                  ParseObject(ExpertiseEntity.className)..objectId = element,
+            )
+            .toList(),
+      );
+    } else {
+      parseObject.removeRelation(
+          'expertises',
+          ids
+              .map((element) =>
+                  ParseObject(ExpertiseEntity.className)..objectId = element)
+              .toList());
     }
     return parseObject;
   }

@@ -1,3 +1,5 @@
+import 'package:agendarep/app/core/models/expertise_model.dart';
+
 abstract class MedicalAddEditEvent {}
 
 class MedicalAddEditEventDelete extends MedicalAddEditEvent {}
@@ -19,4 +21,18 @@ class MedicalAddEditEventFormSubmitted extends MedicalAddEditEvent {
     this.birthday,
     this.description,
   });
+}
+
+class MedicalAddEditEventAddExpertise extends MedicalAddEditEvent {
+  final ExpertiseModel expertiseModel;
+  MedicalAddEditEventAddExpertise(
+    this.expertiseModel,
+  );
+}
+
+class MedicalAddEditEventRemoveExpertise extends MedicalAddEditEvent {
+  final ExpertiseModel expertiseModel;
+  MedicalAddEditEventRemoveExpertise(
+    this.expertiseModel,
+  );
 }
