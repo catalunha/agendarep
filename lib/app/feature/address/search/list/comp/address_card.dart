@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
-import '../../../../core/models/region_model.dart';
-import '../../../utils/app_text_title_value.dart';
-import '../../save/region_save_page.dart';
-import '../../view/region_view_page.dart';
-import '../bloc/region_list_bloc.dart';
+import '../../../../../core/models/address_model.dart';
+import '../../../../utils/app_text_title_value.dart';
+import '../../../save/address_save_page.dart';
+import '../../../view/address_view_page.dart';
+import '../../bloc/address_search_bloc.dart';
 
-class RegionCard extends StatelessWidget {
-  final RegionModel model;
-  const RegionCard({Key? key, required this.model}) : super(key: key);
+class AddressCard extends StatelessWidget {
+  final AddressModel model;
+  const AddressCard({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat('dd/MM/y');
+
     return Card(
       child: Column(
         children: [
@@ -25,16 +28,26 @@ class RegionCard extends StatelessWidget {
             value: model.seller?.name,
           ),
           AppTextTitleValue(
-            title: 'Estado: ',
-            value: model.uf,
-          ),
-          AppTextTitleValue(
-            title: 'Cidade: ',
-            value: model.city,
-          ),
-          AppTextTitleValue(
             title: 'Nome: ',
             value: model.name,
+          ),
+          AppTextTitleValue(
+            title: 'Telefone: ',
+            value: model.phone,
+          ),
+          AppTextTitleValue(
+            title: 'Descrição: ',
+            value: model.description,
+          ),
+          AppTextTitleValue(
+            title: 'Região: ',
+            value: model.region?.name,
+            inColumn: true,
+          ),
+          AppTextTitleValue(
+            title: 'Geopoint: ',
+            value: model.parseGeoPoint.toString(),
+            inColumn: true,
           ),
           Wrap(
             children: [
@@ -43,8 +56,8 @@ class RegionCard extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
-                        value: BlocProvider.of<RegionListBloc>(context),
-                        child: RegionSavePage(model: model),
+                        value: BlocProvider.of<AddressSearchBloc>(context),
+                        child: AddressSavePage(model: model),
                       ),
                     ),
                   );
@@ -57,7 +70,7 @@ class RegionCard extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => RegionViewPage(model: model),
+                      builder: (_) => AddressViewPage(model: model),
                     ),
                   );
                 },
@@ -65,15 +78,12 @@ class RegionCard extends StatelessWidget {
                   Icons.assignment_ind_outlined,
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  // Get.back(result: imageModel)
-                  Navigator.of(context).pop(model);
-                },
-                icon: const Icon(
-                  Icons.check,
-                ),
-              ),
+              // IconButton(
+              //   onPressed: () => copy(model.id!),
+              //   icon: const Icon(
+              //     Icons.copy,
+              //   ),
+              // ),
             ],
           ),
         ],

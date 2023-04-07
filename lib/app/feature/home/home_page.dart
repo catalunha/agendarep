@@ -93,6 +93,24 @@ class HomePage extends StatelessWidget {
                 icon: Icons.bubble_chart_outlined,
                 color: Colors.black87,
               ),
+              HomeCardModule(
+                title: 'Adicionar Endereço',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/address/save');
+                },
+                icon: Icons.location_city,
+                color: Colors.black87,
+              ),
+              HomeCardModule(
+                title: 'Buscar Endereço',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/address/search');
+                },
+                icon: Icons.location_on_outlined,
+                color: Colors.black87,
+              ),
             ],
           ),
         ),

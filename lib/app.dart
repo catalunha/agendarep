@@ -5,6 +5,8 @@ import 'app/core/authentication/bloc/authentication_bloc.dart';
 import 'app/core/models/user_model.dart';
 import 'app/core/repositories/user_repository.dart';
 import 'app/data/b4a/table/user_b4a.dart';
+import 'app/feature/address/save/address_save_page.dart';
+import 'app/feature/address/search/address_search_page.dart';
 import 'app/feature/cycle/addedit/cycle_addedit_page.dart';
 import 'app/feature/cycle/list/cycle_list_page.dart';
 import 'app/feature/home/home_page.dart';
@@ -110,6 +112,8 @@ class _AppViewState extends State<AppView> {
         '/cycle/list': (_) => const CycleListPage(),
         '/region/save': (_) => const RegionSavePage(),
         '/region/list': (_) => const RegionListPage(),
+        '/address/save': (_) => const AddressSavePage(),
+        '/address/search': (_) => const AddressSearchPage(),
       },
       initialRoute: '/',
     );
