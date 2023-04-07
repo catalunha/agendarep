@@ -7,6 +7,8 @@ import 'app/core/repositories/user_repository.dart';
 import 'app/data/b4a/table/user_b4a.dart';
 import 'app/feature/address/save/address_save_page.dart';
 import 'app/feature/address/search/address_search_page.dart';
+import 'app/feature/clinic/save/clinic_save_page.dart';
+import 'app/feature/clinic/search/clinic_search_page.dart';
 import 'app/feature/cycle/addedit/cycle_addedit_page.dart';
 import 'app/feature/cycle/list/cycle_list_page.dart';
 import 'app/feature/expertise/list/expertise_list_page.dart';
@@ -116,6 +118,8 @@ class _AppViewState extends State<AppView> {
         '/address/save': (_) => const AddressSavePage(),
         '/address/search': (_) => const AddressSearchPage(),
         '/expertise/list': (_) => const ExpertiseListPage(),
+        '/clinic/save': (_) => const ClinicSavePage(),
+        '/clinic/search': (_) => const ClinicSearchPage(),
       },
       initialRoute: '/',
     );

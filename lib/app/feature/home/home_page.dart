@@ -120,6 +120,24 @@ class HomePage extends StatelessWidget {
                 icon: Icons.list,
                 color: Colors.black87,
               ),
+              HomeCardModule(
+                title: 'Adicionar clinica',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/clinic/save');
+                },
+                icon: Icons.camera_enhance_outlined,
+                color: Colors.black87,
+              ),
+              HomeCardModule(
+                title: 'Buscar clinicas',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/clinic/search');
+                },
+                icon: Icons.screen_search_desktop,
+                color: Colors.black87,
+              ),
             ],
           ),
         ),
