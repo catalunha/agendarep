@@ -5,6 +5,8 @@ import 'app/core/authentication/bloc/authentication_bloc.dart';
 import 'app/core/models/user_model.dart';
 import 'app/core/repositories/user_repository.dart';
 import 'app/data/b4a/table/user_b4a.dart';
+import 'app/feature/cycle/addedit/cycle_addedit_page.dart';
+import 'app/feature/cycle/list/cycle_list_page.dart';
 import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/addedit/medical_addedit_page.dart';
 import 'app/feature/medical/search/medical_search_page.dart';
@@ -102,6 +104,8 @@ class _AppViewState extends State<AppView> {
         '/secretary/search': (_) => const SecretarySearchPage(),
         '/medical/addedit': (_) => const MedicalAddEditPage(),
         '/medical/search': (_) => const MedicalSearchPage(),
+        '/cycle/addedit': (_) => const CycleAddEditPage(),
+        '/cycle/list': (_) => const CycleListPage(),
       },
       initialRoute: '/',
     );

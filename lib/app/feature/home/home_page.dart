@@ -75,6 +75,15 @@ class HomePage extends StatelessWidget {
                 icon: Icons.medication_liquid_sharp,
                 color: Colors.black87,
               ),
+              HomeCardModule(
+                title: 'Ciclos',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/cycle/list');
+                },
+                icon: Icons.cyclone_sharp,
+                color: Colors.black87,
+              ),
             ],
           ),
         ),
