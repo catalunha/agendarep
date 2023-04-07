@@ -42,13 +42,11 @@ class MedicalCard extends StatelessWidget {
           AppTextTitleValue(
             title: 'CRM: ',
             value: medicalModel.crm,
-            inColumn: true,
           ),
           AppTextTitleValue(
             title: 'Bloqueado: ',
             value:
                 medicalModel.isBlocked ?? false ? 'Bloqueado' : 'Desbloqueado',
-            inColumn: true,
           ),
           AppTextTitleValue(
             title: 'Data de Aniversário: ',
