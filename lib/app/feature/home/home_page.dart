@@ -111,6 +111,15 @@ class HomePage extends StatelessWidget {
                 icon: Icons.location_on_outlined,
                 color: Colors.black87,
               ),
+              HomeCardModule(
+                title: 'Buscar Especialidades',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/expertise/list');
+                },
+                icon: Icons.list,
+                color: Colors.black87,
+              ),
             ],
           ),
         ),

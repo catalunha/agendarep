@@ -9,6 +9,7 @@ import 'app/feature/address/save/address_save_page.dart';
 import 'app/feature/address/search/address_search_page.dart';
 import 'app/feature/cycle/addedit/cycle_addedit_page.dart';
 import 'app/feature/cycle/list/cycle_list_page.dart';
+import 'app/feature/expertise/list/expertise_list_page.dart';
 import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/addedit/medical_addedit_page.dart';
 import 'app/feature/medical/search/medical_search_page.dart';
@@ -114,6 +115,7 @@ class _AppViewState extends State<AppView> {
         '/region/list': (_) => const RegionListPage(),
         '/address/save': (_) => const AddressSavePage(),
         '/address/search': (_) => const AddressSearchPage(),
+        '/expertise/list': (_) => const ExpertiseListPage(),
       },
       initialRoute: '/',
     );
