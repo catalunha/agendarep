@@ -10,6 +10,8 @@ import 'app/feature/cycle/list/cycle_list_page.dart';
 import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/addedit/medical_addedit_page.dart';
 import 'app/feature/medical/search/medical_search_page.dart';
+import 'app/feature/region/list/region_list_page.dart';
+import 'app/feature/region/save/region_save_page.dart';
 import 'app/feature/secretary/addedit/secretary_addedit_page.dart';
 import 'app/feature/secretary/search/secretary_search_page.dart';
 import 'app/feature/splash/splash_page.dart';
@@ -106,6 +108,8 @@ class _AppViewState extends State<AppView> {
         '/medical/search': (_) => const MedicalSearchPage(),
         '/cycle/addedit': (_) => const CycleAddEditPage(),
         '/cycle/list': (_) => const CycleListPage(),
+        '/region/save': (_) => const RegionSavePage(),
+        '/region/list': (_) => const RegionListPage(),
       },
       initialRoute: '/',
     );

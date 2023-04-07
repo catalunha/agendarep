@@ -84,6 +84,15 @@ class HomePage extends StatelessWidget {
                 icon: Icons.cyclone_sharp,
                 color: Colors.black87,
               ),
+              HomeCardModule(
+                title: 'Regiões',
+                access: const ['seller'],
+                onAction: () {
+                  Navigator.of(context).pushNamed('/region/list');
+                },
+                icon: Icons.bubble_chart_outlined,
+                color: Colors.black87,
+              ),
             ],
           ),
         ),
