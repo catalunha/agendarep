@@ -18,14 +18,15 @@ class MedicalEntity {
   static const String description = 'description';
   static const String isBlocked = 'isBlocked';
   static const String isDeleted = 'isDeleted';
+  static const String expertises = 'expertises';
 
   Future<MedicalModel> toModel(ParseObject parseObject) async {
     //+++ get expertise
     List<ExpertiseModel> expertiseList = [];
     QueryBuilder<ParseObject> queryExpertise =
         QueryBuilder<ParseObject>(ParseObject(ExpertiseEntity.className));
-    queryExpertise.whereRelatedTo(
-        'expertises', 'Medical', parseObject.objectId!);
+    queryExpertise.whereRelatedTo(MedicalEntity.expertises,
+        MedicalEntity.className, parseObject.objectId!);
     final ParseResponse parseResponse = await queryExpertise.query();
     if (parseResponse.success && parseResponse.results != null) {
       for (var e in parseResponse.results!) {
@@ -88,7 +89,7 @@ class MedicalEntity {
     return parseObject;
   }
 
-  ParseObject? toParseRelationExpertise({
+  ParseObject? toParseRelationExpertises({
     required String objectId,
     required List<String> ids,
     required bool add,
@@ -96,12 +97,12 @@ class MedicalEntity {
     final parseObject = ParseObject(MedicalEntity.className);
     parseObject.objectId = objectId;
     if (ids.isEmpty) {
-      parseObject.unset('expertises');
+      parseObject.unset(MedicalEntity.expertises);
       return parseObject;
     }
     if (add) {
       parseObject.addRelation(
-        'expertises',
+        MedicalEntity.expertises,
         ids
             .map(
               (element) =>
@@ -111,7 +112,7 @@ class MedicalEntity {
       );
     } else {
       parseObject.removeRelation(
-          'expertises',
+          MedicalEntity.expertises,
           ids
               .map((element) =>
                   ParseObject(ExpertiseEntity.className)..objectId = element)

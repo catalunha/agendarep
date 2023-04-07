@@ -1,45 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/medical_search_bloc.dart';
-import '../bloc/medical_search_event.dart';
-import '../bloc/medical_search_state.dart';
-import 'comp/medical_card.dart';
+import '../bloc/clinic_search_bloc.dart';
+import '../bloc/clinic_search_event.dart';
+import '../bloc/clinic_search_state.dart';
+import 'comp/clinic_card.dart';
 
-class MedicalSearchListPage extends StatelessWidget {
-  const MedicalSearchListPage({
+class ClinicSearchListPage extends StatelessWidget {
+  const ClinicSearchListPage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MedicalSearchListView();
+    return const ClinicSearchListView();
   }
 }
 
-class MedicalSearchListView extends StatelessWidget {
-  const MedicalSearchListView({Key? key}) : super(key: key);
+class ClinicSearchListView extends StatelessWidget {
+  const ClinicSearchListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Médicos encontrados'),
+        title: const Text('Clinicas encontradas'),
       ),
       body: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              BlocBuilder<MedicalSearchBloc, MedicalSearchState>(
+              BlocBuilder<ClinicSearchBloc, ClinicSearchState>(
                 builder: (context, state) {
                   return InkWell(
                     onTap: state.firstPage
                         ? null
                         : () {
                             context
-                                .read<MedicalSearchBloc>()
-                                .add(MedicalSearchEventPreviousPage());
+                                .read<ClinicSearchBloc>()
+                                .add(ClinicSearchEventPreviousPage());
                           },
                     child: Card(
                       color: state.firstPage ? Colors.black : Colors.black45,
@@ -55,15 +55,15 @@ class MedicalSearchListView extends StatelessWidget {
                   );
                 },
               ),
-              BlocBuilder<MedicalSearchBloc, MedicalSearchState>(
+              BlocBuilder<ClinicSearchBloc, ClinicSearchState>(
                 builder: (context, state) {
                   return InkWell(
                     onTap: state.lastPage
                         ? null
                         : () {
                             context
-                                .read<MedicalSearchBloc>()
-                                .add(MedicalSearchEventNextPage());
+                                .read<ClinicSearchBloc>()
+                                .add(ClinicSearchEventNextPage());
                           },
                     child: Card(
                       color: state.lastPage ? Colors.black : Colors.black45,
@@ -84,14 +84,14 @@ class MedicalSearchListView extends StatelessWidget {
           Expanded(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 600),
-              child: BlocBuilder<MedicalSearchBloc, MedicalSearchState>(
+              child: BlocBuilder<ClinicSearchBloc, ClinicSearchState>(
                 builder: (context, state) {
-                  var list = state.medicalModelList;
+                  var list = state.list;
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (context, index) {
                       final item = list[index];
-                      return MedicalCard(
+                      return ClinicCard(
                         model: item,
                       );
                     },

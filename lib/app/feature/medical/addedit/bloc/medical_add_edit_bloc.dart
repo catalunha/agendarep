@@ -113,7 +113,7 @@ class MedicalAddEditBloc
       int index = state.expertisesUpdated
           .indexWhere((model) => model.id == expertiseOriginal.id);
       if (index < 0) {
-        await _medicalRepository.updateRelationExpertise(
+        await _medicalRepository.updateRelationExpertises(
             modelId, [expertiseOriginal.id!], false);
         listFinal.removeWhere((element) => element.id == expertiseOriginal.id);
       } else {
@@ -121,7 +121,7 @@ class MedicalAddEditBloc
       }
     }
     for (var expertiseResult in listResult) {
-      await _medicalRepository.updateRelationExpertise(
+      await _medicalRepository.updateRelationExpertises(
           modelId, [expertiseResult.id!], true);
       listFinal.add(expertiseResult);
     }

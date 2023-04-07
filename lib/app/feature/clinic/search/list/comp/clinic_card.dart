@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../../core/models/address_model.dart';
+import '../../../../../core/models/clinic_model.dart';
 import '../../../../utils/app_text_title_value.dart';
-import '../../../save/address_save_page.dart';
-import '../../../view/address_view_page.dart';
-import '../../bloc/address_search_bloc.dart';
+import '../../../save/clinic_save_page.dart';
+import '../../../view/clinic_view_page.dart';
+import '../../bloc/clinic_search_bloc.dart';
 
-class AddressCard extends StatelessWidget {
-  final AddressModel model;
-  const AddressCard({Key? key, required this.model}) : super(key: key);
+class ClinicCard extends StatelessWidget {
+  final ClinicModel model;
+  const ClinicCard({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd/MM/y');
-
     return Card(
       child: Column(
         children: [
@@ -28,26 +25,36 @@ class AddressCard extends StatelessWidget {
             value: model.seller?.name,
           ),
           AppTextTitleValue(
-            title: 'Nome: ',
-            value: model.name,
+            title: 'Medico: ',
+            value: model.medical?.name,
+            inColumn: true,
+          ),
+          AppTextTitleValue(
+            title: 'Sala: ',
+            value: model.room,
+          ),
+          AppTextTitleValue(
+            title: 'Descrição: ',
+            value: model.description,
+            inColumn: true,
           ),
           AppTextTitleValue(
             title: 'Telefone: ',
             value: model.phone,
           ),
           AppTextTitleValue(
-            title: 'Descrição: ',
-            value: model.description,
+            title: 'Endereço: ',
+            value: model.address?.description,
+            inColumn: true,
           ),
           AppTextTitleValue(
             title: 'Região: ',
-            value: model.region?.name,
+            value: model.address?.region?.name,
             inColumn: true,
           ),
           AppTextTitleValue(
-            title: 'Geopoint: ',
-            value: model.parseGeoPoint.toString(),
-            inColumn: true,
+            title: 'Secretarias: ',
+            value: model.secretaries?.map((e) => e.name).toList().join(', '),
           ),
           Wrap(
             children: [
@@ -56,8 +63,8 @@ class AddressCard extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
-                        value: BlocProvider.of<AddressSearchBloc>(context),
-                        child: AddressSavePage(model: model),
+                        value: BlocProvider.of<ClinicSearchBloc>(context),
+                        child: ClinicSavePage(model: model),
                       ),
                     ),
                   );
@@ -70,7 +77,7 @@ class AddressCard extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => AddressViewPage(model: model),
+                      builder: (_) => ClinicViewPage(model: model),
                     ),
                   );
                 },

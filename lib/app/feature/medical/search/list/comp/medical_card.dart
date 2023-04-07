@@ -9,8 +9,8 @@ import '../../../view/medical_view_page.dart';
 import '../../bloc/medical_search_bloc.dart';
 
 class MedicalCard extends StatelessWidget {
-  final MedicalModel medicalModel;
-  const MedicalCard({Key? key, required this.medicalModel}) : super(key: key);
+  final MedicalModel model;
+  const MedicalCard({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,45 +21,43 @@ class MedicalCard extends StatelessWidget {
         children: [
           AppTextTitleValue(
             title: 'Id: ',
-            value: medicalModel.id,
+            value: model.id,
           ),
           AppTextTitleValue(
             title: 'Cadastrada pelo Representante: ',
-            value: medicalModel.seller?.name,
+            value: model.seller?.name,
           ),
           AppTextTitleValue(
             title: 'Email: ',
-            value: medicalModel.email,
+            value: model.email,
           ),
           AppTextTitleValue(
             title: 'Nome: ',
-            value: medicalModel.name,
+            value: model.name,
           ),
           AppTextTitleValue(
             title: 'Telefone: ',
-            value: medicalModel.phone,
+            value: model.phone,
           ),
           AppTextTitleValue(
             title: 'CRM: ',
-            value: medicalModel.crm,
+            value: model.crm,
           ),
           AppTextTitleValue(
             title: 'Bloqueado: ',
-            value:
-                medicalModel.isBlocked ?? false ? 'Bloqueado' : 'Desbloqueado',
+            value: model.isBlocked ?? false ? 'Bloqueado' : 'Desbloqueado',
           ),
           AppTextTitleValue(
             title: 'Data de Aniversário: ',
-            value: dateFormat.format(medicalModel.birthday!),
+            value: dateFormat.format(model.birthday!),
           ),
           AppTextTitleValue(
             title: 'Descrição: ',
-            value: medicalModel.description,
+            value: model.description,
           ),
           AppTextTitleValue(
             title: 'Descrição: ',
-            value:
-                medicalModel.expertises?.map((e) => e.name).toList().join(', '),
+            value: model.expertises?.map((e) => e.name).toList().join(', '),
           ),
           Wrap(
             children: [
@@ -69,7 +67,7 @@ class MedicalCard extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
                         value: BlocProvider.of<MedicalSearchBloc>(context),
-                        child: MedicalAddEditPage(medicalModel: medicalModel),
+                        child: MedicalAddEditPage(medicalModel: model),
                       ),
                     ),
                   );
@@ -82,8 +80,7 @@ class MedicalCard extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) =>
-                          MedicalViewPage(medicalModel: medicalModel),
+                      builder: (_) => MedicalViewPage(medicalModel: model),
                     ),
                   );
                 },
@@ -91,12 +88,14 @@ class MedicalCard extends StatelessWidget {
                   Icons.assignment_ind_outlined,
                 ),
               ),
-              // IconButton(
-              //   onPressed: () => copy(medicalModel.id!),
-              //   icon: const Icon(
-              //     Icons.copy,
-              //   ),
-              // ),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop(model);
+                },
+                icon: const Icon(
+                  Icons.check,
+                ),
+              ),
             ],
           ),
         ],
