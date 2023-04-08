@@ -40,6 +40,8 @@ class MedicalSelectBloc extends Bloc<MedicalSelectEvent, MedicalSelectState> {
     try {
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(MedicalEntity.className));
+      query.whereEqualTo(MedicalEntity.isDeleted, false);
+      // query.includeObject(['seller']);
       query.keysToReturn(['name']);
 
       query.whereEqualTo(

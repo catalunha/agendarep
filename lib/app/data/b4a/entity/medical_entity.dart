@@ -19,26 +19,28 @@ class MedicalEntity {
   static const String isDeleted = 'isDeleted';
   static const String expertises = 'expertises';
 
-  Future<MedicalModel> toModel(ParseObject parseObject) async {
-    print('crm: ${parseObject.containsKey('crm')}');
-    print('expertises: ${parseObject.containsKey('expertises')}');
+  Future<MedicalModel> toModel(ParseObject parseObject,
+      [List<String> includeRelation = const []]) async {
     //+++ get expertise
     List<ExpertiseModel> expertiseList = [];
-    QueryBuilder<ParseObject> queryExpertise =
-        QueryBuilder<ParseObject>(ParseObject(ExpertiseEntity.className));
-    queryExpertise.whereRelatedTo(MedicalEntity.expertises,
-        MedicalEntity.className, parseObject.objectId!);
-    final ParseResponse parseResponse = await queryExpertise.query();
-    if (parseResponse.success && parseResponse.results != null) {
-      for (var e in parseResponse.results!) {
-        expertiseList.add(ExpertiseEntity().toModel(e as ParseObject));
+    if (includeRelation.contains(MedicalEntity.expertises)) {
+      QueryBuilder<ParseObject> queryExpertise =
+          QueryBuilder<ParseObject>(ParseObject(ExpertiseEntity.className));
+      queryExpertise.whereRelatedTo(MedicalEntity.expertises,
+          MedicalEntity.className, parseObject.objectId!);
+      final ParseResponse parseResponse = await queryExpertise.query();
+      if (parseResponse.success && parseResponse.results != null) {
+        for (var e in parseResponse.results!) {
+          expertiseList.add(ExpertiseEntity().toModel(e as ParseObject));
+        }
       }
     }
     //--- get expertise
 
     MedicalModel model = MedicalModel(
       id: parseObject.objectId!,
-      seller: parseObject.get(MedicalEntity.seller) != null
+      seller: parseObject.containsKey(MedicalEntity.seller) &&
+              parseObject.get(MedicalEntity.seller) != null
           ? UserProfileEntity().fromParse(parseObject.get(MedicalEntity.seller))
           : null,
       email: parseObject.get(MedicalEntity.email),

@@ -9,10 +9,9 @@ class MedicalRepository {
 
   MedicalRepository();
   Future<List<MedicalModel>> list(
-    QueryBuilder<ParseObject> query,
-    Pagination pagination,
-  ) =>
-      secretaryB4a.list(query, pagination);
+          QueryBuilder<ParseObject> query, Pagination pagination,
+          [List<String> includeRelation = const []]) =>
+      secretaryB4a.list(query, pagination, includeRelation);
   Future<String> update(MedicalModel model) => secretaryB4a.update(model);
   Future<bool> delete(String modelId) => secretaryB4a.delete(modelId);
   Future<void> updateRelationExpertises(

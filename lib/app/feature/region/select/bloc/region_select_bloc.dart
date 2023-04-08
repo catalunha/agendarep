@@ -40,7 +40,7 @@ class RegionSelectBloc extends Bloc<RegionSelectEvent, RegionSelectState> {
     try {
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(RegionEntity.className));
-      query.keysToReturn(['name']);
+      // query.keysToReturn(['name']);
 
       query.whereEqualTo(
           RegionEntity.seller,

@@ -59,14 +59,19 @@ class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
       if (event.birthdayEqualsToBool) {
         query.whereEqualTo(MedicalEntity.birthday, event.birthdayEqualsTo);
       }
+
+      query.whereEqualTo(MedicalEntity.isDeleted, false);
+      query.includeObject(['seller']);
       query.whereEqualTo(
           MedicalEntity.seller,
           (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
               .toPointer());
       query.orderByDescending('updatedAt');
+
       List<MedicalModel> medicalModelListGet = await _medicalRepository.list(
         query,
         Pagination(page: state.page, limit: state.limit),
+        [MedicalEntity.expertises],
       );
 
       emit(state.copyWith(
@@ -101,6 +106,7 @@ class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
       List<MedicalModel> medicalModelListGet = await _medicalRepository.list(
         state.query,
         Pagination(page: state.page, limit: state.limit),
+        [MedicalEntity.expertises],
       );
       if (state.page == 1) {
         emit(
@@ -133,6 +139,7 @@ class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
     List<MedicalModel> medicalModelListGet = await _medicalRepository.list(
       state.query,
       Pagination(page: state.page + 1, limit: state.limit),
+      [MedicalEntity.expertises],
     );
     if (medicalModelListGet.isEmpty) {
       emit(state.copyWith(

@@ -11,15 +11,13 @@ class MedicalB4a {
       QueryBuilder<ParseObject> query, Pagination pagination) async {
     query.setAmountToSkip((pagination.page - 1) * pagination.limit);
     query.setLimit(pagination.limit);
-    query.whereEqualTo(MedicalEntity.isDeleted, false);
-    query.includeObject(['seller']);
+
     return query;
   }
 
   Future<List<MedicalModel>> list(
-    QueryBuilder<ParseObject> query,
-    Pagination pagination,
-  ) async {
+      QueryBuilder<ParseObject> query, Pagination pagination,
+      [List<String> includeRelation = const []]) async {
     QueryBuilder<ParseObject> query2;
     query2 = await getQueryAll(query, pagination);
     ParseResponse? parseResponse;
@@ -28,7 +26,7 @@ class MedicalB4a {
       List<MedicalModel> listTemp = <MedicalModel>[];
       if (parseResponse.success && parseResponse.results != null) {
         for (var element in parseResponse.results!) {
-          listTemp.add(await MedicalEntity().toModel(element));
+          listTemp.add(await MedicalEntity().toModel(element, includeRelation));
         }
         return listTemp;
       } else {
