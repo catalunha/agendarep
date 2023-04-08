@@ -115,7 +115,7 @@ class HomePage extends StatelessWidget {
                 title: 'Buscar Especialidades',
                 access: const ['seller'],
                 onAction: () {
-                  Navigator.of(context).pushNamed('/expertise/list');
+                  Navigator.of(context).pushNamed('/expertise/select');
                 },
                 icon: Icons.list,
                 color: Colors.black87,

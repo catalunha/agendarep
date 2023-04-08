@@ -203,7 +203,7 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
                                     context.read<MedicalAddEditBloc>();
                                 ExpertiseModel? result =
                                     await Navigator.of(context)
-                                            .pushNamed('/expertise/list')
+                                            .pushNamed('/expertise/select')
                                         as ExpertiseModel?;
                                 if (result != null) {
                                   contextTemp.add(

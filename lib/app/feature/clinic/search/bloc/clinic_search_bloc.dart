@@ -42,7 +42,7 @@ class ClinicSearchBloc extends Bloc<ClinicSearchEvent, ClinicSearchState> {
           QueryBuilder<ParseObject>(ParseObject(ClinicEntity.className));
 
       if (event.nameContainsBool) {
-        query.whereEqualTo(ClinicEntity.phone, event.nameContainsString);
+        query.whereContains(ClinicEntity.phone, event.nameContainsString);
       }
       if (event.phoneEqualsToBool) {
         query.whereEqualTo(ClinicEntity.phone, event.phoneEqualsToString);

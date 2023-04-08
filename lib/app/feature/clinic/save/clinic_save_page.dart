@@ -62,7 +62,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
   @override
   void initState() {
     super.initState();
-    _nameTEC.text = widget.model?.room ?? "";
+    _nameTEC.text = widget.model?.name ?? "";
     _roomTEC.text = widget.model?.room ?? "";
     _phoneTEC.text = widget.model?.phone ?? "";
     _descriptionTEC.text = widget.model?.description ?? "";

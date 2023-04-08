@@ -44,7 +44,7 @@ class ClinicSearchView extends StatefulWidget {
 
 class _SearchPageState extends State<ClinicSearchView> {
   final _formKey = GlobalKey<FormState>();
-  final bool _nameContainsBool = false;
+  bool _nameContainsBool = false;
   bool _phoneEqualsToBool = false;
   final _nameContainsTEC = TextEditingController();
   final _phoneEqualsToTEC = TextEditingController();
@@ -94,6 +94,31 @@ class _SearchPageState extends State<ClinicSearchView> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    Card(
+                      child: Column(
+                        children: [
+                          const Text('por Nome'),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _nameContainsBool,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _nameContainsBool = value!;
+                                  });
+                                },
+                              ),
+                              Expanded(
+                                child: AppTextFormField(
+                                  label: 'que contém',
+                                  controller: _nameContainsTEC,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                     Card(
                       child: Column(
                         children: [

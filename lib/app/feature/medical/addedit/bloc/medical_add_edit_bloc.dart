@@ -90,9 +90,13 @@ class MedicalAddEditBloc
   FutureOr<void> _onMedicalAddEditEventAddExpertise(
       MedicalAddEditEventAddExpertise event,
       Emitter<MedicalAddEditState> emit) {
-    List<ExpertiseModel> expertisesTemp = [...state.expertisesUpdated];
-    expertisesTemp.add(event.expertiseModel);
-    emit(state.copyWith(expertisesUpdated: expertisesTemp));
+    int index = state.expertisesUpdated
+        .indexWhere((model) => model.id == event.model.id);
+    if (index < 0) {
+      List<ExpertiseModel> expertisesTemp = [...state.expertisesUpdated];
+      expertisesTemp.add(event.model);
+      emit(state.copyWith(expertisesUpdated: expertisesTemp));
+    }
   }
 
   FutureOr<void> _onMedicalAddEditEventRemoveExpertise(

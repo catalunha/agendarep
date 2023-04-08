@@ -24,9 +24,9 @@ class MedicalAddEditEventFormSubmitted extends MedicalAddEditEvent {
 }
 
 class MedicalAddEditEventAddExpertise extends MedicalAddEditEvent {
-  final ExpertiseModel expertiseModel;
+  final ExpertiseModel model;
   MedicalAddEditEventAddExpertise(
-    this.expertiseModel,
+    this.model,
   );
 }
 
