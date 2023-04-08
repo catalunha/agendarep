@@ -18,7 +18,6 @@ class ClinicEntity {
   static const String name = 'name';
   static const String room = 'room';
   static const String phone = 'phone';
-  static const String description = 'description';
   static const String isDeleted = 'isDeleted';
 
   Future<ClinicModel> toModel(ParseObject parseObject) async {
@@ -52,7 +51,6 @@ class ClinicEntity {
       name: parseObject.get(ClinicEntity.name),
       room: parseObject.get(ClinicEntity.room),
       phone: parseObject.get(ClinicEntity.phone),
-      description: parseObject.get(ClinicEntity.description),
     );
     return model;
   }
@@ -88,9 +86,6 @@ class ClinicEntity {
     }
     if (model.phone != null) {
       parseObject.set(ClinicEntity.phone, model.phone);
-    }
-    if (model.description != null) {
-      parseObject.set(ClinicEntity.description, model.description);
     }
 
     return parseObject;

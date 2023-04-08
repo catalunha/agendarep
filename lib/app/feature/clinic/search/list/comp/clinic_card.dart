@@ -37,11 +37,6 @@ class ClinicCard extends StatelessWidget {
             value: model.room,
           ),
           AppTextTitleValue(
-            title: 'Descrição: ',
-            value: model.description,
-            inColumn: true,
-          ),
-          AppTextTitleValue(
             title: 'Telefone: ',
             value: model.phone,
           ),

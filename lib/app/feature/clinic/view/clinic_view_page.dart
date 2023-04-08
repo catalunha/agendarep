@@ -41,11 +41,6 @@ class ClinicViewPage extends StatelessWidget {
                   inColumn: true,
                 ),
                 AppTextTitleValue(
-                  title: 'Descrição: ',
-                  value: model.description,
-                  inColumn: true,
-                ),
-                AppTextTitleValue(
                   title: 'Endereço: ',
                   value: model.address?.description,
                   inColumn: true,

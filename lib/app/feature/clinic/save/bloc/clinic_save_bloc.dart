@@ -40,7 +40,6 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
           name: event.name,
           room: event.room,
           phone: event.phone,
-          description: event.description,
         );
       } else {
         clinicModel = state.model!.copyWith(
@@ -49,7 +48,6 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
           name: event.name,
           room: event.room,
           phone: event.phone,
-          description: event.description,
         );
       }
       String clinicModelId = await _clinicRepository.update(clinicModel);

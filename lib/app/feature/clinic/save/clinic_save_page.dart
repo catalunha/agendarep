@@ -57,7 +57,6 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
   final _nameTEC = TextEditingController();
   final _roomTEC = TextEditingController();
   final _phoneTEC = TextEditingController();
-  final _descriptionTEC = TextEditingController();
   bool delete = false;
   @override
   void initState() {
@@ -65,7 +64,6 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
     _nameTEC.text = widget.model?.name ?? "";
     _roomTEC.text = widget.model?.room ?? "";
     _phoneTEC.text = widget.model?.phone ?? "";
-    _descriptionTEC.text = widget.model?.description ?? "";
   }
 
   @override
@@ -89,7 +87,6 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                       name: _nameTEC.text,
                       room: _roomTEC.text,
                       phone: _phoneTEC.text,
-                      description: _descriptionTEC.text,
                     ),
                   );
             }
@@ -155,10 +152,6 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                         label: 'Telefone. Formato DDDNUMERO',
                         controller: _phoneTEC,
                         validator: Validatorless.number('Apenas números.'),
-                      ),
-                      AppTextFormField(
-                        label: 'Descrição',
-                        controller: _descriptionTEC,
                       ),
                       const Text('Selecione o médico'),
                       Row(

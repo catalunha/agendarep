@@ -14,7 +14,6 @@ class ClinicModel {
   final String? name;
   final String? room;
   final String? phone;
-  final String? description;
   ClinicModel({
     this.id,
     this.seller,
@@ -24,7 +23,6 @@ class ClinicModel {
     this.name,
     this.room,
     this.phone,
-    this.description,
   });
 
   ClinicModel copyWith({
@@ -36,7 +34,6 @@ class ClinicModel {
     String? name,
     String? room,
     String? phone,
-    String? description,
   }) {
     return ClinicModel(
       id: id ?? this.id,
@@ -47,13 +44,12 @@ class ClinicModel {
       name: name ?? this.name,
       room: room ?? this.room,
       phone: phone ?? this.phone,
-      description: description ?? this.description,
     );
   }
 
   @override
   String toString() {
-    return 'ClinicModel(id: $id, seller: $seller, medical: $medical, address: $address, secretaries: $secretaries, name: $name, room: $room, phone: $phone, description: $description)';
+    return 'ClinicModel(id: $id, seller: $seller, medical: $medical, address: $address, secretaries: $secretaries, name: $name, room: $room, phone: $phone)';
   }
 
   @override
@@ -68,8 +64,7 @@ class ClinicModel {
         listEquals(other.secretaries, secretaries) &&
         other.name == name &&
         other.room == room &&
-        other.phone == phone &&
-        other.description == description;
+        other.phone == phone;
   }
 
   @override
@@ -81,7 +76,6 @@ class ClinicModel {
         secretaries.hashCode ^
         name.hashCode ^
         room.hashCode ^
-        phone.hashCode ^
-        description.hashCode;
+        phone.hashCode;
   }
 }
