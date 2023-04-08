@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/authentication/authentication.dart';
+import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/expertise_repository.dart';
-import 'bloc/expertise_list_bloc.dart';
-import 'bloc/expertise_list_event.dart';
-import 'bloc/expertise_list_state.dart';
+import '../../utils/app_textformfield.dart';
+import 'bloc/expertise_select_bloc.dart';
+import 'bloc/expertise_select_event.dart';
+import 'bloc/expertise_select_state.dart';
 import 'comp/expertise_card.dart';
 
-class ExpertiseListPage extends StatelessWidget {
-  const ExpertiseListPage({
+class ExpertiseSelectPage extends StatelessWidget {
+  const ExpertiseSelectPage({
     Key? key,
   }) : super(key: key);
 
@@ -18,41 +21,69 @@ class ExpertiseListPage extends StatelessWidget {
       create: (context) => ExpertiseRepository(),
       child: BlocProvider(
         create: (context) {
-          return ExpertiseListBloc(
+          UserProfileModel userProfile =
+              context.read<AuthenticationBloc>().state.user!.userProfile!;
+          return ExpertiseSelectBloc(
             expertiseRepository:
                 RepositoryProvider.of<ExpertiseRepository>(context),
+            seller: userProfile,
           );
         },
-        child: const ExpertiseListView(),
+        child: const ExpertiseSelectView(),
       ),
     );
   }
 }
 
-class ExpertiseListView extends StatelessWidget {
-  const ExpertiseListView({Key? key}) : super(key: key);
+// class ExpertiseSelectPage extends StatelessWidget {
+//   const ExpertiseSelectPage({
+//     Key? key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const ExpertiseSelectView();
+//   }
+// }
+
+class ExpertiseSelectView extends StatefulWidget {
+  const ExpertiseSelectView({Key? key}) : super(key: key);
+
+  @override
+  State<ExpertiseSelectView> createState() => _ExpertiseSelectViewState();
+}
+
+class _ExpertiseSelectViewState extends State<ExpertiseSelectView> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameTEC = TextEditingController();
+
+  @override
+  void initState() {
+    _nameTEC.text = '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Especialidades encontradas'),
+        title: const Text('Selecione uma especialidade'),
       ),
-      body: BlocListener<ExpertiseListBloc, ExpertiseListState>(
+      body: BlocListener<ExpertiseSelectBloc, ExpertiseSelectState>(
         listenWhen: (previous, current) {
           return previous.status != current.status;
         },
         listener: (context, state) async {
-          if (state.status == ExpertiseListStateStatus.error) {
+          if (state.status == ExpertiseSelectStateStatus.error) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
           }
-          if (state.status == ExpertiseListStateStatus.success) {
+          if (state.status == ExpertiseSelectStateStatus.success) {
             Navigator.of(context).pop();
           }
-          if (state.status == ExpertiseListStateStatus.loading) {
+          if (state.status == ExpertiseSelectStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,
               context: context,
@@ -64,18 +95,33 @@ class ExpertiseListView extends StatelessWidget {
         },
         child: Column(
           children: [
+            Form(
+              child: Column(
+                children: [
+                  AppTextFormField(
+                    label: 'Nome da especialidade',
+                    controller: _nameTEC,
+                    onChange: (value) {
+                      context
+                          .read<ExpertiseSelectBloc>()
+                          .add(ExpertiseSelectEventFormSubmitted(value));
+                    },
+                  ),
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BlocBuilder<ExpertiseListBloc, ExpertiseListState>(
+                BlocBuilder<ExpertiseSelectBloc, ExpertiseSelectState>(
                   builder: (context, state) {
                     return InkWell(
                       onTap: state.firstPage
                           ? null
                           : () {
                               context
-                                  .read<ExpertiseListBloc>()
-                                  .add(ExpertiseListEventPreviousPage());
+                                  .read<ExpertiseSelectBloc>()
+                                  .add(ExpertiseSelectEventPreviousPage());
                             },
                       child: Card(
                         color: state.firstPage ? Colors.black : Colors.black45,
@@ -91,15 +137,15 @@ class ExpertiseListView extends StatelessWidget {
                     );
                   },
                 ),
-                BlocBuilder<ExpertiseListBloc, ExpertiseListState>(
+                BlocBuilder<ExpertiseSelectBloc, ExpertiseSelectState>(
                   builder: (context, state) {
                     return InkWell(
                       onTap: state.lastPage
                           ? null
                           : () {
                               context
-                                  .read<ExpertiseListBloc>()
-                                  .add(ExpertiseListEventNextPage());
+                                  .read<ExpertiseSelectBloc>()
+                                  .add(ExpertiseSelectEventNextPage());
                             },
                       child: Card(
                         color: state.lastPage ? Colors.black : Colors.black45,
@@ -120,10 +166,9 @@ class ExpertiseListView extends StatelessWidget {
             Expanded(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 600),
-                child: BlocBuilder<ExpertiseListBloc, ExpertiseListState>(
+                child: BlocBuilder<ExpertiseSelectBloc, ExpertiseSelectState>(
                   builder: (context, state) {
-                    var list = state.list;
-
+                    var list = state.listFiltered;
                     return ListView.builder(
                       itemCount: list.length,
                       itemBuilder: (context, index) {

@@ -12,7 +12,7 @@ import 'app/feature/clinic/save/clinic_save_page.dart';
 import 'app/feature/clinic/search/clinic_search_page.dart';
 import 'app/feature/cycle/addedit/cycle_addedit_page.dart';
 import 'app/feature/cycle/list/cycle_list_page.dart';
-import 'app/feature/expertise/list/expertise_list_page.dart';
+import 'app/feature/expertise/select/expertise_select_page.dart';
 import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/addedit/medical_addedit_page.dart';
 import 'app/feature/medical/search/medical_search_page.dart';
@@ -123,7 +123,7 @@ class _AppViewState extends State<AppView> {
         '/address/save': (_) => const AddressSavePage(),
         '/address/search': (_) => const AddressSearchPage(),
         '/address/select': (_) => const AddressSelectPage(),
-        '/expertise/list': (_) => const ExpertiseListPage(),
+        '/expertise/select': (_) => const ExpertiseSelectPage(),
         '/clinic/save': (_) => const ClinicSavePage(),
         '/clinic/search': (_) => const ClinicSearchPage(),
       },

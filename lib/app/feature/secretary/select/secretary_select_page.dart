@@ -99,7 +99,7 @@ class _SecretarySelectViewState extends State<SecretarySelectView> {
               child: Column(
                 children: [
                   AppTextFormField(
-                    label: 'Nome do médico',
+                    label: 'Nome',
                     controller: _nameTEC,
                     onChange: (value) {
                       context

@@ -99,7 +99,7 @@ class _MedicalSelectViewState extends State<MedicalSelectView> {
               child: Column(
                 children: [
                   AppTextFormField(
-                    label: 'Nome do médico',
+                    label: 'Nome',
                     controller: _nameTEC,
                     onChange: (value) {
                       context
