@@ -142,13 +142,14 @@ class _SecretarySaveViewState extends State<SecretarySaveView> {
                     children: [
                       const SizedBox(height: 5),
                       AppTextFormField(
-                        label: 'email',
-                        controller: _emailTEC,
-                      ),
-                      AppTextFormField(
-                        label: 'Nome',
+                        label: 'Nome *',
                         controller: _nameTEC,
                         validator: Validatorless.required('Nome é obrigatório'),
+                      ),
+                      const Divider(height: 5),
+                      AppTextFormField(
+                        label: 'email',
+                        controller: _emailTEC,
                       ),
                       AppTextFormField(
                         label: 'Telefone. Formato DDDNUMERO',

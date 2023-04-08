@@ -137,19 +137,19 @@ class _RegionSaveViewState extends State<RegionSaveView> {
                     children: [
                       const SizedBox(height: 5),
                       AppTextFormField(
-                        label: 'Estado',
+                        label: 'Estado *',
                         controller: _ufTEC,
                         validator:
                             Validatorless.required('Estado é obrigatório'),
                       ),
                       AppTextFormField(
-                        label: 'Cidade',
+                        label: 'Cidade *',
                         controller: _cityTEC,
                         validator:
                             Validatorless.required('Cidade é obrigatório'),
                       ),
                       AppTextFormField(
-                        label: 'Nome',
+                        label: 'Nome *',
                         controller: _nameTEC,
                         validator: Validatorless.required('Nome é obrigatório'),
                       ),

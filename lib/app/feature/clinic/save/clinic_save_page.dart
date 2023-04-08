@@ -70,7 +70,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar ou Editar consultório'),
+        title: const Text('Adicionar ou Editar clínica/consultório'),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.cloud_upload),
@@ -139,21 +139,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                   child: Column(
                     children: [
                       const SizedBox(height: 5),
-                      AppTextFormField(
-                        label: 'Nome',
-                        controller: _nameTEC,
-                        validator: Validatorless.required('Nome é obrigatório'),
-                      ),
-                      AppTextFormField(
-                        label: 'Sala',
-                        controller: _roomTEC,
-                      ),
-                      AppTextFormField(
-                        label: 'Telefone. Formato DDDNUMERO',
-                        controller: _phoneTEC,
-                        validator: Validatorless.number('Apenas números.'),
-                      ),
-                      const Text('Selecione o médico'),
+                      const Text('Selecione o médico *'),
                       Row(
                         children: [
                           IconButton(
@@ -176,6 +162,21 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                             },
                           ),
                         ],
+                      ),
+                      AppTextFormField(
+                        label: 'Nome da clinica/consultório *',
+                        controller: _nameTEC,
+                        validator: Validatorless.required('Nome é obrigatório'),
+                      ),
+                      const Divider(height: 5),
+                      AppTextFormField(
+                        label: 'Sala',
+                        controller: _roomTEC,
+                      ),
+                      AppTextFormField(
+                        label: 'Telefone. Formato DDDNUMERO',
+                        controller: _phoneTEC,
+                        validator: Validatorless.number('Apenas números.'),
                       ),
                       const Text('Selecione o endereço'),
                       Row(

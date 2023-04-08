@@ -174,10 +174,11 @@ class _AddressSaveViewState extends State<AddressSaveView> {
                         ],
                       ),
                       AppTextFormField(
-                        label: 'Nome',
+                        label: 'Nome *',
                         controller: _nameTEC,
                         validator: Validatorless.required('Nome é obrigatório'),
                       ),
+                      const Divider(height: 5),
                       AppTextFormField(
                         label: 'Telefone. Formato DDDNUMERO',
                         controller: _phoneTEC,
