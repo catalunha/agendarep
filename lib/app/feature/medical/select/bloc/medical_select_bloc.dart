@@ -9,87 +9,70 @@ import '../../../../core/repositories/medical_repository.dart';
 import '../../../../data/b4a/entity/medical_entity.dart';
 import '../../../../data/b4a/entity/user_profile_entity.dart';
 import '../../../../data/utils/pagination.dart';
-import 'medical_search_event.dart';
-import 'medical_search_state.dart';
+import 'medical_select_event.dart';
+import 'medical_select_state.dart';
 
-class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
+class MedicalSelectBloc extends Bloc<MedicalSelectEvent, MedicalSelectState> {
   final MedicalRepository _medicalRepository;
-  MedicalSearchBloc(
+  MedicalSelectBloc(
       {required MedicalRepository medicalRepository,
       required UserProfileModel seller})
       : _medicalRepository = medicalRepository,
-        super(MedicalSearchState.initial(seller: seller)) {
-    on<MedicalSearchEventFormSubmitted>(_onMedicalSearchEventFormSubmitted);
-    on<MedicalSearchEventPreviousPage>(_onMedicalSearchEventPreviousPage);
-    on<MedicalSearchEventNextPage>(_onUserProfileSearchEventNextPage);
-    on<MedicalSearchEventUpdateList>(_onMedicalSearchEventUpdateList);
-    on<MedicalSearchEventRemoveFromList>(_onMedicalSearchEventRemoveFromList);
+        super(MedicalSelectState.initial(seller: seller)) {
+    on<MedicalSelectEventStartQuery>(_onMedicalSelectEventStartQuery);
+    on<MedicalSelectEventPreviousPage>(_onMedicalSelectEventPreviousPage);
+    on<MedicalSelectEventNextPage>(_onMedicalSelectEventNextPage);
+    on<MedicalSelectEventFormSubmitted>(_onMedicalSelectEventFormSubmitted);
+    add(MedicalSelectEventStartQuery());
   }
 
-  FutureOr<void> _onMedicalSearchEventFormSubmitted(
-      MedicalSearchEventFormSubmitted event,
-      Emitter<MedicalSearchState> emit) async {
+  FutureOr<void> _onMedicalSelectEventStartQuery(
+      MedicalSelectEventStartQuery event,
+      Emitter<MedicalSelectState> emit) async {
     emit(state.copyWith(
-      status: MedicalSearchStateStatus.loading,
+      status: MedicalSelectStateStatus.loading,
       firstPage: true,
       lastPage: false,
       page: 1,
-      medicalModelList: [],
+      list: [],
       query: QueryBuilder<ParseObject>(ParseObject(MedicalEntity.className)),
     ));
     try {
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(MedicalEntity.className));
+      query.keysToReturn(['name']);
 
-      if (event.emailEqualsToBool) {
-        query.whereEqualTo(MedicalEntity.email, event.emailEqualsToString);
-      }
-      if (event.nameContainsBool) {
-        query.whereContains(MedicalEntity.name, event.nameContainsString);
-      }
-      if (event.phoneEqualsToBool) {
-        query.whereEqualTo(MedicalEntity.phone, event.phoneEqualsToString);
-      }
-      if (event.crmEqualsToBool) {
-        query.whereEqualTo(MedicalEntity.crm, event.crmEqualsToString);
-      }
-      if (event.isBlockedBool) {
-        query.whereEqualTo(MedicalEntity.isBlocked, event.isBlockedSelected);
-      }
-      if (event.birthdayEqualsToBool) {
-        query.whereEqualTo(MedicalEntity.birthday, event.birthdayEqualsTo);
-      }
       query.whereEqualTo(
           MedicalEntity.seller,
           (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
               .toPointer());
       query.orderByDescending('updatedAt');
-      List<MedicalModel> medicalModelListGet = await _medicalRepository.list(
+      List<MedicalModel> listGet = await _medicalRepository.list(
         query,
         Pagination(page: state.page, limit: state.limit),
       );
 
       emit(state.copyWith(
-        status: MedicalSearchStateStatus.success,
-        medicalModelList: medicalModelListGet,
+        status: MedicalSelectStateStatus.success,
+        list: listGet,
+        listFiltered: listGet,
         query: query,
       ));
     } catch (e) {
-      print(e);
       emit(
         state.copyWith(
-            status: MedicalSearchStateStatus.error,
+            status: MedicalSelectStateStatus.error,
             error: 'Erro na montagem da busca'),
       );
     }
   }
 
-  FutureOr<void> _onMedicalSearchEventPreviousPage(
-      MedicalSearchEventPreviousPage event,
-      Emitter<MedicalSearchState> emit) async {
+  FutureOr<void> _onMedicalSelectEventPreviousPage(
+      MedicalSelectEventPreviousPage event,
+      Emitter<MedicalSelectState> emit) async {
     emit(
       state.copyWith(
-        status: MedicalSearchStateStatus.loading,
+        status: MedicalSelectStateStatus.loading,
       ),
     );
     if (state.page > 1) {
@@ -98,7 +81,7 @@ class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
           page: state.page - 1,
         ),
       );
-      List<MedicalModel> medicalModelListGet = await _medicalRepository.list(
+      List<MedicalModel> listGet = await _medicalRepository.list(
         state.query,
         Pagination(page: state.page, limit: state.limit),
       );
@@ -112,64 +95,51 @@ class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
         );
       }
       emit(state.copyWith(
-        status: MedicalSearchStateStatus.success,
-        medicalModelList: medicalModelListGet,
+        status: MedicalSelectStateStatus.success,
+        list: listGet,
         lastPage: false,
       ));
     } else {
       emit(state.copyWith(
-        status: MedicalSearchStateStatus.success,
+        status: MedicalSelectStateStatus.success,
         lastPage: false,
       ));
     }
   }
 
-  FutureOr<void> _onUserProfileSearchEventNextPage(
-      MedicalSearchEventNextPage event,
-      Emitter<MedicalSearchState> emit) async {
+  FutureOr<void> _onMedicalSelectEventNextPage(MedicalSelectEventNextPage event,
+      Emitter<MedicalSelectState> emit) async {
     emit(
-      state.copyWith(status: MedicalSearchStateStatus.loading),
+      state.copyWith(status: MedicalSelectStateStatus.loading),
     );
-    List<MedicalModel> medicalModelListGet = await _medicalRepository.list(
+    List<MedicalModel> listGet = await _medicalRepository.list(
       state.query,
       Pagination(page: state.page + 1, limit: state.limit),
     );
-    if (medicalModelListGet.isEmpty) {
+    if (listGet.isEmpty) {
       emit(state.copyWith(
-        status: MedicalSearchStateStatus.success,
+        status: MedicalSelectStateStatus.success,
         // firstPage: false,
         lastPage: true,
       ));
     } else {
       emit(state.copyWith(
-        status: MedicalSearchStateStatus.success,
-        medicalModelList: medicalModelListGet,
+        status: MedicalSelectStateStatus.success,
+        list: listGet,
         page: state.page + 1,
         firstPage: false,
       ));
     }
   }
 
-  FutureOr<void> _onMedicalSearchEventUpdateList(
-      MedicalSearchEventUpdateList event, Emitter<MedicalSearchState> emit) {
-    int index = state.medicalModelList
-        .indexWhere((model) => model.id == event.medicalModel.id);
-    if (index >= 0) {
-      List<MedicalModel> medicalModelListTemp = [...state.medicalModelList];
-      medicalModelListTemp.replaceRange(index, index + 1, [event.medicalModel]);
-      emit(state.copyWith(medicalModelList: medicalModelListTemp));
-    }
-  }
-
-  FutureOr<void> _onMedicalSearchEventRemoveFromList(
-      MedicalSearchEventRemoveFromList event,
-      Emitter<MedicalSearchState> emit) {
-    int index =
-        state.medicalModelList.indexWhere((model) => model.id == event.modelId);
-    if (index >= 0) {
-      List<MedicalModel> medicalModelListTemp = [...state.medicalModelList];
-      medicalModelListTemp.removeAt(index);
-      emit(state.copyWith(medicalModelList: medicalModelListTemp));
+  FutureOr<void> _onMedicalSelectEventFormSubmitted(
+      MedicalSelectEventFormSubmitted event, Emitter<MedicalSelectState> emit) {
+    if (event.name.isEmpty) {
+      emit(state.copyWith(listFiltered: state.list));
+    } else {
+      List<MedicalModel> listTemp;
+      listTemp = state.list.where((e) => e.name!.contains(event.name)).toList();
+      emit(state.copyWith(listFiltered: listTemp));
     }
   }
 }

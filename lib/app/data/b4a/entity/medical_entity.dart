@@ -21,6 +21,8 @@ class MedicalEntity {
   static const String expertises = 'expertises';
 
   Future<MedicalModel> toModel(ParseObject parseObject) async {
+    print('crm: ${parseObject.containsKey('crm')}');
+    print('expertises: ${parseObject.containsKey('expertises')}');
     //+++ get expertise
     List<ExpertiseModel> expertiseList = [];
     QueryBuilder<ParseObject> queryExpertise =

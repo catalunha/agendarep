@@ -162,7 +162,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                                     context.read<ClinicSaveBloc>();
                                 MedicalModel? result =
                                     await Navigator.of(context)
-                                            .pushNamed('/medical/search')
+                                            .pushNamed('/medical/select')
                                         as MedicalModel?;
                                 if (result != null) {
                                   contextTemp

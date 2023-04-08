@@ -6,12 +6,13 @@ import 'package:agendarep/app/core/models/user_profile_model.dart';
 import '../../../../core/models/medical_model.dart';
 import '../../../../data/b4a/entity/medical_entity.dart';
 
-enum MedicalSearchStateStatus { initial, loading, success, error }
+enum MedicalSelectStateStatus { initial, loading, success, error }
 
-class MedicalSearchState {
-  final MedicalSearchStateStatus status;
+class MedicalSelectState {
+  final MedicalSelectStateStatus status;
   final String? error;
-  final List<MedicalModel> medicalModelList;
+  final List<MedicalModel> list;
+  final List<MedicalModel> listFiltered;
   final int page;
   final int limit;
   final bool firstPage;
@@ -19,10 +20,11 @@ class MedicalSearchState {
   QueryBuilder<ParseObject> query;
   final UserProfileModel seller;
 
-  MedicalSearchState({
+  MedicalSelectState({
     required this.status,
     this.error,
-    required this.medicalModelList,
+    required this.list,
+    required this.listFiltered,
     required this.page,
     required this.limit,
     required this.firstPage,
@@ -30,20 +32,22 @@ class MedicalSearchState {
     required this.query,
     required this.seller,
   });
-  MedicalSearchState.initial({required this.seller})
-      : status = MedicalSearchStateStatus.initial,
+  MedicalSelectState.initial({required this.seller})
+      : status = MedicalSelectStateStatus.initial,
         error = '',
-        medicalModelList = [],
+        list = [],
+        listFiltered = [],
         page = 1,
         limit = 2,
         firstPage = true,
         lastPage = false,
         query = QueryBuilder<ParseObject>(ParseObject(MedicalEntity.className));
 
-  MedicalSearchState copyWith({
-    MedicalSearchStateStatus? status,
+  MedicalSelectState copyWith({
+    MedicalSelectStateStatus? status,
     String? error,
-    List<MedicalModel>? medicalModelList,
+    List<MedicalModel>? list,
+    List<MedicalModel>? listFiltered,
     int? page,
     int? limit,
     bool? firstPage,
@@ -51,10 +55,11 @@ class MedicalSearchState {
     QueryBuilder<ParseObject>? query,
     UserProfileModel? seller,
   }) {
-    return MedicalSearchState(
+    return MedicalSelectState(
       status: status ?? this.status,
       error: error ?? this.error,
-      medicalModelList: medicalModelList ?? this.medicalModelList,
+      list: list ?? this.list,
+      listFiltered: listFiltered ?? this.listFiltered,
       page: page ?? this.page,
       limit: limit ?? this.limit,
       firstPage: firstPage ?? this.firstPage,
@@ -68,10 +73,11 @@ class MedicalSearchState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MedicalSearchState &&
+    return other is MedicalSelectState &&
         other.status == status &&
         other.error == error &&
-        listEquals(other.medicalModelList, medicalModelList) &&
+        listEquals(other.list, list) &&
+        listEquals(other.listFiltered, listFiltered) &&
         other.page == page &&
         other.limit == limit &&
         other.firstPage == firstPage &&
@@ -84,7 +90,8 @@ class MedicalSearchState {
   int get hashCode {
     return status.hashCode ^
         error.hashCode ^
-        medicalModelList.hashCode ^
+        list.hashCode ^
+        listFiltered.hashCode ^
         page.hashCode ^
         limit.hashCode ^
         firstPage.hashCode ^
@@ -95,6 +102,6 @@ class MedicalSearchState {
 
   @override
   String toString() {
-    return 'MedicalSearchState(status: $status, error: $error, medicalModelList: $medicalModelList, page: $page, limit: $limit, firstPage: $firstPage, lastPage: $lastPage, query: $query, seller: $seller)';
+    return 'MedicalSelectState(status: $status, error: $error, list: $list, page: $page, limit: $limit, firstPage: $firstPage, lastPage: $lastPage, query: $query, seller: $seller)';
   }
 }

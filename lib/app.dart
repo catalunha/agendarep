@@ -15,6 +15,7 @@ import 'app/feature/expertise/list/expertise_list_page.dart';
 import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/addedit/medical_addedit_page.dart';
 import 'app/feature/medical/search/medical_search_page.dart';
+import 'app/feature/medical/select/medical_select_page.dart';
 import 'app/feature/region/list/region_list_page.dart';
 import 'app/feature/region/save/region_save_page.dart';
 import 'app/feature/secretary/addedit/secretary_addedit_page.dart';
@@ -111,6 +112,7 @@ class _AppViewState extends State<AppView> {
         '/secretary/search': (_) => const SecretarySearchPage(),
         '/medical/addedit': (_) => const MedicalAddEditPage(),
         '/medical/search': (_) => const MedicalSearchPage(),
+        '/medical/select': (_) => const MedicalSelectPage(),
         '/cycle/addedit': (_) => const CycleAddEditPage(),
         '/cycle/list': (_) => const CycleListPage(),
         '/region/save': (_) => const RegionSavePage(),
