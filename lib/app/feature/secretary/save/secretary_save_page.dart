@@ -10,14 +10,14 @@ import '../../../core/repositories/secretary_repository.dart';
 import '../../utils/app_textformfield.dart';
 import '../search/bloc/secretary_search_bloc.dart';
 import '../search/bloc/secretary_search_event.dart';
-import 'bloc/secretary_add_edit_bloc.dart';
-import 'bloc/secretary_add_edit_event.dart';
-import 'bloc/secretary_add_edit_state.dart';
+import 'bloc/secretary_save_bloc.dart';
+import 'bloc/secretary_save_event.dart';
+import 'bloc/secretary_save_state.dart';
 
-class SecretaryAddEditPage extends StatelessWidget {
+class SecretarySavePage extends StatelessWidget {
   final SecretaryModel? secretaryModel;
 
-  const SecretaryAddEditPage({super.key, this.secretaryModel});
+  const SecretarySavePage({super.key, this.secretaryModel});
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +28,13 @@ class SecretaryAddEditPage extends StatelessWidget {
           UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
-          return SecretaryAddEditBloc(
+          return SecretarySaveBloc(
               secretaryModel: secretaryModel,
               secretaryRepository:
                   RepositoryProvider.of<SecretaryRepository>(context),
               seller: userProfile);
         },
-        child: SecretaryAddEditView(
+        child: SecretarySaveView(
           secretaryModel: secretaryModel,
         ),
       ),
@@ -42,16 +42,16 @@ class SecretaryAddEditPage extends StatelessWidget {
   }
 }
 
-class SecretaryAddEditView extends StatefulWidget {
+class SecretarySaveView extends StatefulWidget {
   final SecretaryModel? secretaryModel;
-  const SecretaryAddEditView({Key? key, required this.secretaryModel})
+  const SecretarySaveView({Key? key, required this.secretaryModel})
       : super(key: key);
 
   @override
-  State<SecretaryAddEditView> createState() => _SecretaryAddEditViewState();
+  State<SecretarySaveView> createState() => _SecretarySaveViewState();
 }
 
-class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
+class _SecretarySaveViewState extends State<SecretarySaveView> {
   final _formKey = GlobalKey<FormState>();
   final _emailTEC = TextEditingController();
   final _nameTEC = TextEditingController();
@@ -77,14 +77,14 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
         child: const Icon(Icons.cloud_upload),
         onPressed: () async {
           if (delete) {
-            context.read<SecretaryAddEditBloc>().add(
-                  SecretaryAddEditEventDelete(),
+            context.read<SecretarySaveBloc>().add(
+                  SecretarySaveEventDelete(),
                 );
           } else {
             final formValid = _formKey.currentState?.validate() ?? false;
             if (formValid) {
-              context.read<SecretaryAddEditBloc>().add(
-                    SecretaryAddEditEventFormSubmitted(
+              context.read<SecretarySaveBloc>().add(
+                    SecretarySaveEventFormSubmitted(
                       email: _emailTEC.text,
                       name: _nameTEC.text,
                       phone: _phoneTEC.text,
@@ -95,18 +95,18 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
           }
         },
       ),
-      body: BlocListener<SecretaryAddEditBloc, SecretaryAddEditState>(
+      body: BlocListener<SecretarySaveBloc, SecretarySaveState>(
         listenWhen: (previous, current) {
           return previous.status != current.status;
         },
         listener: (context, state) async {
-          if (state.status == SecretaryAddEditStateStatus.error) {
+          if (state.status == SecretarySaveStateStatus.error) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
           }
-          if (state.status == SecretaryAddEditStateStatus.success) {
+          if (state.status == SecretarySaveStateStatus.success) {
             Navigator.of(context).pop();
             if (widget.secretaryModel != null) {
               if (delete) {
@@ -121,7 +121,7 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
             }
             Navigator.of(context).pop();
           }
-          if (state.status == SecretaryAddEditStateStatus.loading) {
+          if (state.status == SecretarySaveStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,
               context: context,

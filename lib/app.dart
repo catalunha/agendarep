@@ -20,7 +20,7 @@ import 'app/feature/medical/select/medical_select_page.dart';
 import 'app/feature/region/save/region_save_page.dart';
 import 'app/feature/region/search/region_search_page.dart';
 import 'app/feature/region/select/region_select_page.dart';
-import 'app/feature/secretary/addedit/secretary_addedit_page.dart';
+import 'app/feature/secretary/save/secretary_save_page.dart';
 import 'app/feature/secretary/search/secretary_search_page.dart';
 import 'app/feature/secretary/select/secretary_select_page.dart';
 import 'app/feature/splash/splash_page.dart';
@@ -111,7 +111,7 @@ class _AppViewState extends State<AppView> {
           );
         },
         '/userProfile/search': (_) => const UserProfileSearchPage(),
-        '/secretary/addedit': (_) => const SecretaryAddEditPage(),
+        '/secretary/addedit': (_) => const SecretarySavePage(),
         '/secretary/search': (_) => const SecretarySearchPage(),
         '/secretary/select': (_) => const SecretarySelectPage(),
         '/medical/addedit': (_) => const MedicalSavePage(),

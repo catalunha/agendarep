@@ -5,29 +5,27 @@ import 'package:bloc/bloc.dart';
 import '../../../../core/models/secretary_model.dart';
 import '../../../../core/models/user_profile_model.dart';
 import '../../../../core/repositories/secretary_repository.dart';
-import 'secretary_add_edit_event.dart';
-import 'secretary_add_edit_state.dart';
+import 'secretary_save_event.dart';
+import 'secretary_save_state.dart';
 
-class SecretaryAddEditBloc
-    extends Bloc<SecretaryAddEditEvent, SecretaryAddEditState> {
+class SecretarySaveBloc extends Bloc<SecretarySaveEvent, SecretarySaveState> {
   final SecretaryRepository _secretaryRepository;
   final UserProfileModel _seller;
-  SecretaryAddEditBloc({
+  SecretarySaveBloc({
     required SecretaryModel? secretaryModel,
     required SecretaryRepository secretaryRepository,
     required UserProfileModel seller,
   })  : _secretaryRepository = secretaryRepository,
         _seller = seller,
-        super(SecretaryAddEditState.initial(secretaryModel)) {
-    on<SecretaryAddEditEventFormSubmitted>(
-        _onSecretaryAddEditEventFormSubmitted);
-    on<SecretaryAddEditEventDelete>(_onSecretaryAddEditEventDelete);
+        super(SecretarySaveState.initial(secretaryModel)) {
+    on<SecretarySaveEventFormSubmitted>(_onSecretarySaveEventFormSubmitted);
+    on<SecretarySaveEventDelete>(_onSecretarySaveEventDelete);
   }
 
-  FutureOr<void> _onSecretaryAddEditEventFormSubmitted(
-      SecretaryAddEditEventFormSubmitted event,
-      Emitter<SecretaryAddEditState> emit) async {
-    emit(state.copyWith(status: SecretaryAddEditStateStatus.loading));
+  FutureOr<void> _onSecretarySaveEventFormSubmitted(
+      SecretarySaveEventFormSubmitted event,
+      Emitter<SecretarySaveState> emit) async {
+    emit(state.copyWith(status: SecretarySaveStateStatus.loading));
     try {
       SecretaryModel secretaryModel;
       if (state.secretaryModel == null) {
@@ -53,24 +51,23 @@ class SecretaryAddEditBloc
 
       emit(state.copyWith(
           secretaryModel: secretaryModel,
-          status: SecretaryAddEditStateStatus.success));
+          status: SecretarySaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: SecretaryAddEditStateStatus.error,
+          status: SecretarySaveStateStatus.error,
           error: 'Erro ao salvar secretary'));
     }
   }
 
-  FutureOr<void> _onSecretaryAddEditEventDelete(
-      SecretaryAddEditEventDelete event,
-      Emitter<SecretaryAddEditState> emit) async {
+  FutureOr<void> _onSecretarySaveEventDelete(
+      SecretarySaveEventDelete event, Emitter<SecretarySaveState> emit) async {
     try {
-      emit(state.copyWith(status: SecretaryAddEditStateStatus.loading));
+      emit(state.copyWith(status: SecretarySaveStateStatus.loading));
       await _secretaryRepository.delete(state.secretaryModel!.id!);
-      emit(state.copyWith(status: SecretaryAddEditStateStatus.success));
+      emit(state.copyWith(status: SecretarySaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: SecretaryAddEditStateStatus.error,
+          status: SecretarySaveStateStatus.error,
           error: 'Erro ao salvar secretary'));
     }
   }

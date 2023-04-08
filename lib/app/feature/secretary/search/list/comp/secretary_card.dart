@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../../core/models/secretary_model.dart';
 import '../../../../utils/app_text_title_value.dart';
-import '../../../addedit/secretary_addedit_page.dart';
+import '../../../save/secretary_save_page.dart';
 import '../../../view/secretary_view_page.dart';
 import '../../bloc/secretary_search_bloc.dart';
 
@@ -52,8 +52,8 @@ class SecretaryCard extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
                         value: BlocProvider.of<SecretarySearchBloc>(context),
-                        child: SecretaryAddEditPage(
-                            secretaryModel: secretaryModel),
+                        child:
+                            SecretarySavePage(secretaryModel: secretaryModel),
                       ),
                     ),
                   );

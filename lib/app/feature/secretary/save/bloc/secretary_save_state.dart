@@ -1,25 +1,25 @@
 import '../../../../core/models/secretary_model.dart';
 
-enum SecretaryAddEditStateStatus { initial, loading, success, error }
+enum SecretarySaveStateStatus { initial, loading, success, error }
 
-class SecretaryAddEditState {
-  final SecretaryAddEditStateStatus status;
+class SecretarySaveState {
+  final SecretarySaveStateStatus status;
   final String? error;
   final SecretaryModel? secretaryModel;
-  SecretaryAddEditState({
+  SecretarySaveState({
     required this.status,
     this.error,
     this.secretaryModel,
   });
-  SecretaryAddEditState.initial(this.secretaryModel)
-      : status = SecretaryAddEditStateStatus.initial,
+  SecretarySaveState.initial(this.secretaryModel)
+      : status = SecretarySaveStateStatus.initial,
         error = '';
-  SecretaryAddEditState copyWith({
-    SecretaryAddEditStateStatus? status,
+  SecretarySaveState copyWith({
+    SecretarySaveStateStatus? status,
     String? error,
     SecretaryModel? secretaryModel,
   }) {
-    return SecretaryAddEditState(
+    return SecretarySaveState(
       status: status ?? this.status,
       error: error ?? this.error,
       secretaryModel: secretaryModel ?? this.secretaryModel,
@@ -30,7 +30,7 @@ class SecretaryAddEditState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SecretaryAddEditState &&
+    return other is SecretarySaveState &&
         other.status == status &&
         other.error == error &&
         other.secretaryModel == secretaryModel;
