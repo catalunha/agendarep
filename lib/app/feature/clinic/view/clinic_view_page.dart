@@ -12,7 +12,7 @@ class ClinicViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dados deste médico')),
+      appBar: AppBar(title: const Text('Dados deste consultório')),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600),

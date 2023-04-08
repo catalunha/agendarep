@@ -72,7 +72,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar ou Editar Clinica'),
+        title: const Text('Adicionar ou Editar consultório'),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.cloud_upload),

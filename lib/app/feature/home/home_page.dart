@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
               HomeCardModule(
                 title: 'Endereço',
                 access: const ['seller'],
-                icon: Icons.location_on,
+                icon: Icons.location_city,
                 color: Colors.black87,
                 actions: [
                   IconButton(
@@ -120,12 +120,12 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               HomeCardModule(
-                title: 'Clinica',
+                title: 'Consultorio',
                 access: const ['seller'],
                 onAction: () {
                   Navigator.of(context).pushNamed('/clinic/save');
                 },
-                icon: Icons.location_city,
+                icon: Icons.house,
                 color: Colors.black87,
                 actions: [
                   IconButton(

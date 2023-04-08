@@ -60,7 +60,7 @@ class _SearchPageState extends State<ClinicSearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Buscando Clinica'),
+        title: const Text('Buscando consultório'),
       ),
       body: BlocListener<ClinicSearchBloc, ClinicSearchState>(
         listenWhen: (previous, current) {
