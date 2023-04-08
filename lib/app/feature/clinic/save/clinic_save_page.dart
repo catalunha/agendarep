@@ -186,7 +186,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                                     context.read<ClinicSaveBloc>();
                                 AddressModel? result =
                                     await Navigator.of(context)
-                                            .pushNamed('/address/search')
+                                            .pushNamed('/address/select')
                                         as AddressModel?;
                                 if (result != null) {
                                   contextTemp

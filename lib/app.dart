@@ -7,6 +7,7 @@ import 'app/core/repositories/user_repository.dart';
 import 'app/data/b4a/table/user_b4a.dart';
 import 'app/feature/address/save/address_save_page.dart';
 import 'app/feature/address/search/address_search_page.dart';
+import 'app/feature/address/select/address_select_page.dart';
 import 'app/feature/clinic/save/clinic_save_page.dart';
 import 'app/feature/clinic/search/clinic_search_page.dart';
 import 'app/feature/cycle/addedit/cycle_addedit_page.dart';
@@ -119,6 +120,7 @@ class _AppViewState extends State<AppView> {
         '/region/list': (_) => const RegionListPage(),
         '/address/save': (_) => const AddressSavePage(),
         '/address/search': (_) => const AddressSearchPage(),
+        '/address/select': (_) => const AddressSelectPage(),
         '/expertise/list': (_) => const ExpertiseListPage(),
         '/clinic/save': (_) => const ClinicSavePage(),
         '/clinic/search': (_) => const ClinicSearchPage(),
