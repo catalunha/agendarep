@@ -53,10 +53,6 @@ class MedicalCard extends StatelessWidget {
           ),
           AppTextTitleValue(
             title: 'Descrição: ',
-            value: model.description,
-          ),
-          AppTextTitleValue(
-            title: 'Descrição: ',
             value: model.expertises?.map((e) => e.name).toList().join(', '),
           ),
           Wrap(

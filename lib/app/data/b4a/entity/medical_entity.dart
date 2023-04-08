@@ -15,7 +15,6 @@ class MedicalEntity {
   static const String phone = 'phone';
   static const String crm = 'crm';
   static const String birthday = 'birthday';
-  static const String description = 'description';
   static const String isBlocked = 'isBlocked';
   static const String isDeleted = 'isDeleted';
   static const String expertises = 'expertises';
@@ -47,7 +46,6 @@ class MedicalEntity {
       phone: parseObject.get(MedicalEntity.phone),
       crm: parseObject.get(MedicalEntity.crm),
       birthday: parseObject.get<DateTime>(MedicalEntity.birthday)?.toLocal(),
-      description: parseObject.get(MedicalEntity.description),
       isBlocked: parseObject.get(MedicalEntity.isBlocked),
       expertises: expertiseList,
     );
@@ -82,9 +80,7 @@ class MedicalEntity {
     if (model.birthday != null) {
       parseObject.set<DateTime?>(MedicalEntity.birthday, model.birthday);
     }
-    if (model.description != null) {
-      parseObject.set(MedicalEntity.description, model.description);
-    }
+
     if (model.isBlocked != null) {
       parseObject.set(MedicalEntity.isBlocked, model.isBlocked);
     }

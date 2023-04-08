@@ -42,7 +42,6 @@ class MedicalAddEditBloc
           crm: event.crm,
           isBlocked: event.isBlocked,
           birthday: event.birthday,
-          description: event.description,
         );
       } else {
         medicalModel = state.medicalModel!.copyWith(
@@ -52,7 +51,6 @@ class MedicalAddEditBloc
           crm: event.crm,
           isBlocked: event.isBlocked,
           birthday: event.birthday,
-          description: event.description,
         );
       }
       String medicalModelId = await _medicalRepository.update(medicalModel);

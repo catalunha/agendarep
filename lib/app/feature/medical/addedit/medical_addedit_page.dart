@@ -58,7 +58,6 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
   final _nameTEC = TextEditingController();
   final _phoneTEC = TextEditingController();
   final _crmTEC = TextEditingController();
-  final _descriptionTEC = TextEditingController();
   DateTime _birthday = DateTime.now();
   bool delete = false;
   bool isBlocked = false;
@@ -70,7 +69,6 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
     _phoneTEC.text = widget.medicalModel?.phone ?? "";
     _crmTEC.text = widget.medicalModel?.crm ?? "";
     _birthday = widget.medicalModel?.birthday ?? DateTime.now();
-    _descriptionTEC.text = widget.medicalModel?.description ?? "";
     isBlocked = widget.medicalModel?.isBlocked ?? false;
   }
 
@@ -98,7 +96,6 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
                       crm: _crmTEC.text,
                       isBlocked: isBlocked,
                       birthday: _birthday,
-                      description: _descriptionTEC.text,
                     ),
                   );
             }
@@ -189,10 +186,6 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
                             _birthday = newDate;
                           },
                         ),
-                      ),
-                      AppTextFormField(
-                        label: 'Descrição',
-                        controller: _descriptionTEC,
                       ),
                       const Text('Selecione uma Especialidade'),
                       Row(

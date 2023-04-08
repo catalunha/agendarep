@@ -61,11 +61,6 @@ class MedicalViewPage extends StatelessWidget {
                 ),
                 AppTextTitleValue(
                   title: 'Descrição: ',
-                  value: medicalModel.description,
-                  inColumn: true,
-                ),
-                AppTextTitleValue(
-                  title: 'Descrição: ',
                   value: medicalModel.expertises
                       ?.map((e) => e.name)
                       .toList()

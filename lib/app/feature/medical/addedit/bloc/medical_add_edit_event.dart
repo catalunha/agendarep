@@ -11,7 +11,6 @@ class MedicalAddEditEventFormSubmitted extends MedicalAddEditEvent {
   final String? crm;
   final bool? isBlocked;
   final DateTime? birthday;
-  final String? description;
   MedicalAddEditEventFormSubmitted({
     this.email,
     this.name,
@@ -19,7 +18,6 @@ class MedicalAddEditEventFormSubmitted extends MedicalAddEditEvent {
     this.crm,
     this.isBlocked,
     this.birthday,
-    this.description,
   });
 }
 
