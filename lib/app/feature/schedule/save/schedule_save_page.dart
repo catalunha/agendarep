@@ -10,10 +10,10 @@ import '../../../core/models/secretary_model.dart';
 import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/clinic_repository.dart';
 import '../../utils/app_textformfield.dart';
-import '../search/bloc/clinic_search_bloc.dart';
+import '../search/bloc/schedule_search_bloc.dart';
 import '../search/bloc/clinic_search_event.dart';
-import 'bloc/clinic_save_bloc.dart';
-import 'bloc/clinic_save_event.dart';
+import 'bloc/schedule_save_bloc.dart';
+import 'bloc/schedule_save_event.dart';
 import 'bloc/clinic_save_state.dart';
 
 class ClinicSavePage extends StatelessWidget {

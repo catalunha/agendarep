@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/clinic_search_bloc.dart';
+import '../bloc/schedule_search_bloc.dart';
 import '../bloc/clinic_search_event.dart';
-import '../bloc/clinic_search_state.dart';
+import '../bloc/schedule_search_state.dart';
 import 'comp/clinic_card.dart';
 
 class ClinicSearchListPage extends StatelessWidget {

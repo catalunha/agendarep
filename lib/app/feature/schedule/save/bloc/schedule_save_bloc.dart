@@ -6,7 +6,7 @@ import '../../../../core/models/clinic_model.dart';
 import '../../../../core/models/secretary_model.dart';
 import '../../../../core/models/user_profile_model.dart';
 import '../../../../core/repositories/clinic_repository.dart';
-import 'clinic_save_event.dart';
+import 'schedule_save_event.dart';
 import 'clinic_save_state.dart';
 
 class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {

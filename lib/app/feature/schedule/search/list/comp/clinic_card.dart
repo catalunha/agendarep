@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/models/clinic_model.dart';
 import '../../../../utils/app_text_title_value.dart';
-import '../../../save/clinic_save_page.dart';
-import '../../../view/clinic_view_page.dart';
-import '../../bloc/clinic_search_bloc.dart';
+import '../../../save/schedule_save_page.dart';
+import '../../../view/schedule_view_page.dart';
+import '../../bloc/schedule_search_bloc.dart';
 
 class ClinicCard extends StatelessWidget {
   final ClinicModel model;

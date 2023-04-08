@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import '../../../core/models/clinic_model.dart';
+import '../../../core/models/schedule_models.dart';
 import '../../utils/app_text_title_value.dart';
 
-class ClinicViewPage extends StatelessWidget {
-  final ClinicModel model;
-  ClinicViewPage({super.key, required this.model});
-  final dateFormat = DateFormat('dd/MM/y');
+class ScheduleViewPage extends StatelessWidget {
+  final ScheduleModel model;
+  const ScheduleViewPage({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dados deste consultório')),
+      appBar: AppBar(title: const Text('Dados desta agenda')),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600),
@@ -31,29 +29,32 @@ class ClinicViewPage extends StatelessWidget {
                   inColumn: true,
                 ),
                 AppTextTitleValue(
-                  title: 'Sala: ',
-                  value: model.room,
+                  title: 'Especialidade: ',
+                  value: model.expertise?.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
-                  title: 'Telefone: ',
-                  value: model.phone,
+                  title: 'Consultorio: ',
+                  value: model.clinic?.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
-                  title: 'Endereço: ',
-                  value: model.address?.description,
+                  title: 'Atende agendado: ',
+                  value: model.justSchedule ?? false ? "Sim" : "Não",
                   inColumn: true,
                 ),
                 AppTextTitleValue(
-                  title: 'Região: ',
-                  value: model.address?.region?.name,
+                  title: 'Limite de representante: ',
+                  value: model.limitedSellers?.toString(),
+                ),
+                AppTextTitleValue(
+                  title: 'Dia da semana: ',
+                  value: model.weekday?.toString(),
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Secretárias: ',
-                  value:
-                      model.secretaries?.map((e) => e.name).toList().join(', '),
+                  value: model.hour?.map((e) => e).toList().join(', '),
                 ),
               ],
             ),

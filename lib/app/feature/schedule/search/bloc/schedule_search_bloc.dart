@@ -10,7 +10,7 @@ import '../../../../data/b4a/entity/clinic_entity.dart';
 import '../../../../data/b4a/entity/user_profile_entity.dart';
 import '../../../../data/utils/pagination.dart';
 import 'clinic_search_event.dart';
-import 'clinic_search_state.dart';
+import 'schedule_search_state.dart';
 
 class ClinicSearchBloc extends Bloc<ClinicSearchEvent, ClinicSearchState> {
   final ClinicRepository _clinicRepository;
