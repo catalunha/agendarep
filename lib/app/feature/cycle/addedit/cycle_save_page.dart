@@ -10,14 +10,14 @@ import '../../../core/repositories/cycle_repository.dart';
 import '../../utils/app_textformfield.dart';
 import '../list/bloc/cycle_list_bloc.dart';
 import '../list/bloc/cycle_list_event.dart';
-import 'bloc/cycle_add_edit_bloc.dart';
-import 'bloc/cycle_add_edit_event.dart';
-import 'bloc/cycle_add_edit_state.dart';
+import 'bloc/cycle_save_bloc.dart';
+import 'bloc/cycle_save_event.dart';
+import 'bloc/cycle_save_state.dart';
 
-class CycleAddEditPage extends StatelessWidget {
+class CycleSavePage extends StatelessWidget {
   final CycleModel? model;
 
-  const CycleAddEditPage({super.key, this.model});
+  const CycleSavePage({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,12 @@ class CycleAddEditPage extends StatelessWidget {
           UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
-          return CycleAddEditBloc(
+          return CycleSaveBloc(
               cycleModel: model,
               cycleRepository: RepositoryProvider.of<CycleRepository>(context),
               seller: userProfile);
         },
-        child: CycleAddEditView(
+        child: CycleSaveView(
           model: model,
         ),
       ),
@@ -41,15 +41,15 @@ class CycleAddEditPage extends StatelessWidget {
   }
 }
 
-class CycleAddEditView extends StatefulWidget {
+class CycleSaveView extends StatefulWidget {
   final CycleModel? model;
-  const CycleAddEditView({Key? key, required this.model}) : super(key: key);
+  const CycleSaveView({Key? key, required this.model}) : super(key: key);
 
   @override
-  State<CycleAddEditView> createState() => _CycleAddEditViewState();
+  State<CycleSaveView> createState() => _CycleSaveViewState();
 }
 
-class _CycleAddEditViewState extends State<CycleAddEditView> {
+class _CycleSaveViewState extends State<CycleSaveView> {
   final _formKey = GlobalKey<FormState>();
   final _nameTEC = TextEditingController();
   DateTime _start = DateTime.now();
@@ -75,14 +75,14 @@ class _CycleAddEditViewState extends State<CycleAddEditView> {
         child: const Icon(Icons.cloud_upload),
         onPressed: () async {
           if (delete) {
-            context.read<CycleAddEditBloc>().add(
-                  CycleAddEditEventDelete(),
+            context.read<CycleSaveBloc>().add(
+                  CycleSaveEventDelete(),
                 );
           } else {
             final formValid = _formKey.currentState?.validate() ?? false;
             if (formValid) {
-              context.read<CycleAddEditBloc>().add(
-                    CycleAddEditEventFormSubmitted(
+              context.read<CycleSaveBloc>().add(
+                    CycleSaveEventFormSubmitted(
                       name: _nameTEC.text,
                       isArchived: isArchived,
                       start: _start,
@@ -93,18 +93,18 @@ class _CycleAddEditViewState extends State<CycleAddEditView> {
           }
         },
       ),
-      body: BlocListener<CycleAddEditBloc, CycleAddEditState>(
+      body: BlocListener<CycleSaveBloc, CycleSaveState>(
         listenWhen: (previous, current) {
           return previous.status != current.status;
         },
         listener: (context, state) async {
-          if (state.status == CycleAddEditStateStatus.error) {
+          if (state.status == CycleSaveStateStatus.error) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
           }
-          if (state.status == CycleAddEditStateStatus.success) {
+          if (state.status == CycleSaveStateStatus.success) {
             Navigator.of(context).pop();
             if (widget.model != null) {
               if (delete) {
@@ -121,7 +121,7 @@ class _CycleAddEditViewState extends State<CycleAddEditView> {
             }
             Navigator.of(context).pop();
           }
-          if (state.status == CycleAddEditStateStatus.loading) {
+          if (state.status == CycleSaveStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,
               context: context,

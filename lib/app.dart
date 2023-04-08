@@ -10,7 +10,6 @@ import 'app/feature/address/search/address_search_page.dart';
 import 'app/feature/address/select/address_select_page.dart';
 import 'app/feature/clinic/save/clinic_save_page.dart';
 import 'app/feature/clinic/search/clinic_search_page.dart';
-import 'app/feature/cycle/addedit/cycle_addedit_page.dart';
 import 'app/feature/cycle/list/cycle_list_page.dart';
 import 'app/feature/expertise/select/expertise_select_page.dart';
 import 'app/feature/home/home_page.dart';

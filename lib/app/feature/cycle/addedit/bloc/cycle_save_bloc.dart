@@ -5,27 +5,26 @@ import 'package:bloc/bloc.dart';
 import '../../../../core/models/cycle_model.dart';
 import '../../../../core/models/user_profile_model.dart';
 import '../../../../core/repositories/cycle_repository.dart';
-import 'cycle_add_edit_event.dart';
-import 'cycle_add_edit_state.dart';
+import 'cycle_save_event.dart';
+import 'cycle_save_state.dart';
 
-class CycleAddEditBloc extends Bloc<CycleAddEditEvent, CycleAddEditState> {
+class CycleSaveBloc extends Bloc<CycleSaveEvent, CycleSaveState> {
   final CycleRepository _cycleRepository;
   final UserProfileModel _seller;
-  CycleAddEditBloc({
+  CycleSaveBloc({
     required CycleModel? cycleModel,
     required CycleRepository cycleRepository,
     required UserProfileModel seller,
   })  : _cycleRepository = cycleRepository,
         _seller = seller,
-        super(CycleAddEditState.initial(cycleModel)) {
-    on<CycleAddEditEventFormSubmitted>(_onCycleAddEditEventFormSubmitted);
-    on<CycleAddEditEventDelete>(_onCycleAddEditEventDelete);
+        super(CycleSaveState.initial(cycleModel)) {
+    on<CycleSaveEventFormSubmitted>(_onCycleSaveEventFormSubmitted);
+    on<CycleSaveEventDelete>(_onCycleSaveEventDelete);
   }
 
-  FutureOr<void> _onCycleAddEditEventFormSubmitted(
-      CycleAddEditEventFormSubmitted event,
-      Emitter<CycleAddEditState> emit) async {
-    emit(state.copyWith(status: CycleAddEditStateStatus.loading));
+  FutureOr<void> _onCycleSaveEventFormSubmitted(
+      CycleSaveEventFormSubmitted event, Emitter<CycleSaveState> emit) async {
+    emit(state.copyWith(status: CycleSaveStateStatus.loading));
     try {
       CycleModel cycleModel;
       if (state.cycleModel == null) {
@@ -49,24 +48,22 @@ class CycleAddEditBloc extends Bloc<CycleAddEditEvent, CycleAddEditState> {
       cycleModel = cycleModel.copyWith(id: cycleModelId);
 
       emit(state.copyWith(
-          cycleModel: cycleModel, status: CycleAddEditStateStatus.success));
+          cycleModel: cycleModel, status: CycleSaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: CycleAddEditStateStatus.error,
-          error: 'Erro ao salvar cycle'));
+          status: CycleSaveStateStatus.error, error: 'Erro ao salvar cycle'));
     }
   }
 
-  FutureOr<void> _onCycleAddEditEventDelete(
-      CycleAddEditEventDelete event, Emitter<CycleAddEditState> emit) async {
+  FutureOr<void> _onCycleSaveEventDelete(
+      CycleSaveEventDelete event, Emitter<CycleSaveState> emit) async {
     try {
-      emit(state.copyWith(status: CycleAddEditStateStatus.loading));
+      emit(state.copyWith(status: CycleSaveStateStatus.loading));
       await _cycleRepository.delete(state.cycleModel!.id!);
-      emit(state.copyWith(status: CycleAddEditStateStatus.success));
+      emit(state.copyWith(status: CycleSaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: CycleAddEditStateStatus.error,
-          error: 'Erro ao salvar cycle'));
+          status: CycleSaveStateStatus.error, error: 'Erro ao salvar cycle'));
     }
   }
 }

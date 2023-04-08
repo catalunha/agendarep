@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/models/cycle_model.dart';
 import '../../../utils/app_text_title_value.dart';
-import '../../addedit/cycle_addedit_page.dart';
+import '../../addedit/cycle_save_page.dart';
 import '../../view/cycle_view_page.dart';
 import '../bloc/cycle_list_bloc.dart';
 
@@ -52,7 +52,7 @@ class CycleCard extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
                         value: BlocProvider.of<CycleListBloc>(context),
-                        child: CycleAddEditPage(model: model),
+                        child: CycleSavePage(model: model),
                       ),
                     ),
                   );

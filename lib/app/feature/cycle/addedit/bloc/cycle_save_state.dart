@@ -1,25 +1,25 @@
 import '../../../../core/models/cycle_model.dart';
 
-enum CycleAddEditStateStatus { initial, loading, success, error }
+enum CycleSaveStateStatus { initial, loading, success, error }
 
-class CycleAddEditState {
-  final CycleAddEditStateStatus status;
+class CycleSaveState {
+  final CycleSaveStateStatus status;
   final String? error;
   final CycleModel? cycleModel;
-  CycleAddEditState({
+  CycleSaveState({
     required this.status,
     this.error,
     this.cycleModel,
   });
-  CycleAddEditState.initial(this.cycleModel)
-      : status = CycleAddEditStateStatus.initial,
+  CycleSaveState.initial(this.cycleModel)
+      : status = CycleSaveStateStatus.initial,
         error = '';
-  CycleAddEditState copyWith({
-    CycleAddEditStateStatus? status,
+  CycleSaveState copyWith({
+    CycleSaveStateStatus? status,
     String? error,
     CycleModel? cycleModel,
   }) {
-    return CycleAddEditState(
+    return CycleSaveState(
       status: status ?? this.status,
       error: error ?? this.error,
       cycleModel: cycleModel ?? this.cycleModel,
@@ -30,7 +30,7 @@ class CycleAddEditState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CycleAddEditState &&
+    return other is CycleSaveState &&
         other.status == status &&
         other.error == error &&
         other.cycleModel == cycleModel;
