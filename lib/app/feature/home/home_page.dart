@@ -31,49 +31,116 @@ class HomePage extends StatelessWidget {
           child: Wrap(
             children: [
               HomeCardModule(
-                title: 'Gerenciar usuários',
+                title: 'Usuários',
                 access: const ['admin'],
                 onAction: () {
                   Navigator.of(context).pushNamed('/userProfile/search');
                 },
                 icon: Icons.people,
-                color: Colors.black87,
+                color: Colors.black,
               ),
               HomeCardModule(
-                title: 'Adicionar Secretária',
+                title: 'Regiões',
                 access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/secretary/addedit');
-                },
+                icon: Icons.bubble_chart_outlined,
+                color: Colors.black87,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/region/save');
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/region/search');
+                    },
+                    icon: const Icon(Icons.search),
+                  )
+                ],
+              ),
+              HomeCardModule(
+                title: 'Endereço',
+                access: const ['seller'],
+                icon: Icons.location_on,
+                color: Colors.black87,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/address/save');
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/address/search');
+                    },
+                    icon: const Icon(Icons.search),
+                  )
+                ],
+              ),
+              HomeCardModule(
+                title: 'Secretária',
+                access: const ['seller'],
                 icon: Icons.person_2_outlined,
                 color: Colors.black87,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/secretary/addedit');
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/secretary/search');
+                    },
+                    icon: const Icon(Icons.search),
+                  )
+                ],
               ),
               HomeCardModule(
-                title: 'Buscar Secretária',
+                title: 'Médico',
                 access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/secretary/search');
-                },
-                icon: Icons.search,
-                color: Colors.black87,
-              ),
-              HomeCardModule(
-                title: 'Adicionar Médico',
-                access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/medical/addedit');
-                },
                 icon: Icons.medical_information,
                 color: Colors.black87,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/medical/addedit');
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/medical/search');
+                    },
+                    icon: const Icon(Icons.search),
+                  )
+                ],
               ),
               HomeCardModule(
-                title: 'Buscar Médico',
+                title: 'Clinica',
                 access: const ['seller'],
                 onAction: () {
-                  Navigator.of(context).pushNamed('/medical/search');
+                  Navigator.of(context).pushNamed('/clinic/save');
                 },
-                icon: Icons.medication_liquid_sharp,
+                icon: Icons.location_city,
                 color: Colors.black87,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/clinic/save');
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/clinic/search');
+                    },
+                    icon: const Icon(Icons.search),
+                  )
+                ],
               ),
               HomeCardModule(
                 title: 'Ciclos',
@@ -85,57 +152,12 @@ class HomePage extends StatelessWidget {
                 color: Colors.black87,
               ),
               HomeCardModule(
-                title: 'Regiões',
-                access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/region/list');
-                },
-                icon: Icons.bubble_chart_outlined,
-                color: Colors.black87,
-              ),
-              HomeCardModule(
-                title: 'Adicionar Endereço',
-                access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/address/save');
-                },
-                icon: Icons.location_city,
-                color: Colors.black87,
-              ),
-              HomeCardModule(
-                title: 'Buscar Endereço',
-                access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/address/search');
-                },
-                icon: Icons.location_on_outlined,
-                color: Colors.black87,
-              ),
-              HomeCardModule(
-                title: 'Buscar Especialidades',
+                title: 'Especialidades',
                 access: const ['seller'],
                 onAction: () {
                   Navigator.of(context).pushNamed('/expertise/select');
                 },
                 icon: Icons.list,
-                color: Colors.black87,
-              ),
-              HomeCardModule(
-                title: 'Adicionar clinica',
-                access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/clinic/save');
-                },
-                icon: Icons.camera_enhance_outlined,
-                color: Colors.black87,
-              ),
-              HomeCardModule(
-                title: 'Buscar clinicas',
-                access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/clinic/search');
-                },
-                icon: Icons.screen_search_desktop,
                 color: Colors.black87,
               ),
             ],

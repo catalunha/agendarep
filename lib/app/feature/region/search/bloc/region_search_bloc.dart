@@ -9,28 +9,28 @@ import '../../../../core/repositories/region_repository.dart';
 import '../../../../data/b4a/entity/region_entity.dart';
 import '../../../../data/b4a/entity/user_profile_entity.dart';
 import '../../../../data/utils/pagination.dart';
-import 'region_list_event.dart';
-import 'region_list_state.dart';
+import 'region_search_event.dart';
+import 'region_search_state.dart';
 
-class RegionListBloc extends Bloc<RegionListEvent, RegionListState> {
+class RegionSearchBloc extends Bloc<RegionSearchEvent, RegionSearchState> {
   final RegionRepository _regionRepository;
-  RegionListBloc(
+  RegionSearchBloc(
       {required RegionRepository regionRepository,
       required UserProfileModel seller})
       : _regionRepository = regionRepository,
-        super(RegionListState.initial(seller: seller)) {
-    on<RegionListEventList>(_onRegionListEventList);
-    on<RegionListEventPreviousPage>(_onRegionListEventPreviousPage);
-    on<RegionListEventNextPage>(_onUserProfileListEventNextPage);
-    on<RegionListEventUpdateList>(_onRegionListEventUpdateList);
-    on<RegionListEventRemoveFromList>(_onRegionListEventRemoveFromList);
-    add(RegionListEventList());
+        super(RegionSearchState.initial(seller: seller)) {
+    on<RegionSearchEventFormSubmitted>(_onRegionSearchEventFormSubmitted);
+    on<RegionSearchEventPreviousPage>(_onRegionSearchEventPreviousPage);
+    on<RegionSearchEventNextPage>(_onUserProfileSearchEventNextPage);
+    on<RegionSearchEventUpdateList>(_onRegionSearchEventUpdateList);
+    on<RegionSearchEventRemoveFromList>(_onRegionSearchEventRemoveFromList);
   }
 
-  FutureOr<void> _onRegionListEventList(
-      RegionListEventList event, Emitter<RegionListState> emit) async {
+  FutureOr<void> _onRegionSearchEventFormSubmitted(
+      RegionSearchEventFormSubmitted event,
+      Emitter<RegionSearchState> emit) async {
     emit(state.copyWith(
-      status: RegionListStateStatus.loading,
+      status: RegionSearchStateStatus.loading,
       firstPage: true,
       lastPage: false,
       page: 1,
@@ -40,6 +40,16 @@ class RegionListBloc extends Bloc<RegionListEvent, RegionListState> {
     try {
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(RegionEntity.className));
+
+      if (event.ufContainsBool) {
+        query.whereContains(RegionEntity.uf, event.ufContainsString);
+      }
+      if (event.cityContainsBool) {
+        query.whereContains(RegionEntity.city, event.cityContainsString);
+      }
+      if (event.nameContainsBool) {
+        query.whereContains(RegionEntity.name, event.nameContainsString);
+      }
 
       query.whereEqualTo(
           RegionEntity.seller,
@@ -52,24 +62,26 @@ class RegionListBloc extends Bloc<RegionListEvent, RegionListState> {
       );
 
       emit(state.copyWith(
-        status: RegionListStateStatus.success,
+        status: RegionSearchStateStatus.success,
         list: regionModelListGet,
         query: query,
       ));
     } catch (e) {
+      print(e);
       emit(
         state.copyWith(
-            status: RegionListStateStatus.error,
+            status: RegionSearchStateStatus.error,
             error: 'Erro na montagem da busca'),
       );
     }
   }
 
-  FutureOr<void> _onRegionListEventPreviousPage(
-      RegionListEventPreviousPage event, Emitter<RegionListState> emit) async {
+  FutureOr<void> _onRegionSearchEventPreviousPage(
+      RegionSearchEventPreviousPage event,
+      Emitter<RegionSearchState> emit) async {
     emit(
       state.copyWith(
-        status: RegionListStateStatus.loading,
+        status: RegionSearchStateStatus.loading,
       ),
     );
     if (state.page > 1) {
@@ -92,22 +104,22 @@ class RegionListBloc extends Bloc<RegionListEvent, RegionListState> {
         );
       }
       emit(state.copyWith(
-        status: RegionListStateStatus.success,
+        status: RegionSearchStateStatus.success,
         list: regionModelListGet,
         lastPage: false,
       ));
     } else {
       emit(state.copyWith(
-        status: RegionListStateStatus.success,
+        status: RegionSearchStateStatus.success,
         lastPage: false,
       ));
     }
   }
 
-  FutureOr<void> _onUserProfileListEventNextPage(
-      RegionListEventNextPage event, Emitter<RegionListState> emit) async {
+  FutureOr<void> _onUserProfileSearchEventNextPage(
+      RegionSearchEventNextPage event, Emitter<RegionSearchState> emit) async {
     emit(
-      state.copyWith(status: RegionListStateStatus.loading),
+      state.copyWith(status: RegionSearchStateStatus.loading),
     );
     List<RegionModel> regionModelListGet = await _regionRepository.list(
       state.query,
@@ -115,12 +127,13 @@ class RegionListBloc extends Bloc<RegionListEvent, RegionListState> {
     );
     if (regionModelListGet.isEmpty) {
       emit(state.copyWith(
-        status: RegionListStateStatus.success,
+        status: RegionSearchStateStatus.success,
+        // firstPage: false,
         lastPage: true,
       ));
     } else {
       emit(state.copyWith(
-        status: RegionListStateStatus.success,
+        status: RegionSearchStateStatus.success,
         list: regionModelListGet,
         page: state.page + 1,
         firstPage: false,
@@ -128,8 +141,8 @@ class RegionListBloc extends Bloc<RegionListEvent, RegionListState> {
     }
   }
 
-  FutureOr<void> _onRegionListEventUpdateList(
-      RegionListEventUpdateList event, Emitter<RegionListState> emit) {
+  FutureOr<void> _onRegionSearchEventUpdateList(
+      RegionSearchEventUpdateList event, Emitter<RegionSearchState> emit) {
     int index = state.list.indexWhere((model) => model.id == event.model.id);
     if (index >= 0) {
       List<RegionModel> regionModelListTemp = [...state.list];
@@ -138,8 +151,8 @@ class RegionListBloc extends Bloc<RegionListEvent, RegionListState> {
     }
   }
 
-  FutureOr<void> _onRegionListEventRemoveFromList(
-      RegionListEventRemoveFromList event, Emitter<RegionListState> emit) {
+  FutureOr<void> _onRegionSearchEventRemoveFromList(
+      RegionSearchEventRemoveFromList event, Emitter<RegionSearchState> emit) {
     int index = state.list.indexWhere((model) => model.id == event.modelId);
     if (index >= 0) {
       List<RegionModel> regionModelListTemp = [...state.list];

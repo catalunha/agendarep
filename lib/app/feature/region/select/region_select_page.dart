@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/authentication/bloc/authentication_bloc.dart';
+import '../../../core/authentication/authentication.dart';
 import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/region_repository.dart';
-import '../save/region_save_page.dart';
-import 'bloc/region_list_bloc.dart';
-import 'bloc/region_list_event.dart';
-import 'bloc/region_list_state.dart';
+import '../../utils/app_textformfield.dart';
+import 'bloc/region_select_bloc.dart';
+import 'bloc/region_select_event.dart';
+import 'bloc/region_select_state.dart';
 import 'comp/region_card.dart';
 
-class RegionListPage extends StatelessWidget {
-  const RegionListPage({
+class RegionSelectPage extends StatelessWidget {
+  const RegionSelectPage({
     Key? key,
   }) : super(key: key);
 
@@ -23,41 +23,66 @@ class RegionListPage extends StatelessWidget {
         create: (context) {
           UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
-          return RegionListBloc(
+          return RegionSelectBloc(
             regionRepository: RepositoryProvider.of<RegionRepository>(context),
             seller: userProfile,
           );
         },
-        child: const RegionListView(),
+        child: const RegionSelectView(),
       ),
     );
   }
 }
 
-class RegionListView extends StatelessWidget {
-  const RegionListView({Key? key}) : super(key: key);
+// class RegionSelectPage extends StatelessWidget {
+//   const RegionSelectPage({
+//     Key? key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const RegionSelectView();
+//   }
+// }
+
+class RegionSelectView extends StatefulWidget {
+  const RegionSelectView({Key? key}) : super(key: key);
+
+  @override
+  State<RegionSelectView> createState() => _RegionSelectViewState();
+}
+
+class _RegionSelectViewState extends State<RegionSelectView> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameTEC = TextEditingController();
+
+  @override
+  void initState() {
+    _nameTEC.text = '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Regiões encontradas'),
+        title: const Text('Selecione uma região'),
       ),
-      body: BlocListener<RegionListBloc, RegionListState>(
+      body: BlocListener<RegionSelectBloc, RegionSelectState>(
         listenWhen: (previous, current) {
           return previous.status != current.status;
         },
         listener: (context, state) async {
-          if (state.status == RegionListStateStatus.error) {
+          if (state.status == RegionSelectStateStatus.error) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
           }
-          if (state.status == RegionListStateStatus.success) {
+          if (state.status == RegionSelectStateStatus.success) {
             Navigator.of(context).pop();
           }
-          if (state.status == RegionListStateStatus.loading) {
+          if (state.status == RegionSelectStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,
               context: context,
@@ -69,18 +94,33 @@ class RegionListView extends StatelessWidget {
         },
         child: Column(
           children: [
+            Form(
+              child: Column(
+                children: [
+                  AppTextFormField(
+                    label: 'Nome',
+                    controller: _nameTEC,
+                    onChange: (value) {
+                      context
+                          .read<RegionSelectBloc>()
+                          .add(RegionSelectEventFormSubmitted(value));
+                    },
+                  ),
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BlocBuilder<RegionListBloc, RegionListState>(
+                BlocBuilder<RegionSelectBloc, RegionSelectState>(
                   builder: (context, state) {
                     return InkWell(
                       onTap: state.firstPage
                           ? null
                           : () {
                               context
-                                  .read<RegionListBloc>()
-                                  .add(RegionListEventPreviousPage());
+                                  .read<RegionSelectBloc>()
+                                  .add(RegionSelectEventPreviousPage());
                             },
                       child: Card(
                         color: state.firstPage ? Colors.black : Colors.black45,
@@ -96,15 +136,15 @@ class RegionListView extends StatelessWidget {
                     );
                   },
                 ),
-                BlocBuilder<RegionListBloc, RegionListState>(
+                BlocBuilder<RegionSelectBloc, RegionSelectState>(
                   builder: (context, state) {
                     return InkWell(
                       onTap: state.lastPage
                           ? null
                           : () {
                               context
-                                  .read<RegionListBloc>()
-                                  .add(RegionListEventNextPage());
+                                  .read<RegionSelectBloc>()
+                                  .add(RegionSelectEventNextPage());
                             },
                       child: Card(
                         color: state.lastPage ? Colors.black : Colors.black45,
@@ -125,10 +165,9 @@ class RegionListView extends StatelessWidget {
             Expanded(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 600),
-                child: BlocBuilder<RegionListBloc, RegionListState>(
+                child: BlocBuilder<RegionSelectBloc, RegionSelectState>(
                   builder: (context, state) {
-                    var list = state.list;
-
+                    var list = state.listFiltered;
                     return ListView.builder(
                       itemCount: list.length,
                       itemBuilder: (context, index) {
@@ -145,18 +184,6 @@ class RegionListView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<RegionListBloc>(context),
-                  child: const RegionSavePage(model: null),
-                ),
-              ),
-            );
-          },
-          child: const Icon(Icons.add)),
     );
   }
 }

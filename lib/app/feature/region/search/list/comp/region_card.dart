@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
-import '../../../../core/models/region_model.dart';
-import '../../../utils/app_text_title_value.dart';
-import '../../save/region_save_page.dart';
-import '../../view/region_view_page.dart';
-import '../bloc/region_list_bloc.dart';
+import '../../../../../core/models/region_model.dart';
+import '../../../../utils/app_text_title_value.dart';
+import '../../../save/region_save_page.dart';
+import '../../../view/region_view_page.dart';
+import '../../bloc/region_search_bloc.dart';
 
 class RegionCard extends StatelessWidget {
   final RegionModel model;
@@ -13,6 +14,8 @@ class RegionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat('dd/MM/y');
+
     return Card(
       child: Column(
         children: [
@@ -43,7 +46,7 @@ class RegionCard extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
-                        value: BlocProvider.of<RegionListBloc>(context),
+                        value: BlocProvider.of<RegionSearchBloc>(context),
                         child: RegionSavePage(model: model),
                       ),
                     ),
@@ -63,15 +66,6 @@ class RegionCard extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.assignment_ind_outlined,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  // Get.back(result: imageModel)
-                  Navigator.of(context).pop(model);
-                },
-                icon: const Icon(
-                  Icons.check,
                 ),
               ),
             ],

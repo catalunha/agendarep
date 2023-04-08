@@ -17,8 +17,9 @@ import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/addedit/medical_addedit_page.dart';
 import 'app/feature/medical/search/medical_search_page.dart';
 import 'app/feature/medical/select/medical_select_page.dart';
-import 'app/feature/region/list/region_list_page.dart';
 import 'app/feature/region/save/region_save_page.dart';
+import 'app/feature/region/search/region_search_page.dart';
+import 'app/feature/region/select/region_select_page.dart';
 import 'app/feature/secretary/addedit/secretary_addedit_page.dart';
 import 'app/feature/secretary/search/secretary_search_page.dart';
 import 'app/feature/secretary/select/secretary_select_page.dart';
@@ -119,7 +120,8 @@ class _AppViewState extends State<AppView> {
         '/cycle/addedit': (_) => const CycleAddEditPage(),
         '/cycle/list': (_) => const CycleListPage(),
         '/region/save': (_) => const RegionSavePage(),
-        '/region/list': (_) => const RegionListPage(),
+        '/region/search': (_) => const RegionSearchPage(),
+        '/region/select': (_) => const RegionSelectPage(),
         '/address/save': (_) => const AddressSavePage(),
         '/address/search': (_) => const AddressSearchPage(),
         '/address/select': (_) => const AddressSelectPage(),

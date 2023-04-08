@@ -158,7 +158,7 @@ class _AddressSaveViewState extends State<AddressSaveView> {
                               onPressed: () async {
                                 RegionModel? result =
                                     await Navigator.of(context)
-                                            .pushNamed('/region/list')
+                                            .pushNamed('/region/select')
                                         as RegionModel?;
                                 if (result != null) {
                                   setState(() {

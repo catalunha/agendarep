@@ -7,8 +7,8 @@ import '../../../core/models/region_model.dart';
 import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/region_repository.dart';
 import '../../utils/app_textformfield.dart';
-import '../list/bloc/region_list_bloc.dart';
-import '../list/bloc/region_list_event.dart';
+import '../search/bloc/region_search_bloc.dart';
+import '../search/bloc/region_search_event.dart';
 import 'bloc/region_save_bloc.dart';
 import 'bloc/region_save_event.dart';
 import 'bloc/region_save_state.dart';
@@ -106,15 +106,13 @@ class _RegionSaveViewState extends State<RegionSaveView> {
             if (widget.model != null) {
               if (delete) {
                 context
-                    .read<RegionListBloc>()
-                    .add(RegionListEventRemoveFromList(state.model!.id!));
+                    .read<RegionSearchBloc>()
+                    .add(RegionSearchEventRemoveFromList(state.model!.id!));
               } else {
                 context
-                    .read<RegionListBloc>()
-                    .add(RegionListEventUpdateList(state.model!));
+                    .read<RegionSearchBloc>()
+                    .add(RegionSearchEventUpdateList(state.model!));
               }
-            } else {
-              context.read<RegionListBloc>().add(RegionListEventList());
             }
             Navigator.of(context).pop();
           }
