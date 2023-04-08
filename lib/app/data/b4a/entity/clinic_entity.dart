@@ -15,6 +15,7 @@ class ClinicEntity {
   static const String medical = 'medical';
   static const String address = 'address';
   static const String secretaries = 'secretaries';
+  static const String name = 'name';
   static const String room = 'room';
   static const String phone = 'phone';
   static const String description = 'description';
@@ -27,6 +28,7 @@ class ClinicEntity {
         QueryBuilder<ParseObject>(ParseObject(SecretaryEntity.className));
     querySecretary.whereRelatedTo(ClinicEntity.secretaries,
         ClinicEntity.className, parseObject.objectId!);
+    querySecretary.includeObject(['seller']);
     final ParseResponse parseResponse = await querySecretary.query();
     if (parseResponse.success && parseResponse.results != null) {
       for (var e in parseResponse.results!) {
@@ -47,6 +49,7 @@ class ClinicEntity {
           ? AddressEntity().toModel(parseObject.get(ClinicEntity.address))
           : null,
       secretaries: secretaryList,
+      name: parseObject.get(ClinicEntity.name),
       room: parseObject.get(ClinicEntity.room),
       phone: parseObject.get(ClinicEntity.phone),
       description: parseObject.get(ClinicEntity.description),
@@ -64,6 +67,21 @@ class ClinicEntity {
           (ParseObject(UserProfileEntity.className)
                 ..objectId = model.seller!.id)
               .toPointer());
+    }
+    if (model.medical != null) {
+      parseObject.set(
+          ClinicEntity.medical,
+          (ParseObject(MedicalEntity.className)..objectId = model.medical!.id)
+              .toPointer());
+    }
+    if (model.address != null) {
+      parseObject.set(
+          ClinicEntity.address,
+          (ParseObject(AddressEntity.className)..objectId = model.address!.id)
+              .toPointer());
+    }
+    if (model.name != null) {
+      parseObject.set(ClinicEntity.name, model.name);
     }
     if (model.room != null) {
       parseObject.set(ClinicEntity.room, model.room);

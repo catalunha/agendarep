@@ -12,7 +12,15 @@ class ClinicB4a {
     query.setAmountToSkip((pagination.page - 1) * pagination.limit);
     query.setLimit(pagination.limit);
     query.whereEqualTo(ClinicEntity.isDeleted, false);
-    query.includeObject(['seller']);
+    query.includeObject([
+      'seller',
+      'medical',
+      'medical.seller',
+      'address',
+      'address.seller',
+      'address.region',
+      'address.region.seller'
+    ]);
     return query;
   }
 

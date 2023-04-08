@@ -11,6 +11,7 @@ class ClinicModel {
   final MedicalModel? medical;
   final AddressModel? address;
   final List<SecretaryModel>? secretaries;
+  final String? name;
   final String? room;
   final String? phone;
   final String? description;
@@ -20,6 +21,7 @@ class ClinicModel {
     this.medical,
     this.address,
     this.secretaries,
+    this.name,
     this.room,
     this.phone,
     this.description,
@@ -31,6 +33,7 @@ class ClinicModel {
     MedicalModel? medical,
     AddressModel? address,
     List<SecretaryModel>? secretaries,
+    String? name,
     String? room,
     String? phone,
     String? description,
@@ -41,6 +44,7 @@ class ClinicModel {
       medical: medical ?? this.medical,
       address: address ?? this.address,
       secretaries: secretaries ?? this.secretaries,
+      name: name ?? this.name,
       room: room ?? this.room,
       phone: phone ?? this.phone,
       description: description ?? this.description,
@@ -49,7 +53,7 @@ class ClinicModel {
 
   @override
   String toString() {
-    return 'ClinicModel(id: $id, seller: $seller, medical: $medical, address: $address, secretaries: $secretaries, room: $room, phone: $phone, description: $description)';
+    return 'ClinicModel(id: $id, seller: $seller, medical: $medical, address: $address, secretaries: $secretaries, name: $name, room: $room, phone: $phone, description: $description)';
   }
 
   @override
@@ -62,6 +66,7 @@ class ClinicModel {
         other.medical == medical &&
         other.address == address &&
         listEquals(other.secretaries, secretaries) &&
+        other.name == name &&
         other.room == room &&
         other.phone == phone &&
         other.description == description;
@@ -74,6 +79,7 @@ class ClinicModel {
         medical.hashCode ^
         address.hashCode ^
         secretaries.hashCode ^
+        name.hashCode ^
         room.hashCode ^
         phone.hashCode ^
         description.hashCode;

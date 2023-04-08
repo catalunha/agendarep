@@ -37,6 +37,7 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
           seller: _seller,
           medical: state.medical,
           address: state.address,
+          name: event.name,
           room: event.room,
           phone: event.phone,
           description: event.description,
@@ -45,6 +46,7 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
         clinicModel = state.model!.copyWith(
           medical: state.medical,
           address: state.address,
+          name: event.name,
           room: event.room,
           phone: event.phone,
           description: event.description,
@@ -82,9 +84,13 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
 
   FutureOr<void> _onClinicSaveEventAddSecretary(
       ClinicSaveEventAddSecretary event, Emitter<ClinicSaveState> emit) {
-    List<SecretaryModel> secretariesTemp = [...state.secretariesUpdated];
-    secretariesTemp.add(event.model);
-    emit(state.copyWith(secretariesUpdated: secretariesTemp));
+    int index = state.secretariesUpdated
+        .indexWhere((model) => model.id == event.model.id);
+    if (index < 0) {
+      List<SecretaryModel> secretariesTemp = [...state.secretariesUpdated];
+      secretariesTemp.add(event.model);
+      emit(state.copyWith(secretariesUpdated: secretariesTemp));
+    }
   }
 
   FutureOr<void> _onClinicSaveEventRemoveSecretary(

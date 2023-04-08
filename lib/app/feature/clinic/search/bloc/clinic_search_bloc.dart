@@ -41,10 +41,12 @@ class ClinicSearchBloc extends Bloc<ClinicSearchEvent, ClinicSearchState> {
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(ClinicEntity.className));
 
+      if (event.nameContainsBool) {
+        query.whereEqualTo(ClinicEntity.phone, event.nameContainsString);
+      }
       if (event.phoneEqualsToBool) {
         query.whereEqualTo(ClinicEntity.phone, event.phoneEqualsToString);
       }
-
       query.whereEqualTo(
           ClinicEntity.seller,
           (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
@@ -61,6 +63,7 @@ class ClinicSearchBloc extends Bloc<ClinicSearchEvent, ClinicSearchState> {
         query: query,
       ));
     } catch (e) {
+      print(e);
       emit(
         state.copyWith(
             status: ClinicSearchStateStatus.error,

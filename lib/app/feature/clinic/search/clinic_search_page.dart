@@ -44,12 +44,15 @@ class ClinicSearchView extends StatefulWidget {
 
 class _SearchPageState extends State<ClinicSearchView> {
   final _formKey = GlobalKey<FormState>();
+  final bool _nameContainsBool = false;
   bool _phoneEqualsToBool = false;
+  final _nameContainsTEC = TextEditingController();
   final _phoneEqualsToTEC = TextEditingController();
 
   @override
   void initState() {
     _phoneEqualsToTEC.text = '';
+    _nameContainsTEC.text = '';
     super.initState();
   }
 
@@ -131,6 +134,8 @@ class _SearchPageState extends State<ClinicSearchView> {
           final formValid = _formKey.currentState?.validate() ?? false;
           if (formValid) {
             context.read<ClinicSearchBloc>().add(ClinicSearchEventFormSubmitted(
+                  nameContainsBool: _nameContainsBool,
+                  nameContainsString: _nameContainsTEC.text,
                   phoneEqualsToBool: _phoneEqualsToBool,
                   phoneEqualsToString: _phoneEqualsToTEC.text,
                 ));

@@ -8,10 +8,12 @@ abstract class ClinicSaveEvent {}
 class ClinicSaveEventDelete extends ClinicSaveEvent {}
 
 class ClinicSaveEventFormSubmitted extends ClinicSaveEvent {
+  final String? name;
   final String? room;
   final String? phone;
   final String? description;
   ClinicSaveEventFormSubmitted({
+    this.name,
     this.room,
     this.phone,
     this.description,

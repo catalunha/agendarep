@@ -88,14 +88,6 @@ class MedicalCard extends StatelessWidget {
                   Icons.assignment_ind_outlined,
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop(model);
-                },
-                icon: const Icon(
-                  Icons.check,
-                ),
-              ),
             ],
           ),
         ],

@@ -21,6 +21,7 @@ import 'app/feature/region/list/region_list_page.dart';
 import 'app/feature/region/save/region_save_page.dart';
 import 'app/feature/secretary/addedit/secretary_addedit_page.dart';
 import 'app/feature/secretary/search/secretary_search_page.dart';
+import 'app/feature/secretary/select/secretary_select_page.dart';
 import 'app/feature/splash/splash_page.dart';
 import 'app/feature/user/login/login_page.dart';
 import 'app/feature/user/register/email/user_register_email.page.dart';
@@ -111,6 +112,7 @@ class _AppViewState extends State<AppView> {
         '/userProfile/search': (_) => const UserProfileSearchPage(),
         '/secretary/addedit': (_) => const SecretaryAddEditPage(),
         '/secretary/search': (_) => const SecretarySearchPage(),
+        '/secretary/select': (_) => const SecretarySelectPage(),
         '/medical/addedit': (_) => const MedicalAddEditPage(),
         '/medical/search': (_) => const MedicalSearchPage(),
         '/medical/select': (_) => const MedicalSelectPage(),

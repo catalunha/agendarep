@@ -17,9 +17,13 @@ class ClinicSearchEventRemoveFromList extends ClinicSearchEvent {
 }
 
 class ClinicSearchEventFormSubmitted extends ClinicSearchEvent {
+  final bool nameContainsBool;
+  final String nameContainsString;
   final bool phoneEqualsToBool;
   final String phoneEqualsToString;
   ClinicSearchEventFormSubmitted({
+    required this.nameContainsBool,
+    required this.nameContainsString,
     required this.phoneEqualsToBool,
     required this.phoneEqualsToString,
   });

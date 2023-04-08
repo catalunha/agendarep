@@ -54,6 +54,7 @@ class ClinicSaveView extends StatefulWidget {
 
 class _ClinicSaveViewState extends State<ClinicSaveView> {
   final _formKey = GlobalKey<FormState>();
+  final _nameTEC = TextEditingController();
   final _roomTEC = TextEditingController();
   final _phoneTEC = TextEditingController();
   final _descriptionTEC = TextEditingController();
@@ -61,6 +62,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
   @override
   void initState() {
     super.initState();
+    _nameTEC.text = widget.model?.room ?? "";
     _roomTEC.text = widget.model?.room ?? "";
     _phoneTEC.text = widget.model?.phone ?? "";
     _descriptionTEC.text = widget.model?.description ?? "";
@@ -84,6 +86,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
             if (formValid) {
               context.read<ClinicSaveBloc>().add(
                     ClinicSaveEventFormSubmitted(
+                      name: _nameTEC.text,
                       room: _roomTEC.text,
                       phone: _phoneTEC.text,
                       description: _descriptionTEC.text,
@@ -140,9 +143,13 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                     children: [
                       const SizedBox(height: 5),
                       AppTextFormField(
+                        label: 'Nome',
+                        controller: _nameTEC,
+                        validator: Validatorless.required('Nome é obrigatório'),
+                      ),
+                      AppTextFormField(
                         label: 'Sala',
                         controller: _roomTEC,
-                        validator: Validatorless.required('Sala é obrigatório'),
                       ),
                       AppTextFormField(
                         label: 'Telefone. Formato DDDNUMERO',
@@ -210,7 +217,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                                     context.read<ClinicSaveBloc>();
                                 SecretaryModel? result =
                                     await Navigator.of(context)
-                                            .pushNamed('/secretary/search')
+                                            .pushNamed('/secretary/select')
                                         as SecretaryModel?;
                                 if (result != null) {
                                   contextTemp
