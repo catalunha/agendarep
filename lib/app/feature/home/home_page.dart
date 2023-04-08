@@ -87,7 +87,7 @@ class HomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/secretary/addedit');
+                      Navigator.of(context).pushNamed('/secretary/save');
                     },
                     icon: const Icon(Icons.add),
                   ),
@@ -107,7 +107,7 @@ class HomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/medical/addedit');
+                      Navigator.of(context).pushNamed('/medical/save');
                     },
                     icon: const Icon(Icons.add),
                   ),
