@@ -1,17 +1,17 @@
 import 'package:agendarep/app/core/models/expertise_model.dart';
 
-abstract class MedicalAddEditEvent {}
+abstract class MedicalSaveEvent {}
 
-class MedicalAddEditEventDelete extends MedicalAddEditEvent {}
+class MedicalSaveEventDelete extends MedicalSaveEvent {}
 
-class MedicalAddEditEventFormSubmitted extends MedicalAddEditEvent {
+class MedicalSaveEventFormSubmitted extends MedicalSaveEvent {
   final String? email;
   final String? name;
   final String? phone;
   final String? crm;
   final bool? isBlocked;
   final DateTime? birthday;
-  MedicalAddEditEventFormSubmitted({
+  MedicalSaveEventFormSubmitted({
     this.email,
     this.name,
     this.phone,
@@ -21,16 +21,16 @@ class MedicalAddEditEventFormSubmitted extends MedicalAddEditEvent {
   });
 }
 
-class MedicalAddEditEventAddExpertise extends MedicalAddEditEvent {
+class MedicalSaveEventAddExpertise extends MedicalSaveEvent {
   final ExpertiseModel model;
-  MedicalAddEditEventAddExpertise(
+  MedicalSaveEventAddExpertise(
     this.model,
   );
 }
 
-class MedicalAddEditEventRemoveExpertise extends MedicalAddEditEvent {
+class MedicalSaveEventRemoveExpertise extends MedicalSaveEvent {
   final ExpertiseModel expertiseModel;
-  MedicalAddEditEventRemoveExpertise(
+  MedicalSaveEventRemoveExpertise(
     this.expertiseModel,
   );
 }

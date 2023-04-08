@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../../core/models/medical_model.dart';
 import '../../../../utils/app_text_title_value.dart';
-import '../../../addedit/medical_addedit_page.dart';
+import '../../../save/medical_save_page.dart';
 import '../../../view/medical_view_page.dart';
 import '../../bloc/medical_search_bloc.dart';
 
@@ -63,7 +63,7 @@ class MedicalCard extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => BlocProvider.value(
                         value: BlocProvider.of<MedicalSearchBloc>(context),
-                        child: MedicalAddEditPage(medicalModel: model),
+                        child: MedicalSavePage(medicalModel: model),
                       ),
                     ),
                   );

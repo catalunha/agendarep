@@ -11,14 +11,14 @@ import '../../../core/repositories/medical_repository.dart';
 import '../../utils/app_textformfield.dart';
 import '../search/bloc/medical_search_bloc.dart';
 import '../search/bloc/medical_search_event.dart';
-import 'bloc/medical_add_edit_bloc.dart';
-import 'bloc/medical_add_edit_event.dart';
-import 'bloc/medical_add_edit_state.dart';
+import 'bloc/medical_save_bloc.dart';
+import 'bloc/medical_save_event.dart';
+import 'bloc/medical_save_state.dart';
 
-class MedicalAddEditPage extends StatelessWidget {
+class MedicalSavePage extends StatelessWidget {
   final MedicalModel? medicalModel;
 
-  const MedicalAddEditPage({super.key, this.medicalModel});
+  const MedicalSavePage({super.key, this.medicalModel});
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +29,13 @@ class MedicalAddEditPage extends StatelessWidget {
           UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
-          return MedicalAddEditBloc(
+          return MedicalSaveBloc(
               medicalModel: medicalModel,
               medicalRepository:
                   RepositoryProvider.of<MedicalRepository>(context),
               seller: userProfile);
         },
-        child: MedicalAddEditView(
+        child: MedicalSaveView(
           medicalModel: medicalModel,
         ),
       ),
@@ -43,16 +43,16 @@ class MedicalAddEditPage extends StatelessWidget {
   }
 }
 
-class MedicalAddEditView extends StatefulWidget {
+class MedicalSaveView extends StatefulWidget {
   final MedicalModel? medicalModel;
-  const MedicalAddEditView({Key? key, required this.medicalModel})
+  const MedicalSaveView({Key? key, required this.medicalModel})
       : super(key: key);
 
   @override
-  State<MedicalAddEditView> createState() => _MedicalAddEditViewState();
+  State<MedicalSaveView> createState() => _MedicalSaveViewState();
 }
 
-class _MedicalAddEditViewState extends State<MedicalAddEditView> {
+class _MedicalSaveViewState extends State<MedicalSaveView> {
   final _formKey = GlobalKey<FormState>();
   final _emailTEC = TextEditingController();
   final _nameTEC = TextEditingController();
@@ -82,14 +82,14 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
         child: const Icon(Icons.cloud_upload),
         onPressed: () async {
           if (delete) {
-            context.read<MedicalAddEditBloc>().add(
-                  MedicalAddEditEventDelete(),
+            context.read<MedicalSaveBloc>().add(
+                  MedicalSaveEventDelete(),
                 );
           } else {
             final formValid = _formKey.currentState?.validate() ?? false;
             if (formValid) {
-              context.read<MedicalAddEditBloc>().add(
-                    MedicalAddEditEventFormSubmitted(
+              context.read<MedicalSaveBloc>().add(
+                    MedicalSaveEventFormSubmitted(
                       email: _emailTEC.text,
                       name: _nameTEC.text,
                       phone: _phoneTEC.text,
@@ -102,18 +102,18 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
           }
         },
       ),
-      body: BlocListener<MedicalAddEditBloc, MedicalAddEditState>(
+      body: BlocListener<MedicalSaveBloc, MedicalSaveState>(
         listenWhen: (previous, current) {
           return previous.status != current.status;
         },
         listener: (context, state) async {
-          if (state.status == MedicalAddEditStateStatus.error) {
+          if (state.status == MedicalSaveStateStatus.error) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
           }
-          if (state.status == MedicalAddEditStateStatus.success) {
+          if (state.status == MedicalSaveStateStatus.success) {
             Navigator.of(context).pop();
             if (widget.medicalModel != null) {
               if (delete) {
@@ -127,7 +127,7 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
             }
             Navigator.of(context).pop();
           }
-          if (state.status == MedicalAddEditStateStatus.loading) {
+          if (state.status == MedicalSaveStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,
               context: context,
@@ -193,18 +193,18 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
                           IconButton(
                               onPressed: () async {
                                 var contextTemp =
-                                    context.read<MedicalAddEditBloc>();
+                                    context.read<MedicalSaveBloc>();
                                 ExpertiseModel? result =
                                     await Navigator.of(context)
                                             .pushNamed('/expertise/select')
                                         as ExpertiseModel?;
                                 if (result != null) {
                                   contextTemp.add(
-                                      MedicalAddEditEventAddExpertise(result));
+                                      MedicalSaveEventAddExpertise(result));
                                 }
                               },
                               icon: const Icon(Icons.search)),
-                          BlocBuilder<MedicalAddEditBloc, MedicalAddEditState>(
+                          BlocBuilder<MedicalSaveBloc, MedicalSaveState>(
                             builder: (context, state) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,11 +216,9 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
                                           IconButton(
                                             icon: const Icon(Icons.delete),
                                             onPressed: () {
-                                              context
-                                                  .read<MedicalAddEditBloc>()
-                                                  .add(
-                                                      MedicalAddEditEventRemoveExpertise(
-                                                          e));
+                                              context.read<MedicalSaveBloc>().add(
+                                                  MedicalSaveEventRemoveExpertise(
+                                                      e));
                                             },
                                           ),
                                         ],
@@ -233,9 +231,9 @@ class _MedicalAddEditViewState extends State<MedicalAddEditView> {
                                       //       icon: const Icon(Icons.delete),
                                       //       onPressed: () {
                                       //         context
-                                      //             .read<MedicalAddEditBloc>()
+                                      //             .read<MedicalSaveBloc>()
                                       //             .add(
-                                      //                 MedicalAddEditEventRemoveExpertise(
+                                      //                 MedicalSaveEventRemoveExpertise(
                                       //                     e));
                                       //       },
                                       //     ),

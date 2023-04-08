@@ -3,34 +3,34 @@ import 'package:flutter/foundation.dart';
 import '../../../../core/models/expertise_model.dart';
 import '../../../../core/models/medical_model.dart';
 
-enum MedicalAddEditStateStatus { initial, loading, success, error }
+enum MedicalSaveStateStatus { initial, loading, success, error }
 
-class MedicalAddEditState {
-  final MedicalAddEditStateStatus status;
+class MedicalSaveState {
+  final MedicalSaveStateStatus status;
   final String? error;
   final MedicalModel? medicalModel;
   final List<ExpertiseModel> expertisesOriginal;
   final List<ExpertiseModel> expertisesUpdated;
-  MedicalAddEditState({
+  MedicalSaveState({
     required this.status,
     this.error,
     this.medicalModel,
     this.expertisesOriginal = const [],
     this.expertisesUpdated = const [],
   });
-  MedicalAddEditState.initial(this.medicalModel)
-      : status = MedicalAddEditStateStatus.initial,
+  MedicalSaveState.initial(this.medicalModel)
+      : status = MedicalSaveStateStatus.initial,
         error = '',
         expertisesOriginal = medicalModel?.expertises ?? [],
         expertisesUpdated = medicalModel?.expertises ?? [];
-  MedicalAddEditState copyWith({
-    MedicalAddEditStateStatus? status,
+  MedicalSaveState copyWith({
+    MedicalSaveStateStatus? status,
     String? error,
     MedicalModel? medicalModel,
     List<ExpertiseModel>? expertisesOriginal,
     List<ExpertiseModel>? expertisesUpdated,
   }) {
-    return MedicalAddEditState(
+    return MedicalSaveState(
       status: status ?? this.status,
       error: error ?? this.error,
       medicalModel: medicalModel ?? this.medicalModel,
@@ -43,7 +43,7 @@ class MedicalAddEditState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MedicalAddEditState &&
+    return other is MedicalSaveState &&
         other.status == status &&
         other.error == error &&
         other.medicalModel == medicalModel &&

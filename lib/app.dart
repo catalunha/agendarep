@@ -11,9 +11,10 @@ import 'app/feature/address/select/address_select_page.dart';
 import 'app/feature/clinic/save/clinic_save_page.dart';
 import 'app/feature/clinic/search/clinic_search_page.dart';
 import 'app/feature/cycle/list/cycle_list_page.dart';
+import 'app/feature/cycle/save/cycle_save_page.dart';
 import 'app/feature/expertise/select/expertise_select_page.dart';
 import 'app/feature/home/home_page.dart';
-import 'app/feature/medical/addedit/medical_addedit_page.dart';
+import 'app/feature/medical/save/medical_save_page.dart';
 import 'app/feature/medical/search/medical_search_page.dart';
 import 'app/feature/medical/select/medical_select_page.dart';
 import 'app/feature/region/save/region_save_page.dart';
@@ -113,10 +114,10 @@ class _AppViewState extends State<AppView> {
         '/secretary/addedit': (_) => const SecretaryAddEditPage(),
         '/secretary/search': (_) => const SecretarySearchPage(),
         '/secretary/select': (_) => const SecretarySelectPage(),
-        '/medical/addedit': (_) => const MedicalAddEditPage(),
+        '/medical/addedit': (_) => const MedicalSavePage(),
         '/medical/search': (_) => const MedicalSearchPage(),
         '/medical/select': (_) => const MedicalSelectPage(),
-        '/cycle/addedit': (_) => const CycleAddEditPage(),
+        '/cycle/addedit': (_) => const CycleSavePage(),
         '/cycle/list': (_) => const CycleListPage(),
         '/region/save': (_) => const RegionSavePage(),
         '/region/search': (_) => const RegionSearchPage(),

@@ -6,31 +6,29 @@ import '../../../../core/models/expertise_model.dart';
 import '../../../../core/models/medical_model.dart';
 import '../../../../core/models/user_profile_model.dart';
 import '../../../../core/repositories/medical_repository.dart';
-import 'medical_add_edit_event.dart';
-import 'medical_add_edit_state.dart';
+import 'medical_save_event.dart';
+import 'medical_save_state.dart';
 
-class MedicalAddEditBloc
-    extends Bloc<MedicalAddEditEvent, MedicalAddEditState> {
+class MedicalSaveBloc extends Bloc<MedicalSaveEvent, MedicalSaveState> {
   final MedicalRepository _medicalRepository;
   final UserProfileModel _seller;
-  MedicalAddEditBloc({
+  MedicalSaveBloc({
     required MedicalModel? medicalModel,
     required MedicalRepository medicalRepository,
     required UserProfileModel seller,
   })  : _medicalRepository = medicalRepository,
         _seller = seller,
-        super(MedicalAddEditState.initial(medicalModel)) {
-    on<MedicalAddEditEventFormSubmitted>(_onMedicalAddEditEventFormSubmitted);
-    on<MedicalAddEditEventDelete>(_onMedicalAddEditEventDelete);
-    on<MedicalAddEditEventAddExpertise>(_onMedicalAddEditEventAddExpertise);
-    on<MedicalAddEditEventRemoveExpertise>(
-        _onMedicalAddEditEventRemoveExpertise);
+        super(MedicalSaveState.initial(medicalModel)) {
+    on<MedicalSaveEventFormSubmitted>(_onMedicalSaveEventFormSubmitted);
+    on<MedicalSaveEventDelete>(_onMedicalSaveEventDelete);
+    on<MedicalSaveEventAddExpertise>(_onMedicalSaveEventAddExpertise);
+    on<MedicalSaveEventRemoveExpertise>(_onMedicalSaveEventRemoveExpertise);
   }
 
-  FutureOr<void> _onMedicalAddEditEventFormSubmitted(
-      MedicalAddEditEventFormSubmitted event,
-      Emitter<MedicalAddEditState> emit) async {
-    emit(state.copyWith(status: MedicalAddEditStateStatus.loading));
+  FutureOr<void> _onMedicalSaveEventFormSubmitted(
+      MedicalSaveEventFormSubmitted event,
+      Emitter<MedicalSaveState> emit) async {
+    emit(state.copyWith(status: MedicalSaveStateStatus.loading));
     try {
       MedicalModel medicalModel;
       if (state.medicalModel == null) {
@@ -64,30 +62,29 @@ class MedicalAddEditBloc
           medicalModel: medicalModel,
           expertisesOriginal: expertisesResult,
           expertisesUpdated: expertisesResult,
-          status: MedicalAddEditStateStatus.success));
+          status: MedicalSaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: MedicalAddEditStateStatus.error,
+          status: MedicalSaveStateStatus.error,
           error: 'Erro ao salvar medical'));
     }
   }
 
-  FutureOr<void> _onMedicalAddEditEventDelete(MedicalAddEditEventDelete event,
-      Emitter<MedicalAddEditState> emit) async {
+  FutureOr<void> _onMedicalSaveEventDelete(
+      MedicalSaveEventDelete event, Emitter<MedicalSaveState> emit) async {
     try {
-      emit(state.copyWith(status: MedicalAddEditStateStatus.loading));
+      emit(state.copyWith(status: MedicalSaveStateStatus.loading));
       await _medicalRepository.delete(state.medicalModel!.id!);
-      emit(state.copyWith(status: MedicalAddEditStateStatus.success));
+      emit(state.copyWith(status: MedicalSaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: MedicalAddEditStateStatus.error,
+          status: MedicalSaveStateStatus.error,
           error: 'Erro ao salvar medical'));
     }
   }
 
-  FutureOr<void> _onMedicalAddEditEventAddExpertise(
-      MedicalAddEditEventAddExpertise event,
-      Emitter<MedicalAddEditState> emit) {
+  FutureOr<void> _onMedicalSaveEventAddExpertise(
+      MedicalSaveEventAddExpertise event, Emitter<MedicalSaveState> emit) {
     int index = state.expertisesUpdated
         .indexWhere((model) => model.id == event.model.id);
     if (index < 0) {
@@ -97,9 +94,8 @@ class MedicalAddEditBloc
     }
   }
 
-  FutureOr<void> _onMedicalAddEditEventRemoveExpertise(
-      MedicalAddEditEventRemoveExpertise event,
-      Emitter<MedicalAddEditState> emit) {
+  FutureOr<void> _onMedicalSaveEventRemoveExpertise(
+      MedicalSaveEventRemoveExpertise event, Emitter<MedicalSaveState> emit) {
     List<ExpertiseModel> expertisesTemp = [...state.expertisesUpdated];
     expertisesTemp
         .removeWhere((element) => element.id == event.expertiseModel.id);
