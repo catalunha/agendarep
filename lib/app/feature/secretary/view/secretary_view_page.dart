@@ -47,11 +47,6 @@ class SecretaryViewPage extends StatelessWidget {
                       : dateFormat.format(secretaryModel.birthday!),
                   inColumn: true,
                 ),
-                AppTextTitleValue(
-                  title: 'Descrição: ',
-                  value: secretaryModel.description,
-                  inColumn: true,
-                ),
               ],
             ),
           ),

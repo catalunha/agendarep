@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:agendarep/app/core/models/user_profile_model.dart';
 
 class SecretaryModel {
@@ -9,7 +7,6 @@ class SecretaryModel {
   final String? name;
   final String? phone;
   final DateTime? birthday;
-  final String? description;
   SecretaryModel({
     this.id,
     this.seller,
@@ -17,7 +14,6 @@ class SecretaryModel {
     this.name,
     this.phone,
     this.birthday,
-    this.description,
   });
 
   SecretaryModel copyWith({
@@ -27,7 +23,6 @@ class SecretaryModel {
     String? name,
     String? phone,
     DateTime? birthday,
-    String? description,
   }) {
     return SecretaryModel(
       id: id ?? this.id,
@@ -36,62 +31,12 @@ class SecretaryModel {
       name: name ?? this.name,
       phone: phone ?? this.phone,
       birthday: birthday ?? this.birthday,
-      description: description ?? this.description,
     );
   }
-
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    if (id != null) {
-      result.addAll({'id': id});
-    }
-    if (seller != null) {
-      result.addAll({'seller': seller!.toMap()});
-    }
-    if (email != null) {
-      result.addAll({'email': email});
-    }
-    if (name != null) {
-      result.addAll({'name': name});
-    }
-    if (phone != null) {
-      result.addAll({'phone': phone});
-    }
-    if (birthday != null) {
-      result.addAll({'birthday': birthday!.millisecondsSinceEpoch});
-    }
-    if (description != null) {
-      result.addAll({'description': description});
-    }
-
-    return result;
-  }
-
-  factory SecretaryModel.fromMap(Map<String, dynamic> map) {
-    return SecretaryModel(
-      id: map['id'],
-      seller: map['seller'] != null
-          ? UserProfileModel.fromMap(map['seller'])
-          : null,
-      email: map['email'],
-      name: map['name'],
-      phone: map['phone'],
-      birthday: map['birthday'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['birthday'])
-          : null,
-      description: map['description'],
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory SecretaryModel.fromJson(String source) =>
-      SecretaryModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'SecretaryModel(id: $id, seller: $seller, email: $email, name: $name, phone: $phone, birthday: $birthday, description: $description)';
+    return 'SecretaryModel(id: $id, seller: $seller, email: $email, name: $name, phone: $phone, birthday: $birthday)';
   }
 
   @override
@@ -104,8 +49,7 @@ class SecretaryModel {
         other.email == email &&
         other.name == name &&
         other.phone == phone &&
-        other.birthday == birthday &&
-        other.description == description;
+        other.birthday == birthday;
   }
 
   @override
@@ -115,7 +59,6 @@ class SecretaryModel {
         email.hashCode ^
         name.hashCode ^
         phone.hashCode ^
-        birthday.hashCode ^
-        description.hashCode;
+        birthday.hashCode;
   }
 }

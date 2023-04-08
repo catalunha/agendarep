@@ -12,7 +12,6 @@ class SecretaryEntity {
   static const String name = 'name';
   static const String phone = 'phone';
   static const String birthday = 'birthday';
-  static const String description = 'description';
   static const String isDeleted = 'isDeleted';
 
   SecretaryModel toModel(ParseObject parseObject) {
@@ -26,7 +25,6 @@ class SecretaryEntity {
       name: parseObject.get(SecretaryEntity.name),
       phone: parseObject.get(SecretaryEntity.phone),
       birthday: parseObject.get<DateTime>(SecretaryEntity.birthday)?.toLocal(),
-      description: parseObject.get(SecretaryEntity.description),
     );
     return model;
   }
@@ -56,9 +54,7 @@ class SecretaryEntity {
     if (model.birthday != null) {
       parseObject.set<DateTime?>(SecretaryEntity.birthday, model.birthday);
     }
-    if (model.description != null) {
-      parseObject.set(SecretaryEntity.description, model.description);
-    }
+
     return parseObject;
   }
 }

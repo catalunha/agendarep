@@ -37,7 +37,6 @@ class SecretaryAddEditBloc
           name: event.name,
           phone: event.phone,
           birthday: event.birthday,
-          description: event.description,
         );
       } else {
         secretaryModel = state.secretaryModel!.copyWith(
@@ -45,7 +44,6 @@ class SecretaryAddEditBloc
           name: event.name,
           phone: event.phone,
           birthday: event.birthday,
-          description: event.description,
         );
       }
       String secretaryModelId =

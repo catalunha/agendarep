@@ -56,7 +56,6 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
   final _emailTEC = TextEditingController();
   final _nameTEC = TextEditingController();
   final _phoneTEC = TextEditingController();
-  final _descriptionTEC = TextEditingController();
   DateTime _birthday = DateTime.now();
   bool delete = false;
   @override
@@ -66,7 +65,6 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
     _nameTEC.text = widget.secretaryModel?.name ?? "";
     _phoneTEC.text = widget.secretaryModel?.phone ?? "";
     _birthday = widget.secretaryModel?.birthday ?? DateTime.now();
-    _descriptionTEC.text = widget.secretaryModel?.description ?? "";
   }
 
   @override
@@ -91,7 +89,6 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
                       name: _nameTEC.text,
                       phone: _phoneTEC.text,
                       birthday: _birthday,
-                      description: _descriptionTEC.text,
                     ),
                   );
             }
@@ -170,10 +167,6 @@ class _SecretaryAddEditViewState extends State<SecretaryAddEditView> {
                             _birthday = newDate;
                           },
                         ),
-                      ),
-                      AppTextFormField(
-                        label: 'Descrição',
-                        controller: _descriptionTEC,
                       ),
                       if (widget.secretaryModel != null)
                         CheckboxListTile(

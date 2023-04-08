@@ -44,10 +44,6 @@ class SecretaryCard extends StatelessWidget {
             title: 'Data de Aniversário: ',
             value: dateFormat.format(secretaryModel.birthday!),
           ),
-          AppTextTitleValue(
-            title: 'Descrição: ',
-            value: secretaryModel.description,
-          ),
           Wrap(
             children: [
               IconButton(
