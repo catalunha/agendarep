@@ -2,38 +2,40 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import '../../../../core/models/clinic_model.dart';
+import '../../../../core/models/schedule_model.dart';
+import '../../../../core/models/schedule_models.dart';
 import '../../../../core/models/secretary_model.dart';
 import '../../../../core/models/user_profile_model.dart';
-import '../../../../core/repositories/clinic_repository.dart';
+import '../../../../core/repositories/schedule_repository.dart';
 import 'schedule_save_event.dart';
-import 'clinic_save_state.dart';
+import 'schedule_save_state.dart';
 
-class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
-  final ClinicRepository _clinicRepository;
+class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
+  final ScheduleRepository _scheduleRepository;
   final UserProfileModel _seller;
-  ClinicSaveBloc({
-    required ClinicModel? clinicModel,
-    required ClinicRepository clinicRepository,
+  ScheduleSaveBloc({
+    required ScheduleModel? scheduleModel,
+    required ScheduleRepository scheduleRepository,
     required UserProfileModel seller,
-  })  : _clinicRepository = clinicRepository,
+  })  : _scheduleRepository = scheduleRepository,
         _seller = seller,
-        super(ClinicSaveState.initial(clinicModel)) {
-    on<ClinicSaveEventFormSubmitted>(_onClinicSaveEventFormSubmitted);
-    on<ClinicSaveEventDelete>(_onClinicSaveEventDelete);
-    on<ClinicSaveEventAddSecretary>(_onClinicSaveEventAddSecretary);
-    on<ClinicSaveEventRemoveSecretary>(_onClinicSaveEventRemoveSecretary);
-    on<ClinicSaveEventAddMedical>(_onClinicSaveEventAddMedical);
-    on<ClinicSaveEventAddAddress>(_onClinicSaveEventAddAddress);
+        super(ScheduleSaveState.initial(scheduleModel)) {
+    on<ScheduleSaveEventFormSubmitted>(_onScheduleSaveEventFormSubmitted);
+    on<ScheduleSaveEventDelete>(_onScheduleSaveEventDelete);
+    on<ScheduleSaveEventAddSecretary>(_onScheduleSaveEventAddSecretary);
+    on<ScheduleSaveEventRemoveSecretary>(_onScheduleSaveEventRemoveSecretary);
+    on<ScheduleSaveEventAddMedical>(_onScheduleSaveEventAddMedical);
+    on<ScheduleSaveEventAddAddress>(_onScheduleSaveEventAddAddress);
   }
 
-  FutureOr<void> _onClinicSaveEventFormSubmitted(
-      ClinicSaveEventFormSubmitted event, Emitter<ClinicSaveState> emit) async {
-    emit(state.copyWith(status: ClinicSaveStateStatus.loading));
+  FutureOr<void> _onScheduleSaveEventFormSubmitted(
+      ScheduleSaveEventFormSubmitted event,
+      Emitter<ScheduleSaveState> emit) async {
+    emit(state.copyWith(status: ScheduleSaveStateStatus.loading));
     try {
-      ClinicModel clinicModel;
+      ScheduleModel scheduleModel;
       if (state.model == null) {
-        clinicModel = ClinicModel(
+        scheduleModel = ScheduleModel(
           seller: _seller,
           medical: state.medical,
           address: state.address,
@@ -42,7 +44,7 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
           phone: event.phone,
         );
       } else {
-        clinicModel = state.model!.copyWith(
+        scheduleModel = state.model!.copyWith(
           medical: state.medical,
           address: state.address,
           name: event.name,
@@ -50,38 +52,40 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
           phone: event.phone,
         );
       }
-      String clinicModelId = await _clinicRepository.update(clinicModel);
+      String scheduleModelId = await _scheduleRepository.update(scheduleModel);
       List<SecretaryModel> secretariesResult =
-          await updateRelationSecretary(clinicModelId);
+          await updateRelationSecretary(scheduleModelId);
 
-      clinicModel = clinicModel.copyWith(
-          id: clinicModelId, secretaries: secretariesResult);
+      scheduleModel = scheduleModel.copyWith(
+          id: scheduleModelId, secretaries: secretariesResult);
 
       emit(state.copyWith(
-          model: clinicModel,
+          model: scheduleModel,
           secretariesOriginal: secretariesResult,
           secretariesUpdated: secretariesResult,
-          status: ClinicSaveStateStatus.success));
+          status: ScheduleSaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: ClinicSaveStateStatus.error, error: 'Erro ao salvar clinic'));
+          status: ScheduleSaveStateStatus.error,
+          error: 'Erro ao salvar schedule'));
     }
   }
 
-  FutureOr<void> _onClinicSaveEventDelete(
-      ClinicSaveEventDelete event, Emitter<ClinicSaveState> emit) async {
+  FutureOr<void> _onScheduleSaveEventDelete(
+      ScheduleSaveEventDelete event, Emitter<ScheduleSaveState> emit) async {
     try {
-      emit(state.copyWith(status: ClinicSaveStateStatus.loading));
-      await _clinicRepository.delete(state.model!.id!);
-      emit(state.copyWith(status: ClinicSaveStateStatus.success));
+      emit(state.copyWith(status: ScheduleSaveStateStatus.loading));
+      await _scheduleRepository.delete(state.model!.id!);
+      emit(state.copyWith(status: ScheduleSaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: ClinicSaveStateStatus.error, error: 'Erro ao salvar clinic'));
+          status: ScheduleSaveStateStatus.error,
+          error: 'Erro ao salvar schedule'));
     }
   }
 
-  FutureOr<void> _onClinicSaveEventAddSecretary(
-      ClinicSaveEventAddSecretary event, Emitter<ClinicSaveState> emit) {
+  FutureOr<void> _onScheduleSaveEventAddSecretary(
+      ScheduleSaveEventAddSecretary event, Emitter<ScheduleSaveState> emit) {
     int index = state.secretariesUpdated
         .indexWhere((model) => model.id == event.model.id);
     if (index < 0) {
@@ -91,8 +95,8 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
     }
   }
 
-  FutureOr<void> _onClinicSaveEventRemoveSecretary(
-      ClinicSaveEventRemoveSecretary event, Emitter<ClinicSaveState> emit) {
+  FutureOr<void> _onScheduleSaveEventRemoveSecretary(
+      ScheduleSaveEventRemoveSecretary event, Emitter<ScheduleSaveState> emit) {
     List<SecretaryModel> secretariesTemp = [...state.secretariesUpdated];
     secretariesTemp.removeWhere((element) => element.id == event.model.id);
     emit(state.copyWith(secretariesUpdated: secretariesTemp));
@@ -107,7 +111,7 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
       int index = state.secretariesUpdated
           .indexWhere((model) => model.id == original.id);
       if (index < 0) {
-        await _clinicRepository.updateRelationSecretaries(
+        await _scheduleRepository.updateRelationSecretaries(
             modelId, [original.id!], false);
         listFinal.removeWhere((element) => element.id == original.id);
       } else {
@@ -115,20 +119,20 @@ class ClinicSaveBloc extends Bloc<ClinicSaveEvent, ClinicSaveState> {
       }
     }
     for (var expertiseResult in listResult) {
-      await _clinicRepository.updateRelationSecretaries(
+      await _scheduleRepository.updateRelationSecretaries(
           modelId, [expertiseResult.id!], true);
       listFinal.add(expertiseResult);
     }
     return listFinal;
   }
 
-  FutureOr<void> _onClinicSaveEventAddMedical(
-      ClinicSaveEventAddMedical event, Emitter<ClinicSaveState> emit) {
+  FutureOr<void> _onScheduleSaveEventAddMedical(
+      ScheduleSaveEventAddMedical event, Emitter<ScheduleSaveState> emit) {
     emit(state.copyWith(medical: event.model));
   }
 
-  FutureOr<void> _onClinicSaveEventAddAddress(
-      ClinicSaveEventAddAddress event, Emitter<ClinicSaveState> emit) {
+  FutureOr<void> _onScheduleSaveEventAddAddress(
+      ScheduleSaveEventAddAddress event, Emitter<ScheduleSaveState> emit) {
     emit(state.copyWith(address: event.model));
   }
 }

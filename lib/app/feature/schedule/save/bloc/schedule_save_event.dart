@@ -2,42 +2,54 @@ import '../../../../core/models/clinic_model.dart';
 import '../../../../core/models/expertise_model.dart';
 import '../../../../core/models/medical_model.dart';
 
-abstract class ClinicSaveEvent {}
+abstract class ScheduleSaveEvent {}
 
-class ClinicSaveEventDelete extends ClinicSaveEvent {}
+class ScheduleSaveEventDelete extends ScheduleSaveEvent {}
 
-class ClinicSaveEventFormSubmitted extends ClinicSaveEvent {
-  final String? name;
-  final String? room;
-  final String? phone;
-  ClinicSaveEventFormSubmitted({
-    this.name,
-    this.room,
-    this.phone,
+class ScheduleSaveEventFormSubmitted extends ScheduleSaveEvent {
+  final bool? justSchedule;
+  final int? limitedSellers;
+  final int? weekday;
+  final String? description;
+  ScheduleSaveEventFormSubmitted({
+    this.justSchedule,
+    this.limitedSellers,
+    this.weekday,
+    this.description,
   });
 }
 
-class ClinicSaveEventAddMedical extends ClinicSaveEvent {
+class ScheduleSaveEventAddMedical extends ScheduleSaveEvent {
   final MedicalModel model;
-  ClinicSaveEventAddMedical(this.model);
+  ScheduleSaveEventAddMedical(this.model);
 }
 
-class ClinicSaveEventAddExpertise extends ClinicSaveEvent {
+class ScheduleSaveEventAddExpertise extends ScheduleSaveEvent {
   final ExpertiseModel model;
-  ClinicSaveEventAddExpertise(this.model);
+  ScheduleSaveEventAddExpertise(this.model);
 }
 
-class ClinicSaveEventRemoveExpertise extends ClinicSaveEvent {
+class ScheduleSaveEventRemoveExpertise extends ScheduleSaveEvent {
   final ExpertiseModel model;
-  ClinicSaveEventRemoveExpertise(this.model);
+  ScheduleSaveEventRemoveExpertise(this.model);
 }
 
-class ClinicSaveEventAddClinic extends ClinicSaveEvent {
+class ScheduleSaveEventAddClinic extends ScheduleSaveEvent {
   final ClinicModel model;
-  ClinicSaveEventAddClinic(this.model);
+  ScheduleSaveEventAddClinic(this.model);
 }
 
-class ClinicSaveEventRemoveClinic extends ClinicSaveEvent {
+class ScheduleSaveEventRemoveClinic extends ScheduleSaveEvent {
   final ClinicModel model;
-  ClinicSaveEventRemoveClinic(this.model);
+  ScheduleSaveEventRemoveClinic(this.model);
+}
+
+class ScheduleSaveEventAddHour extends ScheduleSaveEvent {
+  final int hour;
+  ScheduleSaveEventAddHour(this.hour);
+}
+
+class ScheduleSaveEventRemoveHour extends ScheduleSaveEvent {
+  final int hour;
+  ScheduleSaveEventRemoveHour(this.hour);
 }
