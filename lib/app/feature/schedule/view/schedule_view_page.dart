@@ -47,15 +47,6 @@ class ScheduleViewPage extends StatelessWidget {
                   title: 'Limite de representante: ',
                   value: model.limitedSellers?.toString(),
                 ),
-                AppTextTitleValue(
-                  title: 'Dia da semana: ',
-                  value: model.weekday?.toString(),
-                  inColumn: true,
-                ),
-                AppTextTitleValue(
-                  title: 'Secretárias: ',
-                  value: model.hour?.map((e) => e).toList().join(', '),
-                ),
               ],
             ),
           ),

@@ -16,8 +16,13 @@ class ScheduleEntity {
   static const String clinic = 'clinic';
   static const String justSchedule = 'justSchedule';
   static const String limitedSellers = 'limitedSellers';
-  static const String weekday = 'weekday';
-  static const String hour = 'hour';
+  static const String mondayHours = 'mondayHours';
+  static const String tuesdayHours = 'tuesdayHours';
+  static const String wednesdayHours = 'wednesdayHours';
+  static const String thursdayHours = 'thursdayHours';
+  static const String fridayHours = 'fridayHours';
+  static const String saturdayHours = 'saturdayHours';
+  static const String sundayHours = 'sundayHours';
   static const String description = 'description';
   static const String isDeleted = 'isDeleted';
 
@@ -40,13 +45,55 @@ class ScheduleEntity {
           : null,
       justSchedule: parseObject.get(ScheduleEntity.justSchedule),
       limitedSellers: parseObject.get(ScheduleEntity.limitedSellers),
-      weekday: parseObject.get(ScheduleEntity.weekday),
-      hour: parseObject.get<List<dynamic>>(ScheduleEntity.hour) != null
-          ? parseObject
-              .get<List<int>>(ScheduleEntity.hour)!
-              .map((e) => e)
-              .toList()
-          : [],
+      mondayHours:
+          parseObject.get<List<dynamic>>(ScheduleEntity.mondayHours) != null
+              ? parseObject
+                  .get<List<int>>(ScheduleEntity.mondayHours)!
+                  .map((e) => e)
+                  .toList()
+              : [],
+      tuesdayHours:
+          parseObject.get<List<dynamic>>(ScheduleEntity.tuesdayHours) != null
+              ? parseObject
+                  .get<List<int>>(ScheduleEntity.tuesdayHours)!
+                  .map((e) => e)
+                  .toList()
+              : [],
+      wednesdayHours:
+          parseObject.get<List<dynamic>>(ScheduleEntity.wednesdayHours) != null
+              ? parseObject
+                  .get<List<int>>(ScheduleEntity.wednesdayHours)!
+                  .map((e) => e)
+                  .toList()
+              : [],
+      thursdayHours:
+          parseObject.get<List<dynamic>>(ScheduleEntity.thursdayHours) != null
+              ? parseObject
+                  .get<List<int>>(ScheduleEntity.thursdayHours)!
+                  .map((e) => e)
+                  .toList()
+              : [],
+      fridayHours:
+          parseObject.get<List<dynamic>>(ScheduleEntity.fridayHours) != null
+              ? parseObject
+                  .get<List<int>>(ScheduleEntity.fridayHours)!
+                  .map((e) => e)
+                  .toList()
+              : [],
+      saturdayHours:
+          parseObject.get<List<dynamic>>(ScheduleEntity.saturdayHours) != null
+              ? parseObject
+                  .get<List<int>>(ScheduleEntity.saturdayHours)!
+                  .map((e) => e)
+                  .toList()
+              : [],
+      sundayHours:
+          parseObject.get<List<dynamic>>(ScheduleEntity.sundayHours) != null
+              ? parseObject
+                  .get<List<int>>(ScheduleEntity.sundayHours)!
+                  .map((e) => e)
+                  .toList()
+              : [],
       description: parseObject.get(ScheduleEntity.description),
     );
     return model;
@@ -88,11 +135,27 @@ class ScheduleEntity {
     if (model.limitedSellers != null) {
       parseObject.set(ScheduleEntity.limitedSellers, model.limitedSellers);
     }
-    if (model.weekday != null) {
-      parseObject.set(ScheduleEntity.weekday, model.weekday);
+
+    if (model.mondayHours != null) {
+      parseObject.set(ScheduleEntity.mondayHours, model.mondayHours);
     }
-    if (model.hour != null) {
-      parseObject.set(ScheduleEntity.hour, model.hour);
+    if (model.tuesdayHours != null) {
+      parseObject.set(ScheduleEntity.tuesdayHours, model.tuesdayHours);
+    }
+    if (model.wednesdayHours != null) {
+      parseObject.set(ScheduleEntity.wednesdayHours, model.wednesdayHours);
+    }
+    if (model.thursdayHours != null) {
+      parseObject.set(ScheduleEntity.thursdayHours, model.thursdayHours);
+    }
+    if (model.fridayHours != null) {
+      parseObject.set(ScheduleEntity.fridayHours, model.fridayHours);
+    }
+    if (model.saturdayHours != null) {
+      parseObject.set(ScheduleEntity.saturdayHours, model.saturdayHours);
+    }
+    if (model.sundayHours != null) {
+      parseObject.set(ScheduleEntity.sundayHours, model.sundayHours);
     }
     if (model.description != null) {
       parseObject.set(ScheduleEntity.description, model.description);

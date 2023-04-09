@@ -1,42 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:validatorless/validatorless.dart';
 
 import '../../../core/authentication/authentication.dart';
-import '../../../core/models/address_model.dart';
 import '../../../core/models/clinic_model.dart';
+import '../../../core/models/expertise_model.dart';
 import '../../../core/models/medical_model.dart';
-import '../../../core/models/secretary_model.dart';
+import '../../../core/models/schedule_models.dart';
 import '../../../core/models/user_profile_model.dart';
-import '../../../core/repositories/clinic_repository.dart';
+import '../../../core/repositories/schedule_repository.dart';
 import '../../utils/app_textformfield.dart';
-import '../search/bloc/schedule_search_bloc.dart';
-import '../search/bloc/clinic_search_event.dart';
 import 'bloc/schedule_save_bloc.dart';
 import 'bloc/schedule_save_event.dart';
-import 'bloc/clinic_save_state.dart';
+import 'bloc/schedule_save_state.dart';
 
-class ClinicSavePage extends StatelessWidget {
-  final ClinicModel? model;
+class ScheduleSavePage extends StatelessWidget {
+  final ScheduleModel? model;
 
-  const ClinicSavePage({super.key, this.model});
+  const ScheduleSavePage({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => ClinicRepository(),
+      create: (context) => ScheduleRepository(),
       child: BlocProvider(
         create: (context) {
           UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
-          return ClinicSaveBloc(
-              clinicModel: model,
-              clinicRepository:
-                  RepositoryProvider.of<ClinicRepository>(context),
+          return ScheduleSaveBloc(
+              scheduleModel: model,
+              scheduleRepository:
+                  RepositoryProvider.of<ScheduleRepository>(context),
               seller: userProfile);
         },
-        child: ClinicSaveView(
+        child: ScheduleSaveView(
           model: model,
         ),
       ),
@@ -44,26 +41,25 @@ class ClinicSavePage extends StatelessWidget {
   }
 }
 
-class ClinicSaveView extends StatefulWidget {
-  final ClinicModel? model;
-  const ClinicSaveView({Key? key, required this.model}) : super(key: key);
+class ScheduleSaveView extends StatefulWidget {
+  final ScheduleModel? model;
+  const ScheduleSaveView({Key? key, required this.model}) : super(key: key);
 
   @override
-  State<ClinicSaveView> createState() => _ClinicSaveViewState();
+  State<ScheduleSaveView> createState() => _ScheduleSaveViewState();
 }
 
-class _ClinicSaveViewState extends State<ClinicSaveView> {
+class _ScheduleSaveViewState extends State<ScheduleSaveView> {
   final _formKey = GlobalKey<FormState>();
-  final _nameTEC = TextEditingController();
-  final _roomTEC = TextEditingController();
-  final _phoneTEC = TextEditingController();
+  bool _justSchedule = false;
+  final _limitedSellersTEC = TextEditingController();
+  final _descriptionTEC = TextEditingController();
   bool delete = false;
   @override
   void initState() {
     super.initState();
-    _nameTEC.text = widget.model?.name ?? "";
-    _roomTEC.text = widget.model?.room ?? "";
-    _phoneTEC.text = widget.model?.phone ?? "";
+    _limitedSellersTEC.text = widget.model?.limitedSellers?.toString() ?? "";
+    _descriptionTEC.text = widget.model?.description ?? "";
   }
 
   @override
@@ -76,50 +72,50 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
         child: const Icon(Icons.cloud_upload),
         onPressed: () async {
           if (delete) {
-            context.read<ClinicSaveBloc>().add(
-                  ClinicSaveEventDelete(),
+            context.read<ScheduleSaveBloc>().add(
+                  ScheduleSaveEventDelete(),
                 );
           } else {
             final formValid = _formKey.currentState?.validate() ?? false;
             if (formValid) {
-              context.read<ClinicSaveBloc>().add(
-                    ClinicSaveEventFormSubmitted(
-                      name: _nameTEC.text,
-                      room: _roomTEC.text,
-                      phone: _phoneTEC.text,
+              context.read<ScheduleSaveBloc>().add(
+                    ScheduleSaveEventFormSubmitted(
+                      justSchedule: _justSchedule,
+                      limitedSellers: int.tryParse(_limitedSellersTEC.text),
+                      description: _descriptionTEC.text,
                     ),
                   );
             }
           }
         },
       ),
-      body: BlocListener<ClinicSaveBloc, ClinicSaveState>(
+      body: BlocListener<ScheduleSaveBloc, ScheduleSaveState>(
         listenWhen: (previous, current) {
           return previous.status != current.status;
         },
         listener: (context, state) async {
-          if (state.status == ClinicSaveStateStatus.error) {
+          if (state.status == ScheduleSaveStateStatus.error) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
           }
-          if (state.status == ClinicSaveStateStatus.success) {
+          if (state.status == ScheduleSaveStateStatus.success) {
             Navigator.of(context).pop();
-            if (widget.model != null) {
-              if (delete) {
-                context
-                    .read<ClinicSearchBloc>()
-                    .add(ClinicSearchEventRemoveFromList(state.model!.id!));
-              } else {
-                context
-                    .read<ClinicSearchBloc>()
-                    .add(ClinicSearchEventUpdateList(state.model!));
-              }
-            }
+            // if (widget.model != null) {
+            //   if (delete) {
+            //     context
+            //         .read<ScheduleSearchBloc>()
+            //         .add(ScheduleSearchEventRemoveFromList(state.model!.id!));
+            //   } else {
+            //     context
+            //         .read<ScheduleSearchBloc>()
+            //         .add(ScheduleSearchEventUpdateList(state.model!));
+            //   }
+            // }
             Navigator.of(context).pop();
           }
-          if (state.status == ClinicSaveStateStatus.loading) {
+          if (state.status == ScheduleSaveStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,
               context: context,
@@ -145,85 +141,46 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                           IconButton(
                               onPressed: () async {
                                 var contextTemp =
-                                    context.read<ClinicSaveBloc>();
+                                    context.read<ScheduleSaveBloc>();
                                 MedicalModel? result =
                                     await Navigator.of(context)
                                             .pushNamed('/medical/select')
                                         as MedicalModel?;
                                 if (result != null) {
                                   contextTemp
-                                      .add(ClinicSaveEventAddMedical(result));
+                                      .add(ScheduleSaveEventAddMedical(result));
                                 }
                               },
                               icon: const Icon(Icons.search)),
-                          BlocBuilder<ClinicSaveBloc, ClinicSaveState>(
+                          BlocBuilder<ScheduleSaveBloc, ScheduleSaveState>(
                             builder: (context, state) {
                               return Text('${state.medical?.name}');
                             },
                           ),
                         ],
                       ),
-                      AppTextFormField(
-                        label: 'Nome da clinica/consultório *',
-                        controller: _nameTEC,
-                        validator: Validatorless.required('Nome é obrigatório'),
-                      ),
-                      const Divider(height: 5),
-                      AppTextFormField(
-                        label: 'Sala',
-                        controller: _roomTEC,
-                      ),
-                      AppTextFormField(
-                        label: 'Telefone. Formato DDDNUMERO',
-                        controller: _phoneTEC,
-                        validator: Validatorless.number('Apenas números.'),
-                      ),
-                      const Text('Selecione o endereço'),
+                      const Text('Selecione a especialidade *'),
                       Row(
                         children: [
                           IconButton(
                               onPressed: () async {
                                 var contextTemp =
-                                    context.read<ClinicSaveBloc>();
-                                AddressModel? result =
+                                    context.read<ScheduleSaveBloc>();
+                                ExpertiseModel? result =
                                     await Navigator.of(context)
-                                            .pushNamed('/address/select')
-                                        as AddressModel?;
+                                            .pushNamed('/expertise/select')
+                                        as ExpertiseModel?;
                                 if (result != null) {
-                                  contextTemp
-                                      .add(ClinicSaveEventAddAddress(result));
+                                  contextTemp.add(
+                                      ScheduleSaveEventAddExpertise(result));
                                 }
                               },
                               icon: const Icon(Icons.search)),
-                          BlocBuilder<ClinicSaveBloc, ClinicSaveState>(
-                            builder: (context, state) {
-                              return Text('${state.address?.name}');
-                            },
-                          ),
-                        ],
-                      ),
-                      const Text('Selecione as secretarias'),
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () async {
-                                var contextTemp =
-                                    context.read<ClinicSaveBloc>();
-                                SecretaryModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/secretary/select')
-                                        as SecretaryModel?;
-                                if (result != null) {
-                                  contextTemp
-                                      .add(ClinicSaveEventAddSecretary(result));
-                                }
-                              },
-                              icon: const Icon(Icons.search)),
-                          BlocBuilder<ClinicSaveBloc, ClinicSaveState>(
+                          BlocBuilder<ScheduleSaveBloc, ScheduleSaveState>(
                             builder: (context, state) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: state.secretariesUpdated
+                                children: state.expertises
                                     .map(
                                       (e) => Row(
                                         children: [
@@ -232,9 +189,9 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                                             icon: const Icon(Icons.delete),
                                             onPressed: () {
                                               context
-                                                  .read<ClinicSaveBloc>()
+                                                  .read<ScheduleSaveBloc>()
                                                   .add(
-                                                    ClinicSaveEventRemoveSecretary(
+                                                    ScheduleSaveEventRemoveExpertise(
                                                       e,
                                                     ),
                                                   );
@@ -248,6 +205,69 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                             },
                           ),
                         ],
+                      ),
+                      const Text('Selecione o consultorio'),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () async {
+                                var contextTemp =
+                                    context.read<ScheduleSaveBloc>();
+                                ClinicModel? result =
+                                    await Navigator.of(context)
+                                            .pushNamed('/clinic/select')
+                                        as ClinicModel?;
+                                if (result != null) {
+                                  contextTemp
+                                      .add(ScheduleSaveEventAddClinic(result));
+                                }
+                              },
+                              icon: const Icon(Icons.search)),
+                          BlocBuilder<ScheduleSaveBloc, ScheduleSaveState>(
+                            builder: (context, state) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: state.clinics
+                                    .map(
+                                      (e) => Row(
+                                        children: [
+                                          Text('${e.name}'),
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () {
+                                              context
+                                                  .read<ScheduleSaveBloc>()
+                                                  .add(
+                                                    ScheduleSaveEventRemoveClinic(
+                                                      e,
+                                                    ),
+                                                  );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                    .toList(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const Divider(height: 5),
+                      CheckboxListTile(
+                        tileColor: _justSchedule ? Colors.red : null,
+                        title: const Text(
+                            "Só recebe representante por agendamento ?"),
+                        onChanged: (value) {
+                          setState(() {
+                            _justSchedule = value ?? false;
+                          });
+                        },
+                        value: delete,
+                      ),
+                      AppTextFormField(
+                        label: 'Número limite de atendentes',
+                        controller: _limitedSellersTEC,
                       ),
                       if (widget.model != null)
                         CheckboxListTile(

@@ -9,12 +9,10 @@ class ScheduleSaveEventDelete extends ScheduleSaveEvent {}
 class ScheduleSaveEventFormSubmitted extends ScheduleSaveEvent {
   final bool? justSchedule;
   final int? limitedSellers;
-  final int? weekday;
   final String? description;
   ScheduleSaveEventFormSubmitted({
     this.justSchedule,
     this.limitedSellers,
-    this.weekday,
     this.description,
   });
 }
@@ -44,12 +42,11 @@ class ScheduleSaveEventRemoveClinic extends ScheduleSaveEvent {
   ScheduleSaveEventRemoveClinic(this.model);
 }
 
-class ScheduleSaveEventAddHour extends ScheduleSaveEvent {
+class ScheduleSaveEventUpdateHourInWeekday extends ScheduleSaveEvent {
+  final int weekday;
   final int hour;
-  ScheduleSaveEventAddHour(this.hour);
-}
-
-class ScheduleSaveEventRemoveHour extends ScheduleSaveEvent {
-  final int hour;
-  ScheduleSaveEventRemoveHour(this.hour);
+  ScheduleSaveEventUpdateHourInWeekday(
+    this.weekday,
+    this.hour,
+  );
 }

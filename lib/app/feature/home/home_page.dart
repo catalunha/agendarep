@@ -122,9 +122,6 @@ class HomePage extends StatelessWidget {
               HomeCardModule(
                 title: 'Consultorio',
                 access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/clinic/save');
-                },
                 icon: Icons.house,
                 color: Colors.black87,
                 actions: [
@@ -140,6 +137,26 @@ class HomePage extends StatelessWidget {
                     },
                     icon: const Icon(Icons.search),
                   )
+                ],
+              ),
+              HomeCardModule(
+                title: 'Agenda do médico',
+                access: const ['seller'],
+                icon: Icons.schedule,
+                color: Colors.black87,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/schedule/save');
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  // IconButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).pushNamed('/clinic/search');
+                  //   },
+                  //   icon: const Icon(Icons.search),
+                  // )
                 ],
               ),
               HomeCardModule(
