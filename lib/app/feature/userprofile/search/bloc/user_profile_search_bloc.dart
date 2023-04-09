@@ -112,11 +112,9 @@ class UserProfileSearchBloc
       if (event.nameContainsBool) {
         query.whereContains('name', event.nameContainsString);
       }
-      if (event.nicknameContainsBool) {
-        query.whereContains('nickname', event.nicknameContainsString);
-      }
-      if (event.registerEqualToBool) {
-        query.whereEqualTo('register', event.registerEqualToString);
+
+      if (event.cpfEqualToBool) {
+        query.whereEqualTo('register', event.cpfEqualToString);
       }
       if (event.phoneEqualToBool) {
         query.whereEqualTo('phone', event.phoneEqualToString);

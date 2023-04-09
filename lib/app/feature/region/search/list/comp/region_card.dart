@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../core/models/region_model.dart';
 import '../../../../utils/app_text_title_value.dart';
@@ -14,18 +13,12 @@ class RegionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd/MM/y');
-
     return Card(
       child: Column(
         children: [
           AppTextTitleValue(
             title: 'Id: ',
             value: model.id,
-          ),
-          AppTextTitleValue(
-            title: 'Cadastrada pelo Representante: ',
-            value: model.seller?.name,
           ),
           AppTextTitleValue(
             title: 'Estado: ',

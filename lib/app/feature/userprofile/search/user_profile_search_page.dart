@@ -37,20 +37,17 @@ class UserProfileSearchView extends StatefulWidget {
 
 class _SearchPageState extends State<UserProfileSearchView> {
   final _formKey = GlobalKey<FormState>();
-  bool _nicknameContains = false;
   bool _nameContains = false;
-  bool _registerEqualTo = false;
+  bool _cpfEqualTo = false;
   bool _phoneEqualTo = false;
-  final _nicknameContainsTEC = TextEditingController();
   final _nameContainsTEC = TextEditingController();
-  final _registerEqualToTEC = TextEditingController();
+  final _cpfEqualToTEC = TextEditingController();
   final _phoneEqualToTEC = TextEditingController();
 
   @override
   void initState() {
-    _nicknameContainsTEC.text = '';
     _nameContainsTEC.text = '';
-    _registerEqualToTEC.text = '';
+    _cpfEqualToTEC.text = '';
     _phoneEqualToTEC.text = '';
     super.initState();
   }
@@ -101,31 +98,6 @@ class _SearchPageState extends State<UserProfileSearchView> {
                     Card(
                       child: Column(
                         children: [
-                          const Text('por Nome em tropa'),
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: _nicknameContains,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _nicknameContains = value!;
-                                  });
-                                },
-                              ),
-                              Expanded(
-                                child: AppTextFormField(
-                                  label: 'que contém',
-                                  controller: _nicknameContainsTEC,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Card(
-                      child: Column(
-                        children: [
                           const Text('por Nome'),
                           Row(
                             children: [
@@ -151,21 +123,21 @@ class _SearchPageState extends State<UserProfileSearchView> {
                     Card(
                       child: Column(
                         children: [
-                          const Text('por registro'),
+                          const Text('por CPF'),
                           Row(
                             children: [
                               Checkbox(
-                                value: _registerEqualTo,
+                                value: _cpfEqualTo,
                                 onChanged: (value) {
                                   setState(() {
-                                    _registerEqualTo = value!;
+                                    _cpfEqualTo = value!;
                                   });
                                 },
                               ),
                               Expanded(
                                 child: AppTextFormField(
                                   label: 'igual a',
-                                  controller: _registerEqualToTEC,
+                                  controller: _cpfEqualToTEC,
                                 ),
                               ),
                             ],
@@ -216,10 +188,8 @@ class _SearchPageState extends State<UserProfileSearchView> {
                   UserProfileSearchEventFormSubmitted(
                     nameContainsBool: _nameContains,
                     nameContainsString: _nameContainsTEC.text,
-                    nicknameContainsBool: _nicknameContains,
-                    nicknameContainsString: _nicknameContainsTEC.text,
-                    registerEqualToBool: _registerEqualTo,
-                    registerEqualToString: _registerEqualToTEC.text,
+                    cpfEqualToBool: _cpfEqualTo,
+                    cpfEqualToString: _cpfEqualToTEC.text,
                     phoneEqualToBool: _phoneEqualTo,
                     phoneEqualToString: _phoneEqualToTEC.text,
                   ),

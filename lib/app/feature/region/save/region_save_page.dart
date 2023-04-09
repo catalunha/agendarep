@@ -67,7 +67,7 @@ class _RegionSaveViewState extends State<RegionSaveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar ou Editar Ciclo'),
+        title: const Text('Adicionar ou Editar Região'),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.cloud_upload),
@@ -149,7 +149,8 @@ class _RegionSaveViewState extends State<RegionSaveView> {
                             Validatorless.required('Cidade é obrigatório'),
                       ),
                       AppTextFormField(
-                        label: 'Nome *',
+                        label:
+                            'Nome * (Centro, Setor X, Bairro Y, Quadras A B C, etc)',
                         controller: _nameTEC,
                         validator: Validatorless.required('Nome é obrigatório'),
                       ),

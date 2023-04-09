@@ -174,7 +174,7 @@ class _AddressSaveViewState extends State<AddressSaveView> {
                         ],
                       ),
                       AppTextFormField(
-                        label: 'Nome *',
+                        label: 'Nome * (Hospital X, Edificio Médico Y, etc)',
                         controller: _nameTEC,
                         validator: Validatorless.required('Nome é obrigatório'),
                       ),
@@ -185,7 +185,7 @@ class _AddressSaveViewState extends State<AddressSaveView> {
                         validator: Validatorless.number('Apenas números.'),
                       ),
                       AppTextFormField(
-                        label: 'Descrição',
+                        label: 'Descrição (Rua X, )',
                         controller: _descriptionTEC,
                       ),
                       Wrap(
