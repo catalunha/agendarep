@@ -22,6 +22,7 @@ class ScheduleB4a {
       'clinic.medical',
       'clinic.medical.seller',
       'clinic.address',
+      'clinic.address.seller',
       'clinic.address.region',
       'clinic.address.region.seller',
     ]);

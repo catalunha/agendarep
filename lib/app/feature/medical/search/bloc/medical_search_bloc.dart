@@ -60,8 +60,6 @@ class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
         query.whereEqualTo(MedicalEntity.birthday, event.birthdayEqualsTo);
       }
 
-      query.whereEqualTo(MedicalEntity.isDeleted, false);
-      query.includeObject(['seller']);
       query.whereEqualTo(
           MedicalEntity.seller,
           (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)

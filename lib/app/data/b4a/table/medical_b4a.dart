@@ -11,6 +11,8 @@ class MedicalB4a {
       QueryBuilder<ParseObject> query, Pagination pagination) async {
     query.setAmountToSkip((pagination.page - 1) * pagination.limit);
     query.setLimit(pagination.limit);
+    query.whereEqualTo(MedicalEntity.isDeleted, false);
+    query.includeObject(['seller']);
 
     return query;
   }

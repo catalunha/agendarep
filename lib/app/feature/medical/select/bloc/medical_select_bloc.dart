@@ -50,9 +50,9 @@ class MedicalSelectBloc extends Bloc<MedicalSelectEvent, MedicalSelectState> {
               .toPointer());
       query.orderByDescending('updatedAt');
       List<MedicalModel> listGet = await _medicalRepository.list(
-        query,
-        Pagination(page: state.page, limit: state.limit),
-      );
+          query,
+          Pagination(page: state.page, limit: state.limit),
+          [MedicalEntity.expertises]);
 
       emit(state.copyWith(
         status: MedicalSelectStateStatus.success,

@@ -21,6 +21,7 @@ class ScheduleSaveState {
   final List<int> fridayHours;
   final List<int> saturdayHours;
   final List<int> sundayHours;
+
   ScheduleSaveState({
     required this.status,
     this.error,
@@ -42,7 +43,7 @@ class ScheduleSaveState {
         medical = model?.medical,
         expertises = model?.expertise != null ? [model!.expertise!] : [],
         clinics = model?.clinic != null ? [model!.clinic!] : [],
-        mondayHours = model?.mondayHours ?? [],
+        mondayHours = model?.mondayHours ?? [8],
         tuesdayHours = model?.tuesdayHours ?? [],
         wednesdayHours = model?.wednesdayHours ?? [],
         thursdayHours = model?.thursdayHours ?? [],

@@ -7,6 +7,7 @@ import '../../../core/models/expertise_model.dart';
 import '../../../core/models/medical_model.dart';
 import '../../../core/models/schedule_models.dart';
 import '../../../core/models/user_profile_model.dart';
+import '../../../core/repositories/clinic_repository.dart';
 import '../../../core/repositories/schedule_repository.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/schedule_save_bloc.dart';
@@ -20,8 +21,15 @@ class ScheduleSavePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => ScheduleRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => ScheduleRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => ClinicRepository(),
+        ),
+      ],
       child: BlocProvider(
         create: (context) {
           UserProfileModel userProfile =
@@ -31,6 +39,8 @@ class ScheduleSavePage extends StatelessWidget {
               scheduleModel: model,
               scheduleRepository:
                   RepositoryProvider.of<ScheduleRepository>(context),
+              clinicRepository:
+                  RepositoryProvider.of<ClinicRepository>(context),
               seller: userProfile);
         },
         child: ScheduleSaveView(
@@ -253,6 +263,13 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                           ),
                         ],
                       ),
+                      const HoursInWeekday(weekday: 2),
+                      const HoursInWeekday(weekday: 3),
+                      const HoursInWeekday(weekday: 4),
+                      const HoursInWeekday(weekday: 5),
+                      const HoursInWeekday(weekday: 6),
+                      const HoursInWeekday(weekday: 7),
+                      const HoursInWeekday(weekday: 1),
                       const Divider(height: 5),
                       CheckboxListTile(
                         tileColor: _justSchedule ? Colors.red : null,
@@ -288,6 +305,134 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class HoursInWeekday extends StatelessWidget {
+  final int weekday;
+  const HoursInWeekday({
+    Key? key,
+    required this.weekday,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String weekdayName = '';
+    if (weekday == 1) {
+      weekdayName = 'Domingo';
+    } else if (weekday == 2) {
+      weekdayName = 'Segunda-feira';
+    } else if (weekday == 3) {
+      weekdayName = 'Terça-feira';
+    } else if (weekday == 4) {
+      weekdayName = 'Quarta-feira';
+    } else if (weekday == 5) {
+      weekdayName = 'Quinta-feira';
+    } else if (weekday == 6) {
+      weekdayName = 'Sexta-feira';
+    } else if (weekday == 7) {
+      weekdayName = 'Sábado';
+    }
+    return Card(
+      child: Column(
+        children: [
+          Text(weekdayName),
+          BlocBuilder<ScheduleSaveBloc, ScheduleSaveState>(
+            builder: (context, state) {
+              List<int> allHours = [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
+              ];
+              List<Widget> hours = [];
+              Color color = Colors.black;
+              for (var hour in allHours) {
+                if (weekday == 2) {
+                  if (state.mondayHours.contains(hour)) {
+                    color = Colors.green;
+                  } else {
+                    color = Colors.black;
+                  }
+                }
+                if (weekday == 3) {
+                  if (state.tuesdayHours.contains(hour)) {
+                    color = Colors.green;
+                  } else {
+                    color = Colors.black;
+                  }
+                }
+                if (weekday == 4) {
+                  if (state.wednesdayHours.contains(hour)) {
+                    color = Colors.green;
+                  } else {
+                    color = Colors.black;
+                  }
+                }
+                if (weekday == 5) {
+                  if (state.thursdayHours.contains(hour)) {
+                    color = Colors.green;
+                  } else {
+                    color = Colors.black;
+                  }
+                }
+                if (weekday == 6) {
+                  if (state.fridayHours.contains(hour)) {
+                    color = Colors.green;
+                  } else {
+                    color = Colors.black;
+                  }
+                }
+                if (weekday == 7) {
+                  if (state.saturdayHours.contains(hour)) {
+                    color = Colors.green;
+                  } else {
+                    color = Colors.black;
+                  }
+                }
+                if (weekday == 1) {
+                  if (state.sundayHours.contains(hour)) {
+                    color = Colors.green;
+                  } else {
+                    color = Colors.black;
+                  }
+                }
+                hours.add(CircleAvatar(
+                  radius: 20,
+                  backgroundColor: color,
+                  child: IconButton(
+                      onPressed: () {
+                        context.read<ScheduleSaveBloc>().add(
+                            ScheduleSaveEventUpdateHourInWeekday(
+                                weekday: weekday, hour: hour));
+                      },
+                      icon: Text('$hour')),
+                ));
+              }
+              return Wrap(
+                children: hours,
+              );
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          )
+        ],
       ),
     );
   }

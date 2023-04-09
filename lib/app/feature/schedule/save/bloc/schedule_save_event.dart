@@ -45,8 +45,8 @@ class ScheduleSaveEventRemoveClinic extends ScheduleSaveEvent {
 class ScheduleSaveEventUpdateHourInWeekday extends ScheduleSaveEvent {
   final int weekday;
   final int hour;
-  ScheduleSaveEventUpdateHourInWeekday(
-    this.weekday,
-    this.hour,
-  );
+  ScheduleSaveEventUpdateHourInWeekday({
+    required this.weekday,
+    required this.hour,
+  });
 }
