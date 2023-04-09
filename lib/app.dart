@@ -22,6 +22,7 @@ import 'app/feature/region/save/region_save_page.dart';
 import 'app/feature/region/search/region_search_page.dart';
 import 'app/feature/region/select/region_select_page.dart';
 import 'app/feature/schedule/save/schedule_save_page.dart';
+import 'app/feature/schedule/search/schedule_search_page.dart';
 import 'app/feature/secretary/save/secretary_save_page.dart';
 import 'app/feature/secretary/search/secretary_search_page.dart';
 import 'app/feature/secretary/select/secretary_select_page.dart';
@@ -132,6 +133,7 @@ class _AppViewState extends State<AppView> {
         '/clinic/search': (_) => const ClinicSearchPage(),
         '/clinic/select': (_) => const ClinicSelectPage(),
         '/schedule/save': (_) => const ScheduleSavePage(),
+        '/schedule/search': (_) => const ScheduleSearchPage(),
       },
       initialRoute: '/',
     );

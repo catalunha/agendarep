@@ -10,6 +10,8 @@ import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/clinic_repository.dart';
 import '../../../core/repositories/schedule_repository.dart';
 import '../../utils/app_textformfield.dart';
+import '../search/bloc/schedule_search_bloc.dart';
+import '../search/bloc/schedule_search_event.dart';
 import 'bloc/schedule_save_bloc.dart';
 import 'bloc/schedule_save_event.dart';
 import 'bloc/schedule_save_state.dart';
@@ -76,7 +78,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar ou Editar clínica/consultório'),
+        title: const Text('Adicionar ou Editar agenda'),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.cloud_upload),
@@ -112,17 +114,17 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
           }
           if (state.status == ScheduleSaveStateStatus.success) {
             Navigator.of(context).pop();
-            // if (widget.model != null) {
-            //   if (delete) {
-            //     context
-            //         .read<ScheduleSearchBloc>()
-            //         .add(ScheduleSearchEventRemoveFromList(state.model!.id!));
-            //   } else {
-            //     context
-            //         .read<ScheduleSearchBloc>()
-            //         .add(ScheduleSearchEventUpdateList(state.model!));
-            //   }
-            // }
+            if (widget.model != null) {
+              if (delete) {
+                context
+                    .read<ScheduleSearchBloc>()
+                    .add(ScheduleSearchEventRemoveFromList(state.model!.id!));
+              } else {
+                context
+                    .read<ScheduleSearchBloc>()
+                    .add(ScheduleSearchEventUpdateList(state.model!));
+              }
+            }
             Navigator.of(context).pop();
           }
           if (state.status == ScheduleSaveStateStatus.loading) {
@@ -263,6 +265,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                           ),
                         ],
                       ),
+                      const Divider(height: 5),
                       const HoursInWeekday(weekday: 2),
                       const HoursInWeekday(weekday: 3),
                       const HoursInWeekday(weekday: 4),
@@ -270,7 +273,6 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                       const HoursInWeekday(weekday: 6),
                       const HoursInWeekday(weekday: 7),
                       const HoursInWeekday(weekday: 1),
-                      const Divider(height: 5),
                       CheckboxListTile(
                         tileColor: _justSchedule ? Colors.red : null,
                         title: const Text(

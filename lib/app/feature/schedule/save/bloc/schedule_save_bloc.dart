@@ -45,7 +45,9 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       Emitter<ScheduleSaveState> emit) async {
     emit(state.copyWith(status: ScheduleSaveStateStatus.loading));
     try {
-      if (state.expertises.length != 1 || state.clinics.length != 1) {
+      print('state.expertises.length: ${state.expertises.length}');
+      print('state.clinics.length: ${state.clinics.length}');
+      if (state.expertises.length == 1 && state.clinics.length == 1) {
         ScheduleModel scheduleModel;
         if (state.model == null) {
           scheduleModel = ScheduleModel(

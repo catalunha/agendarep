@@ -43,7 +43,7 @@ class ScheduleSaveState {
         medical = model?.medical,
         expertises = model?.expertise != null ? [model!.expertise!] : [],
         clinics = model?.clinic != null ? [model!.clinic!] : [],
-        mondayHours = model?.mondayHours ?? [8],
+        mondayHours = model?.mondayHours ?? [],
         tuesdayHours = model?.tuesdayHours ?? [],
         wednesdayHours = model?.wednesdayHours ?? [],
         thursdayHours = model?.thursdayHours ?? [],

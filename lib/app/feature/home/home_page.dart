@@ -151,12 +151,12 @@ class HomePage extends StatelessWidget {
                     },
                     icon: const Icon(Icons.add),
                   ),
-                  // IconButton(
-                  //   onPressed: () {
-                  //     Navigator.of(context).pushNamed('/clinic/search');
-                  //   },
-                  //   icon: const Icon(Icons.search),
-                  // )
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/schedule/search');
+                    },
+                    icon: const Icon(Icons.search),
+                  )
                 ],
               ),
               HomeCardModule(

@@ -27,6 +27,8 @@ class ScheduleEntity {
   static const String isDeleted = 'isDeleted';
 
   Future<ScheduleModel> toModel(ParseObject parseObject) async {
+    print(
+        '>>>>> ${parseObject.get<List<dynamic>>(ScheduleEntity.mondayHours)}');
     ScheduleModel model = ScheduleModel(
       id: parseObject.objectId!,
       seller: parseObject.get(ScheduleEntity.seller) != null
@@ -48,50 +50,50 @@ class ScheduleEntity {
       mondayHours:
           parseObject.get<List<dynamic>>(ScheduleEntity.mondayHours) != null
               ? parseObject
-                  .get<List<int>>(ScheduleEntity.mondayHours)!
-                  .map((e) => e)
+                  .get<List<dynamic>>(ScheduleEntity.mondayHours)!
+                  .map<int>((e) => e)
                   .toList()
               : [],
       tuesdayHours:
           parseObject.get<List<dynamic>>(ScheduleEntity.tuesdayHours) != null
               ? parseObject
-                  .get<List<int>>(ScheduleEntity.tuesdayHours)!
-                  .map((e) => e)
+                  .get<List<dynamic>>(ScheduleEntity.tuesdayHours)!
+                  .map<int>((e) => e)
                   .toList()
               : [],
       wednesdayHours:
           parseObject.get<List<dynamic>>(ScheduleEntity.wednesdayHours) != null
               ? parseObject
-                  .get<List<int>>(ScheduleEntity.wednesdayHours)!
-                  .map((e) => e)
+                  .get<List<dynamic>>(ScheduleEntity.wednesdayHours)!
+                  .map<int>((e) => e)
                   .toList()
               : [],
       thursdayHours:
           parseObject.get<List<dynamic>>(ScheduleEntity.thursdayHours) != null
               ? parseObject
-                  .get<List<int>>(ScheduleEntity.thursdayHours)!
-                  .map((e) => e)
+                  .get<List<dynamic>>(ScheduleEntity.thursdayHours)!
+                  .map<int>((e) => e)
                   .toList()
               : [],
       fridayHours:
           parseObject.get<List<dynamic>>(ScheduleEntity.fridayHours) != null
               ? parseObject
-                  .get<List<int>>(ScheduleEntity.fridayHours)!
-                  .map((e) => e)
+                  .get<List<dynamic>>(ScheduleEntity.fridayHours)!
+                  .map<int>((e) => e)
                   .toList()
               : [],
       saturdayHours:
           parseObject.get<List<dynamic>>(ScheduleEntity.saturdayHours) != null
               ? parseObject
-                  .get<List<int>>(ScheduleEntity.saturdayHours)!
-                  .map((e) => e)
+                  .get<List<dynamic>>(ScheduleEntity.saturdayHours)!
+                  .map<int>((e) => e)
                   .toList()
               : [],
       sundayHours:
           parseObject.get<List<dynamic>>(ScheduleEntity.sundayHours) != null
               ? parseObject
-                  .get<List<int>>(ScheduleEntity.sundayHours)!
-                  .map((e) => e)
+                  .get<List<dynamic>>(ScheduleEntity.sundayHours)!
+                  .map<int>((e) => e)
                   .toList()
               : [],
       description: parseObject.get(ScheduleEntity.description),
