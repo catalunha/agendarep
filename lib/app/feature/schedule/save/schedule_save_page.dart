@@ -206,7 +206,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                           ),
                         ],
                       ),
-                      const Text('Selecione o consultorio'),
+                      const Text('Selecione o consultorio *'),
                       Row(
                         children: [
                           IconButton(

@@ -10,6 +10,7 @@ import 'app/feature/address/search/address_search_page.dart';
 import 'app/feature/address/select/address_select_page.dart';
 import 'app/feature/clinic/save/clinic_save_page.dart';
 import 'app/feature/clinic/search/clinic_search_page.dart';
+import 'app/feature/clinic/select/clinic_select_page.dart';
 import 'app/feature/cycle/list/cycle_list_page.dart';
 import 'app/feature/cycle/save/cycle_save_page.dart';
 import 'app/feature/expertise/select/expertise_select_page.dart';
@@ -129,6 +130,7 @@ class _AppViewState extends State<AppView> {
         '/expertise/select': (_) => const ExpertiseSelectPage(),
         '/clinic/save': (_) => const ClinicSavePage(),
         '/clinic/search': (_) => const ClinicSearchPage(),
+        '/clinic/select': (_) => const ClinicSelectPage(),
         '/schedule/save': (_) => const ScheduleSavePage(),
       },
       initialRoute: '/',
