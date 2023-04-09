@@ -274,7 +274,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                       const HoursInWeekday(weekday: 7),
                       const HoursInWeekday(weekday: 1),
                       CheckboxListTile(
-                        tileColor: _justSchedule ? Colors.red : null,
+                        // tileColor: _justSchedule ? Colors.red : null,
                         title: const Text(
                             "Só recebe representante por agendamento ?"),
                         onChanged: (value) {
@@ -282,7 +282,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                             _justSchedule = value ?? false;
                           });
                         },
-                        value: delete,
+                        value: _justSchedule,
                       ),
                       AppTextFormField(
                         label: 'Número limite de atendentes',
