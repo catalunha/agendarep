@@ -96,17 +96,26 @@ class _ExpertiseSelectViewState extends State<ExpertiseSelectView> {
         child: Column(
           children: [
             Form(
-              child: Column(
+              child: Row(
                 children: [
-                  AppTextFormField(
-                    label: 'Nome da especialidade',
-                    controller: _nameTEC,
-                    onChange: (value) {
-                      context
-                          .read<ExpertiseSelectBloc>()
-                          .add(ExpertiseSelectEventFormSubmitted(value));
-                    },
+                  Expanded(
+                    child: AppTextFormField(
+                      label: 'Nome da especialidade',
+                      controller: _nameTEC,
+                      onChange: (value) {
+                        context
+                            .read<ExpertiseSelectBloc>()
+                            .add(ExpertiseSelectEventFormSubmitted(value));
+                      },
+                    ),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      context.read<ExpertiseSelectBloc>().add(
+                          ExpertiseSelectEventFormSubmitted(_nameTEC.text));
+                    },
+                    icon: const Icon(Icons.youtube_searched_for_sharp),
+                  )
                 ],
               ),
             ),

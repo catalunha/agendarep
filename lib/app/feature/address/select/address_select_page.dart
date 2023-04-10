@@ -96,17 +96,27 @@ class _AddressSelectViewState extends State<AddressSelectView> {
         child: Column(
           children: [
             Form(
-              child: Column(
+              child: Row(
                 children: [
-                  AppTextFormField(
-                    label: 'Nome',
-                    controller: _nameTEC,
-                    onChange: (value) {
+                  Expanded(
+                    child: AppTextFormField(
+                      label: 'Nome',
+                      controller: _nameTEC,
+                      onChange: (value) {
+                        context
+                            .read<AddressSelectBloc>()
+                            .add(AddressSelectEventFormSubmitted(value));
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
                       context
                           .read<AddressSelectBloc>()
-                          .add(AddressSelectEventFormSubmitted(value));
+                          .add(AddressSelectEventFormSubmitted(_nameTEC.text));
                     },
-                  ),
+                    icon: const Icon(Icons.youtube_searched_for_sharp),
+                  )
                 ],
               ),
             ),

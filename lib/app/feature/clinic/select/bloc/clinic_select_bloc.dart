@@ -97,6 +97,7 @@ class ClinicSelectBloc extends Bloc<ClinicSelectEvent, ClinicSelectState> {
       emit(state.copyWith(
         status: ClinicSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         lastPage: false,
       ));
     } else {
@@ -126,6 +127,7 @@ class ClinicSelectBloc extends Bloc<ClinicSelectEvent, ClinicSelectState> {
       emit(state.copyWith(
         status: ClinicSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         page: state.page + 1,
         firstPage: false,
       ));

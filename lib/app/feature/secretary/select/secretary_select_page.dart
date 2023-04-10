@@ -96,17 +96,26 @@ class _SecretarySelectViewState extends State<SecretarySelectView> {
         child: Column(
           children: [
             Form(
-              child: Column(
+              child: Row(
                 children: [
-                  AppTextFormField(
-                    label: 'Nome',
-                    controller: _nameTEC,
-                    onChange: (value) {
-                      context
-                          .read<SecretarySelectBloc>()
-                          .add(SecretarySelectEventFormSubmitted(value));
-                    },
+                  Expanded(
+                    child: AppTextFormField(
+                      label: 'Nome',
+                      controller: _nameTEC,
+                      onChange: (value) {
+                        context
+                            .read<SecretarySelectBloc>()
+                            .add(SecretarySelectEventFormSubmitted(value));
+                      },
+                    ),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      context.read<SecretarySelectBloc>().add(
+                          SecretarySelectEventFormSubmitted(_nameTEC.text));
+                    },
+                    icon: const Icon(Icons.youtube_searched_for_sharp),
+                  )
                 ],
               ),
             ),

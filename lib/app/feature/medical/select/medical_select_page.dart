@@ -96,17 +96,27 @@ class _MedicalSelectViewState extends State<MedicalSelectView> {
         child: Column(
           children: [
             Form(
-              child: Column(
+              child: Row(
                 children: [
-                  AppTextFormField(
-                    label: 'Nome',
-                    controller: _nameTEC,
-                    onChange: (value) {
+                  Expanded(
+                    child: AppTextFormField(
+                      label: 'Nome',
+                      controller: _nameTEC,
+                      onChange: (value) {
+                        context
+                            .read<MedicalSelectBloc>()
+                            .add(MedicalSelectEventFormSubmitted(value));
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
                       context
                           .read<MedicalSelectBloc>()
-                          .add(MedicalSelectEventFormSubmitted(value));
+                          .add(MedicalSelectEventFormSubmitted(_nameTEC.text));
                     },
-                  ),
+                    icon: const Icon(Icons.youtube_searched_for_sharp),
+                  )
                 ],
               ),
             ),

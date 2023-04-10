@@ -95,17 +95,27 @@ class _RegionSelectViewState extends State<RegionSelectView> {
         child: Column(
           children: [
             Form(
-              child: Column(
+              child: Row(
                 children: [
-                  AppTextFormField(
-                    label: 'Nome',
-                    controller: _nameTEC,
-                    onChange: (value) {
+                  Expanded(
+                    child: AppTextFormField(
+                      label: 'Nome da região',
+                      controller: _nameTEC,
+                      onChange: (value) {
+                        context
+                            .read<RegionSelectBloc>()
+                            .add(RegionSelectEventFormSubmitted(value));
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
                       context
                           .read<RegionSelectBloc>()
-                          .add(RegionSelectEventFormSubmitted(value));
+                          .add(RegionSelectEventFormSubmitted(_nameTEC.text));
                     },
-                  ),
+                    icon: const Icon(Icons.youtube_searched_for_sharp),
+                  )
                 ],
               ),
             ),

@@ -99,6 +99,7 @@ class MedicalSelectBloc extends Bloc<MedicalSelectEvent, MedicalSelectState> {
       emit(state.copyWith(
         status: MedicalSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         lastPage: false,
       ));
     } else {
@@ -121,13 +122,13 @@ class MedicalSelectBloc extends Bloc<MedicalSelectEvent, MedicalSelectState> {
     if (listGet.isEmpty) {
       emit(state.copyWith(
         status: MedicalSelectStateStatus.success,
-        // firstPage: false,
         lastPage: true,
       ));
     } else {
       emit(state.copyWith(
         status: MedicalSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         page: state.page + 1,
         firstPage: false,
       ));

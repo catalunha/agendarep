@@ -92,6 +92,7 @@ class ExpertiseSelectBloc
       emit(state.copyWith(
         status: ExpertiseSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         lastPage: false,
       ));
     } else {
@@ -115,13 +116,13 @@ class ExpertiseSelectBloc
     if (listGet.isEmpty) {
       emit(state.copyWith(
         status: ExpertiseSelectStateStatus.success,
-        // firstPage: false,
         lastPage: true,
       ));
     } else {
       emit(state.copyWith(
         status: ExpertiseSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         page: state.page + 1,
         firstPage: false,
       ));

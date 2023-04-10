@@ -98,6 +98,7 @@ class SecretarySelectBloc
       emit(state.copyWith(
         status: SecretarySelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         lastPage: false,
       ));
     } else {
@@ -121,13 +122,13 @@ class SecretarySelectBloc
     if (listGet.isEmpty) {
       emit(state.copyWith(
         status: SecretarySelectStateStatus.success,
-        // firstPage: false,
         lastPage: true,
       ));
     } else {
       emit(state.copyWith(
         status: SecretarySelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         page: state.page + 1,
         firstPage: false,
       ));

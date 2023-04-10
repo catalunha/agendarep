@@ -153,41 +153,6 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                         validator: Validatorless.required('Nome é obrigatório'),
                       ),
                       const Divider(height: 5),
-                      AppTextFormField(
-                        label: 'email',
-                        controller: _emailTEC,
-                      ),
-                      AppTextFormField(
-                        label: 'Telefone. Formato DDDNUMERO',
-                        controller: _phoneTEC,
-                        validator: Validatorless.number('Apenas números.'),
-                      ),
-                      AppTextFormField(
-                        label: 'CRM',
-                        controller: _crmTEC,
-                      ),
-                      CheckboxListTile(
-                        title: const Text("Bloquear este cadastro ?"),
-                        onChanged: (value) {
-                          setState(() {
-                            isBlocked = value ?? false;
-                          });
-                        },
-                        value: isBlocked,
-                      ),
-                      const SizedBox(height: 5),
-                      const Text('Aniversário'),
-                      SizedBox(
-                        width: 300,
-                        height: 100,
-                        child: CupertinoDatePicker(
-                          initialDateTime: _birthday,
-                          mode: CupertinoDatePickerMode.date,
-                          onDateTimeChanged: (DateTime newDate) {
-                            _birthday = newDate;
-                          },
-                        ),
-                      ),
                       const Text('Selecione uma Especialidade'),
                       Row(
                         children: [
@@ -224,22 +189,6 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                                           ),
                                         ],
                                       ),
-                                      // (e) => SizedBox(
-                                      //   width: 200,
-                                      //   child: ListTile(
-                                      //     title: Text('${e.name}'),
-                                      //     trailing: IconButton(
-                                      //       icon: const Icon(Icons.delete),
-                                      //       onPressed: () {
-                                      //         context
-                                      //             .read<MedicalSaveBloc>()
-                                      //             .add(
-                                      //                 MedicalSaveEventRemoveExpertise(
-                                      //                     e));
-                                      //       },
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     )
                                     .toList(),
                               );
@@ -247,6 +196,41 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                           ),
                           const SizedBox(width: 15)
                         ],
+                      ),
+                      AppTextFormField(
+                        label: 'email',
+                        controller: _emailTEC,
+                      ),
+                      AppTextFormField(
+                        label: 'Telefone. Formato DDDNUMERO',
+                        controller: _phoneTEC,
+                        validator: Validatorless.number('Apenas números.'),
+                      ),
+                      AppTextFormField(
+                        label: 'CRM',
+                        controller: _crmTEC,
+                      ),
+                      CheckboxListTile(
+                        title: const Text("Bloquear este cadastro ?"),
+                        onChanged: (value) {
+                          setState(() {
+                            isBlocked = value ?? false;
+                          });
+                        },
+                        value: isBlocked,
+                      ),
+                      const SizedBox(height: 5),
+                      const Text('Aniversário'),
+                      SizedBox(
+                        width: 300,
+                        height: 100,
+                        child: CupertinoDatePicker(
+                          initialDateTime: _birthday,
+                          mode: CupertinoDatePickerMode.date,
+                          onDateTimeChanged: (DateTime newDate) {
+                            _birthday = newDate;
+                          },
+                        ),
                       ),
                       if (widget.medicalModel != null)
                         CheckboxListTile(

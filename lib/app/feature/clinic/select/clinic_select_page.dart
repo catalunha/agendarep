@@ -95,17 +95,27 @@ class _ClinicSelectViewState extends State<ClinicSelectView> {
         child: Column(
           children: [
             Form(
-              child: Column(
+              child: Row(
                 children: [
-                  AppTextFormField(
-                    label: 'Nome',
-                    controller: _nameTEC,
-                    onChange: (value) {
+                  Expanded(
+                    child: AppTextFormField(
+                      label: 'Nome',
+                      controller: _nameTEC,
+                      onChange: (value) {
+                        context
+                            .read<ClinicSelectBloc>()
+                            .add(ClinicSelectEventFormSubmitted(value));
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
                       context
                           .read<ClinicSelectBloc>()
-                          .add(ClinicSelectEventFormSubmitted(value));
+                          .add(ClinicSelectEventFormSubmitted(_nameTEC.text));
                     },
-                  ),
+                    icon: const Icon(Icons.youtube_searched_for_sharp),
+                  )
                 ],
               ),
             ),

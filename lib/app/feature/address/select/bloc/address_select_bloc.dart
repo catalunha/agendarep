@@ -97,6 +97,7 @@ class AddressSelectBloc extends Bloc<AddressSelectEvent, AddressSelectState> {
       emit(state.copyWith(
         status: AddressSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         lastPage: false,
       ));
     } else {
@@ -119,13 +120,13 @@ class AddressSelectBloc extends Bloc<AddressSelectEvent, AddressSelectState> {
     if (listGet.isEmpty) {
       emit(state.copyWith(
         status: AddressSelectStateStatus.success,
-        // firstPage: false,
         lastPage: true,
       ));
     } else {
       emit(state.copyWith(
         status: AddressSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         page: state.page + 1,
         firstPage: false,
       ));

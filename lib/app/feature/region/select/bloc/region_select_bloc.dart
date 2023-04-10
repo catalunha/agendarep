@@ -40,7 +40,6 @@ class RegionSelectBloc extends Bloc<RegionSelectEvent, RegionSelectState> {
     try {
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(RegionEntity.className));
-      // query.keysToReturn(['name']);
 
       query.whereEqualTo(
           RegionEntity.seller,
@@ -97,6 +96,7 @@ class RegionSelectBloc extends Bloc<RegionSelectEvent, RegionSelectState> {
       emit(state.copyWith(
         status: RegionSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         lastPage: false,
       ));
     } else {
@@ -119,13 +119,13 @@ class RegionSelectBloc extends Bloc<RegionSelectEvent, RegionSelectState> {
     if (listGet.isEmpty) {
       emit(state.copyWith(
         status: RegionSelectStateStatus.success,
-        // firstPage: false,
         lastPage: true,
       ));
     } else {
       emit(state.copyWith(
         status: RegionSelectStateStatus.success,
         list: listGet,
+        listFiltered: listGet,
         page: state.page + 1,
         firstPage: false,
       ));
