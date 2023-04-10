@@ -80,7 +80,10 @@ class MedicalEntity {
       parseObject.set(MedicalEntity.crm, model.crm);
     }
     if (model.birthday != null) {
-      parseObject.set<DateTime?>(MedicalEntity.birthday, model.birthday);
+      parseObject.set<DateTime?>(
+          MedicalEntity.birthday,
+          DateTime(model.birthday!.year, model.birthday!.month,
+              model.birthday!.day));
     }
 
     if (model.isBlocked != null) {

@@ -41,10 +41,12 @@ class CycleEntity {
       parseObject.set(CycleEntity.name, model.name);
     }
     if (model.start != null) {
-      parseObject.set<DateTime?>(CycleEntity.start, model.start);
+      parseObject.set<DateTime?>(CycleEntity.start,
+          DateTime(model.start!.year, model.start!.month, model.start!.day));
     }
     if (model.end != null) {
-      parseObject.set<DateTime?>(CycleEntity.end, model.end);
+      parseObject.set<DateTime?>(CycleEntity.end,
+          DateTime(model.end!.year, model.end!.month, model.end!.day));
     }
 
     if (model.isArchived != null) {

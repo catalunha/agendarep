@@ -52,7 +52,10 @@ class SecretaryEntity {
       parseObject.set(SecretaryEntity.phone, model.phone);
     }
     if (model.birthday != null) {
-      parseObject.set<DateTime?>(SecretaryEntity.birthday, model.birthday);
+      parseObject.set<DateTime?>(
+          SecretaryEntity.birthday,
+          DateTime(model.birthday!.year, model.birthday!.month,
+              model.birthday!.day));
     }
 
     return parseObject;
