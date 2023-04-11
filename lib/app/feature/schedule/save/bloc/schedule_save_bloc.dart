@@ -49,6 +49,20 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       print('state.clinics.length: ${state.clinics.length}');
       if (state.expertises.length == 1 && state.clinics.length == 1) {
         ScheduleModel scheduleModel;
+        var mondayHours = state.mondayHours;
+        var tuesdayHours = state.tuesdayHours;
+        var wednesdayHours = state.wednesdayHours;
+        var thursdayHours = state.thursdayHours;
+        var fridayHours = state.fridayHours;
+        var saturdayHours = state.saturdayHours;
+        var sundayHours = state.sundayHours;
+        mondayHours.sort();
+        tuesdayHours.sort();
+        wednesdayHours.sort();
+        thursdayHours.sort();
+        fridayHours.sort();
+        saturdayHours.sort();
+        sundayHours.sort();
         if (state.model == null) {
           scheduleModel = ScheduleModel(
             seller: _seller,
@@ -58,13 +72,13 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
             justSchedule: event.justSchedule,
             limitedSellers: event.limitedSellers,
             description: event.description,
-            mondayHours: state.mondayHours,
-            tuesdayHours: state.tuesdayHours,
-            wednesdayHours: state.wednesdayHours,
-            thursdayHours: state.thursdayHours,
-            fridayHours: state.fridayHours,
-            saturdayHours: state.saturdayHours,
-            sundayHours: state.sundayHours,
+            mondayHours: mondayHours,
+            tuesdayHours: tuesdayHours,
+            wednesdayHours: wednesdayHours,
+            thursdayHours: thursdayHours,
+            fridayHours: fridayHours,
+            saturdayHours: saturdayHours,
+            sundayHours: sundayHours,
           );
         } else {
           scheduleModel = state.model!.copyWith(
@@ -74,13 +88,13 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
             justSchedule: event.justSchedule,
             limitedSellers: event.limitedSellers,
             description: event.description,
-            mondayHours: state.mondayHours,
-            tuesdayHours: state.tuesdayHours,
-            wednesdayHours: state.wednesdayHours,
-            thursdayHours: state.thursdayHours,
-            fridayHours: state.fridayHours,
-            saturdayHours: state.saturdayHours,
-            sundayHours: state.sundayHours,
+            mondayHours: mondayHours,
+            tuesdayHours: tuesdayHours,
+            wednesdayHours: wednesdayHours,
+            thursdayHours: thursdayHours,
+            fridayHours: fridayHours,
+            saturdayHours: saturdayHours,
+            sundayHours: sundayHours,
           );
         }
         String scheduleModelId =
@@ -133,7 +147,7 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       );
       print('clinicModelListGet: $clinicModelListGet');
       emit(state.copyWith(
-          status: ScheduleSaveStateStatus.success,
+          status: ScheduleSaveStateStatus.updated,
           medical: event.model,
           expertises: event.model.expertises,
           clinics: clinicModelListGet));

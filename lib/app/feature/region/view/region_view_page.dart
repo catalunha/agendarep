@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import '../../../core/models/cycle_model.dart';
 import '../../../core/models/region_model.dart';
 import '../../utils/app_text_title_value.dart';
 
@@ -24,6 +22,10 @@ class RegionViewPage extends StatelessWidget {
                 AppTextTitleValue(
                   title: 'Id: ',
                   value: model.id,
+                ),
+                AppTextTitleValue(
+                  title: 'Rep: ',
+                  value: model.seller?.name,
                 ),
                 AppTextTitleValue(
                   title: 'UF: ',

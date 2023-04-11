@@ -5,7 +5,7 @@ import '../../../../core/models/expertise_model.dart';
 import '../../../../core/models/medical_model.dart';
 import '../../../../core/models/schedule_models.dart';
 
-enum ScheduleSaveStateStatus { initial, loading, success, error }
+enum ScheduleSaveStateStatus { initial, loading, updated, success, error }
 
 class ScheduleSaveState {
   final ScheduleSaveStateStatus status;

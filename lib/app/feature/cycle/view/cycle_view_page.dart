@@ -26,14 +26,18 @@ class CycleViewPage extends StatelessWidget {
                   value: model.id,
                 ),
                 AppTextTitleValue(
+                  title: 'Rep: ',
+                  value: model.seller?.name,
+                  inColumn: true,
+                ),
+                AppTextTitleValue(
                   title: 'Nome: ',
                   value: model.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
-                  title: 'Bloqueado: ',
-                  value:
-                      model.isArchived ?? false ? 'Bloqueado' : 'Desbloqueado',
+                  title: 'Arquivado: ',
+                  value: model.isArchived ?? false ? 'Sim' : 'Não',
                   inColumn: true,
                 ),
                 AppTextTitleValue(

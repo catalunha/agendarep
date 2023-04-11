@@ -26,6 +26,11 @@ class SecretaryViewPage extends StatelessWidget {
                   value: secretaryModel.id,
                 ),
                 AppTextTitleValue(
+                  title: 'Rep: ',
+                  value: secretaryModel.seller?.name,
+                  inColumn: true,
+                ),
+                AppTextTitleValue(
                   title: 'Email: ',
                   value: secretaryModel.email,
                   inColumn: true,

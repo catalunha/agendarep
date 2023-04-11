@@ -26,18 +26,12 @@ class ClinicViewPage extends StatelessWidget {
                   value: model.id,
                 ),
                 AppTextTitleValue(
+                  title: 'Rep: ',
+                  value: model.seller?.name,
+                ),
+                AppTextTitleValue(
                   title: 'Medico: ',
                   value: model.medical?.name,
-                  inColumn: true,
-                ),
-                AppTextTitleValue(
-                  title: 'Sala: ',
-                  value: model.room,
-                  inColumn: true,
-                ),
-                AppTextTitleValue(
-                  title: 'Telefone: ',
-                  value: model.phone,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
@@ -54,6 +48,22 @@ class ClinicViewPage extends StatelessWidget {
                   title: 'Secretárias: ',
                   value:
                       model.secretaries?.map((e) => e.name).toList().join(', '),
+                  inColumn: true,
+                ),
+                AppTextTitleValue(
+                  title: 'Nome: ',
+                  value: model.name,
+                  inColumn: true,
+                ),
+                AppTextTitleValue(
+                  title: 'Sala: ',
+                  value: model.room,
+                  inColumn: true,
+                ),
+                AppTextTitleValue(
+                  title: 'Telefone: ',
+                  value: model.phone,
+                  inColumn: true,
                 ),
               ],
             ),

@@ -26,6 +26,11 @@ class MedicalViewPage extends StatelessWidget {
                   value: medicalModel.id,
                 ),
                 AppTextTitleValue(
+                  title: 'Rep: ',
+                  value: medicalModel.seller?.name,
+                  inColumn: true,
+                ),
+                AppTextTitleValue(
                   title: 'Email: ',
                   value: medicalModel.email,
                   inColumn: true,
@@ -60,11 +65,12 @@ class MedicalViewPage extends StatelessWidget {
                   inColumn: true,
                 ),
                 AppTextTitleValue(
-                  title: 'Descrição: ',
+                  title: 'Especialidades: ',
                   value: medicalModel.expertises
                       ?.map((e) => e.name)
                       .toList()
                       .join(', '),
+                  inColumn: true,
                 ),
               ],
             ),

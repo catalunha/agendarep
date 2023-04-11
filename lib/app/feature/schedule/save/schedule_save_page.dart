@@ -127,6 +127,9 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
             }
             Navigator.of(context).pop();
           }
+          if (state.status == ScheduleSaveStateStatus.updated) {
+            Navigator.of(context).pop();
+          }
           if (state.status == ScheduleSaveStateStatus.loading) {
             await showDialog(
               barrierDismissible: false,

@@ -24,6 +24,11 @@ class AddressViewPage extends StatelessWidget {
                   value: model.id,
                 ),
                 AppTextTitleValue(
+                  title: 'Rep: ',
+                  value: model.seller?.name,
+                  inColumn: true,
+                ),
+                AppTextTitleValue(
                   title: 'Nome: ',
                   value: model.name,
                   inColumn: true,
@@ -40,7 +45,7 @@ class AddressViewPage extends StatelessWidget {
                 ),
                 AppTextTitleValue(
                   title: 'Região: ',
-                  value: model.region.toString(),
+                  value: model.region?.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
