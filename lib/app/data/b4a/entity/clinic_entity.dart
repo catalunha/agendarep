@@ -28,6 +28,8 @@ class ClinicEntity {
     querySecretary.whereRelatedTo(ClinicEntity.secretaries,
         ClinicEntity.className, parseObject.objectId!);
     querySecretary.includeObject(['seller']);
+    querySecretary.whereEqualTo(SecretaryEntity.isDeleted, false);
+
     final ParseResponse parseResponse = await querySecretary.query();
     if (parseResponse.success && parseResponse.results != null) {
       for (var e in parseResponse.results!) {
