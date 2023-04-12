@@ -24,7 +24,6 @@ class ScheduleEntity {
   static const String saturdayHours = 'saturdayHours';
   static const String sundayHours = 'sundayHours';
   static const String description = 'description';
-  static const String isDeleted = 'isDeleted';
 
   Future<ScheduleModel> toModel(ParseObject parseObject) async {
     print(

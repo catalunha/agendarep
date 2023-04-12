@@ -12,7 +12,6 @@ class CycleEntity {
   static const String start = 'start';
   static const String end = 'end';
   static const String isArchived = 'isArchived';
-  static const String isDeleted = 'isDeleted';
   CycleModel toModel(ParseObject parseObject) {
     CycleModel model = CycleModel(
       id: parseObject.objectId!,

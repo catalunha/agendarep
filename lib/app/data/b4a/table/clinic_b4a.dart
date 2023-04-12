@@ -11,7 +11,6 @@ class ClinicB4a {
       QueryBuilder<ParseObject> query, Pagination pagination) async {
     query.setAmountToSkip((pagination.page - 1) * pagination.limit);
     query.setLimit(pagination.limit);
-    query.whereEqualTo(ClinicEntity.isDeleted, false);
     query.includeObject([
       'seller',
       'medical',
@@ -82,11 +81,10 @@ class ClinicB4a {
   Future<bool> delete(String modelId) async {
     final parseObject = ParseObject(ClinicEntity.className);
     parseObject.objectId = modelId;
-    parseObject.set(ClinicEntity.isDeleted, true);
     ParseResponse? parseResponse;
 
     try {
-      parseResponse = await parseObject.save();
+      parseResponse = await parseObject.delete();
       if (parseResponse.success && parseResponse.results != null) {
         return true;
       } else {

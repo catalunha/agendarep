@@ -18,7 +18,6 @@ class ClinicEntity {
   static const String name = 'name';
   static const String room = 'room';
   static const String phone = 'phone';
-  static const String isDeleted = 'isDeleted';
 
   Future<ClinicModel> toModel(ParseObject parseObject) async {
     //+++ get secretary
@@ -28,7 +27,6 @@ class ClinicEntity {
     querySecretary.whereRelatedTo(ClinicEntity.secretaries,
         ClinicEntity.className, parseObject.objectId!);
     querySecretary.includeObject(['seller']);
-    querySecretary.whereEqualTo(SecretaryEntity.isDeleted, false);
 
     final ParseResponse parseResponse = await querySecretary.query();
     if (parseResponse.success && parseResponse.results != null) {

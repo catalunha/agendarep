@@ -12,7 +12,6 @@ class SecretaryEntity {
   static const String name = 'name';
   static const String phone = 'phone';
   static const String birthday = 'birthday';
-  static const String isDeleted = 'isDeleted';
 
   SecretaryModel toModel(ParseObject parseObject) {
     SecretaryModel model = SecretaryModel(

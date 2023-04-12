@@ -11,7 +11,6 @@ class RegionEntity {
   static const String uf = 'uf';
   static const String city = 'city';
   static const String name = 'name';
-  static const String isDeleted = 'isDeleted';
   RegionModel toModel(ParseObject parseObject) {
     RegionModel model = RegionModel(
       id: parseObject.objectId!,

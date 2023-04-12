@@ -11,7 +11,6 @@ class AddressB4a {
       QueryBuilder<ParseObject> query, Pagination pagination) async {
     query.setAmountToSkip((pagination.page - 1) * pagination.limit);
     query.setLimit(pagination.limit);
-    query.whereEqualTo(AddressEntity.isDeleted, false);
     query.includeObject(['seller', 'region', 'region.seller']);
     return query;
   }
@@ -74,11 +73,10 @@ class AddressB4a {
   Future<bool> delete(String modelId) async {
     final parseObject = ParseObject(AddressEntity.className);
     parseObject.objectId = modelId;
-    parseObject.set(AddressEntity.isDeleted, true);
     ParseResponse? parseResponse;
 
     try {
-      parseResponse = await parseObject.save();
+      parseResponse = await parseObject.delete();
       if (parseResponse.success && parseResponse.results != null) {
         return true;
       } else {

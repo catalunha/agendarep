@@ -14,7 +14,6 @@ class AddressEntity {
   static const String description = 'description';
   static const String parseGeoPoint = 'parseGeoPoint';
   static const String region = 'region';
-  static const String isDeleted = 'isDeleted';
 
   AddressModel toModel(ParseObject parseObject) {
     print('parseObjectobjectId: ${parseObject.objectId}');

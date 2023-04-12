@@ -11,7 +11,6 @@ class CycleB4a {
       QueryBuilder<ParseObject> query, Pagination pagination) async {
     query.setAmountToSkip((pagination.page - 1) * pagination.limit);
     query.setLimit(pagination.limit);
-    query.whereEqualTo(CycleEntity.isDeleted, false);
     query.includeObject(['seller']);
     return query;
   }
@@ -74,6 +73,30 @@ class CycleB4a {
   Future<bool> delete(String modelId) async {
     final parseObject = ParseObject(CycleEntity.className);
     parseObject.objectId = modelId;
+    ParseResponse? parseResponse;
+
+    try {
+      parseResponse = await parseObject.delete();
+      if (parseResponse.success && parseResponse.results != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } on Exception {
+      var errorTranslated =
+          ParseErrorTranslate.translate(parseResponse!.error!);
+      throw B4aException(
+        errorTranslated,
+        where: 'CycleRepositoryB4a.delete',
+        originalError:
+            '${parseResponse.error!.code} -${parseResponse.error!.message}',
+      );
+    }
+  }
+  /*
+  Future<bool> delete(String modelId) async {
+    final parseObject = ParseObject(CycleEntity.className);
+    parseObject.objectId = modelId;
     parseObject.set(CycleEntity.isDeleted, true);
     ParseResponse? parseResponse;
 
@@ -95,4 +118,5 @@ class CycleB4a {
       );
     }
   }
+  */
 }

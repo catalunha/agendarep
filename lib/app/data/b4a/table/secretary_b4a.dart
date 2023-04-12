@@ -11,7 +11,6 @@ class SecretaryB4a {
       QueryBuilder<ParseObject> query, Pagination pagination) async {
     query.setAmountToSkip((pagination.page - 1) * pagination.limit);
     query.setLimit(pagination.limit);
-    query.whereEqualTo(SecretaryEntity.isDeleted, false);
     query.includeObject(['seller']);
     return query;
   }
@@ -93,11 +92,10 @@ class SecretaryB4a {
   Future<bool> delete(String modelId) async {
     final parseObject = ParseObject(SecretaryEntity.className);
     parseObject.objectId = modelId;
-    parseObject.set(SecretaryEntity.isDeleted, true);
     ParseResponse? parseResponse;
 
     try {
-      parseResponse = await parseObject.save();
+      parseResponse = await parseObject.delete();
       if (parseResponse.success && parseResponse.results != null) {
         return true;
       } else {

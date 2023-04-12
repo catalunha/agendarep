@@ -16,7 +16,6 @@ class MedicalEntity {
   static const String crm = 'crm';
   static const String birthday = 'birthday';
   static const String isBlocked = 'isBlocked';
-  static const String isDeleted = 'isDeleted';
   static const String expertises = 'expertises';
 
   Future<MedicalModel> toModel(ParseObject parseObject,

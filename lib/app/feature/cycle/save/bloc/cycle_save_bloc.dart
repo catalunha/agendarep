@@ -63,7 +63,7 @@ class CycleSaveBloc extends Bloc<CycleSaveEvent, CycleSaveState> {
       emit(state.copyWith(status: CycleSaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
-          status: CycleSaveStateStatus.error, error: 'Erro ao salvar cycle'));
+          status: CycleSaveStateStatus.error, error: 'Erro ao delete ciclo'));
     }
   }
 }
