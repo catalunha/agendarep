@@ -66,7 +66,7 @@ class _ClinicSelectViewState extends State<ClinicSelectView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Selecione um endereço'),
+        title: const Text('Selecione um consultório'),
       ),
       body: BlocListener<ClinicSelectBloc, ClinicSelectState>(
         listenWhen: (previous, current) {

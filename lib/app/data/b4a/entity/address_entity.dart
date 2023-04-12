@@ -16,16 +16,6 @@ class AddressEntity {
   static const String region = 'region';
 
   AddressModel toModel(ParseObject parseObject) {
-    print('parseObjectobjectId: ${parseObject.objectId}');
-    print('parseObject: $parseObject');
-    if (parseObject.get(AddressEntity.region) != null) {
-      print('region: ${parseObject.get(AddressEntity.region)}');
-      print(
-          'regionModel: ${RegionEntity().toModel(parseObject.get(AddressEntity.region))}');
-    }
-    if (parseObject.get(AddressEntity.seller) != null) {
-      print('seller: ${parseObject.get(AddressEntity.seller)}');
-    }
     AddressModel model = AddressModel(
       id: parseObject.objectId!,
       seller: parseObject.get(AddressEntity.seller) != null
