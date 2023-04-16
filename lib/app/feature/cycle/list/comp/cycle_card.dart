@@ -32,8 +32,8 @@ class CycleCard extends StatelessWidget {
             value: model.name,
           ),
           AppTextTitleValue(
-            title: 'Bloqueado: ',
-            value: model.isArchived ?? false ? 'Bloqueado' : 'Desbloqueado',
+            title: 'Arquivado: ',
+            value: model.isArchived ?? true ? 'Sim' : 'Não',
             inColumn: true,
           ),
           AppTextTitleValue(

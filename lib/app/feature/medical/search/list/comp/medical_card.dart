@@ -44,15 +44,15 @@ class MedicalCard extends StatelessWidget {
             value: model.crm,
           ),
           AppTextTitleValue(
-            title: 'Bloqueado: ',
-            value: model.isBlocked ?? false ? 'Bloqueado' : 'Desbloqueado',
+            title: 'Cadastrado no painel: ',
+            value: model.isBlocked ?? true ? 'Sim' : 'Não',
           ),
           AppTextTitleValue(
             title: 'Data de Aniversário: ',
             value: dateFormat.format(model.birthday!),
           ),
           AppTextTitleValue(
-            title: 'Descrição: ',
+            title: 'Especialidades: ',
             value: model.expertises?.map((e) => e.name).toList().join(', '),
           ),
           Wrap(

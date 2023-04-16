@@ -180,7 +180,7 @@ class _AddressSaveViewState extends State<AddressSaveView> {
                       ),
                       const Divider(height: 5),
                       AppTextFormField(
-                        label: 'Telefone. Formato DDDNUMERO',
+                        label: 'Telefone do prédio. Formato DDDNUMERO',
                         controller: _phoneTEC,
                         validator: Validatorless.number('Apenas números.'),
                       ),

@@ -24,7 +24,7 @@ class ClinicSearchListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Clinicas encontradas'),
+        title: const Text('Consultórios encontrados'),
       ),
       body: Column(
         children: [

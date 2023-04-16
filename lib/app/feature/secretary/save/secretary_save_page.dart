@@ -152,7 +152,8 @@ class _SecretarySaveViewState extends State<SecretarySaveView> {
                         controller: _emailTEC,
                       ),
                       AppTextFormField(
-                        label: 'Telefone. Formato DDDNUMERO',
+                        label:
+                            'Telefone pessoal da secretaria. Formato DDDNUMERO',
                         controller: _phoneTEC,
                         validator: Validatorless.number('Apenas números.'),
                       ),

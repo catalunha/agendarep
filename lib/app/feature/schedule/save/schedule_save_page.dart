@@ -150,7 +150,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                   child: Column(
                     children: [
                       const SizedBox(height: 5),
-                      const Text('Selecione o médico *'),
+                      const Text('Selecione um médico *'),
                       Row(
                         children: [
                           IconButton(
@@ -174,7 +174,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                           ),
                         ],
                       ),
-                      const Text('Selecione a especialidade *'),
+                      const Text('Selecione uma especialidade *'),
                       Row(
                         children: [
                           IconButton(
@@ -221,7 +221,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                           ),
                         ],
                       ),
-                      const Text('Selecione o consultorio *'),
+                      const Text('Selecione um consultorio *'),
                       Row(
                         children: [
                           IconButton(

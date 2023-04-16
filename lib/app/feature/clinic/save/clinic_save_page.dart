@@ -174,7 +174,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                         controller: _roomTEC,
                       ),
                       AppTextFormField(
-                        label: 'Telefone. Formato DDDNUMERO',
+                        label: 'Telefone do consultório. Formato DDDNUMERO',
                         controller: _phoneTEC,
                         validator: Validatorless.number('Apenas números.'),
                       ),

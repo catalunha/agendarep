@@ -202,7 +202,7 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                         controller: _emailTEC,
                       ),
                       AppTextFormField(
-                        label: 'Telefone. Formato DDDNUMERO',
+                        label: 'Telefone pessoal do médico. Formato DDDNUMERO',
                         controller: _phoneTEC,
                         validator: Validatorless.number('Apenas números.'),
                       ),
@@ -211,7 +211,7 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                         controller: _crmTEC,
                       ),
                       CheckboxListTile(
-                        title: const Text("Bloquear este cadastro ?"),
+                        title: const Text("Cadastrado no painel ?"),
                         onChanged: (value) {
                           setState(() {
                             isBlocked = value ?? false;
