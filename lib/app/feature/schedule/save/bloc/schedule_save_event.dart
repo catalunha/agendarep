@@ -22,6 +22,7 @@ class ScheduleSaveEventAddMedical extends ScheduleSaveEvent {
   ScheduleSaveEventAddMedical(this.model);
 }
 
+//nao precisa adicionar expertise, tem q vir do medico.
 class ScheduleSaveEventAddExpertise extends ScheduleSaveEvent {
   final ExpertiseModel model;
   ScheduleSaveEventAddExpertise(this.model);
@@ -32,6 +33,7 @@ class ScheduleSaveEventRemoveExpertise extends ScheduleSaveEvent {
   ScheduleSaveEventRemoveExpertise(this.model);
 }
 
+//nao precisa adicionar expertise, tem q vir do medico.
 class ScheduleSaveEventAddClinic extends ScheduleSaveEvent {
   final ClinicModel model;
   ScheduleSaveEventAddClinic(this.model);
