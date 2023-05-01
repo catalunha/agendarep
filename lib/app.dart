@@ -1,3 +1,4 @@
+import 'package:agendarep/app/feature/speed/save/speed_save_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -134,6 +135,7 @@ class _AppViewState extends State<AppView> {
         '/clinic/select': (_) => const ClinicSelectPage(),
         '/schedule/save': (_) => const ScheduleSavePage(),
         '/schedule/search': (_) => const ScheduleSearchPage(),
+        '/speed/save': (_) => const SpeedSavePage(),
       },
       initialRoute: '/',
     );
