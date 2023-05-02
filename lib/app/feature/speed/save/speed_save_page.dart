@@ -1,7 +1,6 @@
 import 'package:agendarep/app/feature/speed/save/bloc/speed_save_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:validatorless/validatorless.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/models/region_model.dart';
@@ -10,6 +9,12 @@ import '../../../core/repositories/region_repository.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/speed_save_bloc.dart';
 import 'bloc/speed_save_state.dart';
+import 'comp/hours_in_weekday.dart';
+import 'comp/speed_address.dart';
+import 'comp/speed_clinic.dart';
+import 'comp/speed_medical.dart';
+import 'comp/speed_region.dart';
+import 'comp/speed_secretary.dart';
 
 class SpeedSavePage extends StatelessWidget {
   const SpeedSavePage({super.key});
@@ -53,35 +58,60 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
   final _addressPhoneTEC = TextEditingController();
   final _addressDescriptionTEC = TextEditingController();
   //Secretary
-  final _secretaryEmailTEC = TextEditingController();
   final _secretaryNameTEC = TextEditingController();
   final _secretaryPhoneTEC = TextEditingController();
-  final DateTime _secretaryBirthday = DateTime.now();
+  final _secretaryEmailTEC = TextEditingController();
   //Medical
-  final _medicalEmailTEC = TextEditingController();
   final _medicalNameTEC = TextEditingController();
   final _medicalPhoneTEC = TextEditingController();
+  final _medicalEmailTEC = TextEditingController();
   final _medicalCrmTEC = TextEditingController();
-  final DateTime _medicalBirthday = DateTime.now();
   //Clinic
-  final _ClinicNameTEC = TextEditingController();
-  final _ClinicRoomTEC = TextEditingController();
-  final _ClinicPhoneTEC = TextEditingController();
+  final _clinicNameTEC = TextEditingController();
+  final _clinicPhoneTEC = TextEditingController();
+  final _clinicRoomTEC = TextEditingController();
   //Schedule
-  final bool _ScheduleJustSchedule = false;
-  final _ScheduleLimitedSellersTEC = TextEditingController();
+  bool _scheduleJustSchedule = false;
+  final _scheduleLimitedSellersTEC = TextEditingController();
+  // Config Speed
+  bool selectRegion = false;
+  bool selectAddress = false;
+  bool selectSecretary = false;
+  bool selectMedical = false;
+  bool selectClinic = false;
+  bool selectSchedule = false;
   @override
   void initState() {
     super.initState();
-    //Region
-    // _regionUfTEC.text = "";
-    // _regionCityTEC.text = "";
-    // _regionNameTEC.text = "";
-    //Address
-    // _addressNameTEC.text = "";
-    // _addressPhoneTEC.text = "";
-    // _addressDescriptionTEC.text = "";
+  }
+
+  resetTEC() {
+    // Region
+    _regionUfTEC.text = "";
+    _regionCityTEC.text = "";
+    _regionNameTEC.text = "";
+    // Address
+    _addressNameTEC.text = "";
+    _addressPhoneTEC.text = "";
+    _addressDescriptionTEC.text = "";
     //Secretary
+    _secretaryNameTEC.text = "";
+    _secretaryPhoneTEC.text = "";
+    _secretaryEmailTEC.text = "";
+    //Medical
+    _medicalNameTEC.text = "";
+    _medicalPhoneTEC.text = "";
+    _medicalEmailTEC.text = "";
+    _medicalCrmTEC.text = "";
+    //Clinic
+    _clinicNameTEC.text = "";
+    _clinicPhoneTEC.text = "";
+    _clinicRoomTEC.text = "";
+    context.read<SpeedSaveBloc>().add(SpeedSaveEventSetRegion(null));
+    context.read<SpeedSaveBloc>().add(SpeedSaveEventSetAddress(null));
+    context.read<SpeedSaveBloc>().add(SpeedSaveEventSetSecretary(null));
+    context.read<SpeedSaveBloc>().add(SpeedSaveEventSetMedical(null));
+    context.read<SpeedSaveBloc>().add(SpeedSaveEventSetClinic(null));
   }
 
   @override
@@ -102,95 +132,176 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
                     regionName: _regionNameTEC.text,
                   ),
                 );
-            Navigator.of(context).pop();
           }
         },
       ),
-      body: Center(
+      body: BlocListener<SpeedSaveBloc, SpeedSaveState>(
+        listener: (context, state) async {
+          if (state.status == SpeedSaveStateStatus.error) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
+          }
+          if (state.status == SpeedSaveStateStatus.success) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          }
+          if (state.status == SpeedSaveStateStatus.loading) {
+            await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return const Center(child: CircularProgressIndicator());
+              },
+            );
+          }
+        },
         child: Form(
           key: _formKey,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Card(
-                    child: Column(children: [
-                      const Text('Selecione ou adicione uma região'),
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () async {
-                                var contextTemp = context.read<SpeedSaveBloc>();
-                                RegionModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/region/select')
-                                        as RegionModel?;
-                                print(result);
-                                if (result != null) {
-                                  contextTemp
-                                      .add(SpeedSaveEventAddRegion(result));
-                                }
-                              },
-                              icon: const Icon(Icons.search)),
-                          BlocBuilder<SpeedSaveBloc, SpeedSaveState>(
-                            builder: (context, state) {
-                              return Visibility(
-                                visible: state.region != null,
-                                child: Row(
-                                  children: [
-                                    Text('${state.region?.name}'),
-                                    IconButton(
-                                        onPressed: () {
-                                          context.read<SpeedSaveBloc>().add(
-                                              SpeedSaveEventRemoveRegion());
-                                        },
-                                        icon: const Icon(Icons.delete))
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      BlocBuilder<SpeedSaveBloc, SpeedSaveState>(
-                        builder: (context, state) {
-                          return Visibility(
-                            visible: state.region == null,
-                            child: Column(
-                              children: [
-                                AppTextFormField(
-                                  label: 'Estado *',
-                                  controller: _regionUfTEC,
-                                  validator: state.region == null
-                                      ? Validatorless.required(
-                                          'Este valor é obrigatório')
-                                      : null,
-                                ),
-                                AppTextFormField(
-                                  label: 'Cidade *',
-                                  controller: _regionCityTEC,
-                                  validator: state.region == null
-                                      ? Validatorless.required(
-                                          'Este valor é obrigatório')
-                                      : null,
-                                ),
-                                AppTextFormField(
-                                  label:
-                                      'Nome * (Centro, Setor X, Bairro Y, Quadras A B C, etc)',
-                                  controller: _regionNameTEC,
-                                  validator: state.region == null
-                                      ? Validatorless.required(
-                                          'Este valor é obrigatório')
-                                      : null,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ]),
+                  CheckboxListTile(
+                    title: const Text("Cadastrar uma região ?"),
+                    onChanged: (value) {
+                      setState(() {
+                        resetTEC();
+                        selectRegion = value ?? false;
+                      });
+                    },
+                    value: selectRegion,
                   ),
+                  CheckboxListTile(
+                    title:
+                        const Text("Cadastrar um endereço (inclui região) ?"),
+                    onChanged: (value) {
+                      setState(() {
+                        resetTEC();
+                        selectRegion = value ?? false;
+                        selectAddress = value ?? false;
+                      });
+                    },
+                    value: selectAddress,
+                  ),
+                  CheckboxListTile(
+                    title: const Text("Cadastrar uma secretária ?"),
+                    onChanged: (value) {
+                      setState(() {
+                        resetTEC();
+                        selectSecretary = value ?? false;
+                      });
+                    },
+                    value: selectSecretary,
+                  ),
+                  CheckboxListTile(
+                    title: const Text("Cadastrar um médico ?"),
+                    onChanged: (value) {
+                      setState(() {
+                        resetTEC();
+                        selectMedical = value ?? false;
+                      });
+                    },
+                    value: selectMedical,
+                  ),
+                  CheckboxListTile(
+                    title: const Text(
+                        "Cadastrar uma consultorio (inclui região, endereço, secretaria e médico) ?"),
+                    onChanged: (value) {
+                      setState(() {
+                        resetTEC();
+                        selectRegion = value ?? false;
+                        selectMedical = value ?? false;
+                        selectAddress = value ?? false;
+                        selectSecretary = value ?? false;
+                        selectClinic = value ?? false;
+                      });
+                    },
+                    value: selectClinic,
+                  ),
+                  CheckboxListTile(
+                    title: const Text(
+                        "Cadastrar uma agenda (inclui região, endereço, secretaria, médico e clínica) ?"),
+                    onChanged: (value) {
+                      setState(() {
+                        resetTEC();
+                        selectRegion = value ?? false;
+                        selectMedical = value ?? false;
+                        selectAddress = value ?? false;
+                        selectSecretary = value ?? false;
+                        selectClinic = value ?? false;
+                        selectSchedule = value ?? false;
+                      });
+                    },
+                    value: selectSchedule,
+                  ),
+                  Visibility(
+                    visible: selectRegion,
+                    child: SpeedRegion(
+                        regionUfTEC: _regionUfTEC,
+                        regionCityTEC: _regionCityTEC,
+                        regionNameTEC: _regionNameTEC),
+                  ),
+                  Visibility(
+                    visible: selectAddress,
+                    child: SpeedAddress(
+                        addressNameTEC: _addressNameTEC,
+                        addressPhoneTEC: _addressPhoneTEC,
+                        addressDescriptionTEC: _addressDescriptionTEC),
+                  ),
+                  Visibility(
+                    visible: selectSecretary,
+                    child: SpeedSecretary(
+                        secretaryNameTEC: _secretaryNameTEC,
+                        secretaryPhoneTEC: _secretaryPhoneTEC,
+                        secretaryEmailTEC: _secretaryEmailTEC),
+                  ),
+                  Visibility(
+                    visible: selectMedical,
+                    child: SpeedMedical(
+                        medicalNameTEC: _medicalNameTEC,
+                        medicalPhoneTEC: _medicalPhoneTEC,
+                        medicalEmailTEC: _medicalEmailTEC,
+                        medicalCrmTEC: _medicalCrmTEC),
+                  ),
+                  Visibility(
+                      visible: selectClinic,
+                      child: SpeedClinic(
+                          clinicNameTEC: _clinicNameTEC,
+                          clinicPhoneTEC: _clinicPhoneTEC,
+                          clinicRoomTEC: _clinicRoomTEC)),
+                  Visibility(
+                    visible: selectSchedule,
+                    child: Card(
+                      child: Column(children: [
+                        const Text('Preencher a agenda médica'),
+                        CheckboxListTile(
+                          title: const Text(
+                              "Só recebe representante por agendamento ?"),
+                          onChanged: (value) {
+                            setState(() {
+                              _scheduleJustSchedule = value ?? false;
+                            });
+                          },
+                          value: _scheduleJustSchedule,
+                        ),
+                        AppTextFormField(
+                          label: 'Número limite de atendentes',
+                          controller: _scheduleLimitedSellersTEC,
+                        ),
+                        const HoursInWeekday(weekday: 2),
+                        const HoursInWeekday(weekday: 3),
+                        const HoursInWeekday(weekday: 4),
+                        const HoursInWeekday(weekday: 5),
+                        const HoursInWeekday(weekday: 6),
+                        const HoursInWeekday(weekday: 7),
+                        const HoursInWeekday(weekday: 1),
+                      ]),
+                    ),
+                  )
                 ],
               ),
             ),
