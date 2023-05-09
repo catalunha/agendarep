@@ -76,7 +76,7 @@ class SpeedClinic extends StatelessWidget {
                   ),
                   const Divider(height: 5),
                   AppTextFormField(
-                    label: 'Telefone pessoal da secretaria. Formato DDDNUMERO',
+                    label: 'Telefone da clinica. Formato DDDNUMERO',
                     controller: _clinicPhoneTEC,
                     validator: state.clinic == null
                         ? Validatorless.number('Apenas números.')

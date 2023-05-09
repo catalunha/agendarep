@@ -89,7 +89,7 @@ class _SearchPageState extends State<ScheduleSearchView> {
                 key: _formKey,
                 child: Column(
                   children: const [
-                    Text('Em construção...'),
+                    Text('Apenas click na lupa para ver todos'),
                     SizedBox(height: 70)
                   ],
                 ),

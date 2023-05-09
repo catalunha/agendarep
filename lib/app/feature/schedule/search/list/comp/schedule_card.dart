@@ -16,14 +16,14 @@ class ScheduleCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          AppTextTitleValue(
-            title: 'Id: ',
-            value: model.id,
-          ),
-          AppTextTitleValue(
-            title: 'Cadastrada pelo Representante: ',
-            value: model.seller?.name,
-          ),
+          // AppTextTitleValue(
+          //   title: 'Id: ',
+          //   value: model.id,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Cadastrada pelo Representante: ',
+          //   value: model.seller?.name,
+          // ),
           AppTextTitleValue(
             title: 'Medico: ',
             value: model.medical?.name,
@@ -36,57 +36,57 @@ class ScheduleCard extends StatelessWidget {
             title: 'Consultório: ',
             value: model.clinic?.name,
           ),
-          AppTextTitleValue(
-            title: 'Limite de representantes: ',
-            value: model.limitedSellers?.toString(),
-          ),
-          AppTextTitleValue(
-            title: 'Atendimento tipo: ',
-            value: model.justSchedule ?? false ? 'Agendado' : 'Semanal',
-          ),
-          AppTextTitleValue(
-            title: 'Segunda-feira: ',
-            value:
-                model.mondayHours?.map((e) => e.toString()).toList().join(', '),
-          ),
-          AppTextTitleValue(
-            title: 'Terça-feira: ',
-            value: model.tuesdayHours
-                ?.map((e) => e.toString())
-                .toList()
-                .join(', '),
-          ),
-          AppTextTitleValue(
-            title: 'Quarta-feira: ',
-            value: model.wednesdayHours
-                ?.map((e) => e.toString())
-                .toList()
-                .join(', '),
-          ),
-          AppTextTitleValue(
-            title: 'Quinta-feira: ',
-            value: model.thursdayHours
-                ?.map((e) => e.toString())
-                .toList()
-                .join(', '),
-          ),
-          AppTextTitleValue(
-            title: 'Sexta-feira: ',
-            value:
-                model.fridayHours?.map((e) => e.toString()).toList().join(', '),
-          ),
-          AppTextTitleValue(
-            title: 'Sabado: ',
-            value: model.saturdayHours
-                ?.map((e) => e.toString())
-                .toList()
-                .join(', '),
-          ),
-          AppTextTitleValue(
-            title: 'Domingo: ',
-            value:
-                model.sundayHours?.map((e) => e.toString()).toList().join(', '),
-          ),
+          // AppTextTitleValue(
+          //   title: 'Limite de representantes: ',
+          //   value: model.limitedSellers?.toString(),
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Atendimento tipo: ',
+          //   value: model.justSchedule ?? false ? 'Agendado' : 'Semanal',
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Segunda-feira: ',
+          //   value:
+          //       model.mondayHours?.map((e) => e.toString()).toList().join(', '),
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Terça-feira: ',
+          //   value: model.tuesdayHours
+          //       ?.map((e) => e.toString())
+          //       .toList()
+          //       .join(', '),
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Quarta-feira: ',
+          //   value: model.wednesdayHours
+          //       ?.map((e) => e.toString())
+          //       .toList()
+          //       .join(', '),
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Quinta-feira: ',
+          //   value: model.thursdayHours
+          //       ?.map((e) => e.toString())
+          //       .toList()
+          //       .join(', '),
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Sexta-feira: ',
+          //   value:
+          //       model.fridayHours?.map((e) => e.toString()).toList().join(', '),
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Sabado: ',
+          //   value: model.saturdayHours
+          //       ?.map((e) => e.toString())
+          //       .toList()
+          //       .join(', '),
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Domingo: ',
+          //   value:
+          //       model.sundayHours?.map((e) => e.toString()).toList().join(', '),
+          // ),
           Wrap(
             children: [
               IconButton(

@@ -59,7 +59,7 @@ class SecretarySearchBloc
           SecretaryEntity.seller,
           (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
               .toPointer());
-      query.orderByDescending('updatedAt');
+      query.orderByDescending(SecretaryEntity.name);
       List<SecretaryModel> secretaryModelListGet =
           await _secretaryRepository.list(
         query,

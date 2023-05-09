@@ -20,18 +20,18 @@ class SecretaryCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          AppTextTitleValue(
-            title: 'Id: ',
-            value: secretaryModel.id,
-          ),
-          AppTextTitleValue(
-            title: 'Cadastrada pelo Representante: ',
-            value: secretaryModel.seller?.name,
-          ),
-          AppTextTitleValue(
-            title: 'Email: ',
-            value: secretaryModel.email,
-          ),
+          // AppTextTitleValue(
+          //   title: 'Id: ',
+          //   value: secretaryModel.id,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Cadastrada pelo Representante: ',
+          //   value: secretaryModel.seller?.name,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Email: ',
+          //   value: secretaryModel.email,
+          // ),
           AppTextTitleValue(
             title: 'Nome: ',
             value: secretaryModel.name,
@@ -40,10 +40,10 @@ class SecretaryCard extends StatelessWidget {
             title: 'Telefone: ',
             value: secretaryModel.phone,
           ),
-          AppTextTitleValue(
-            title: 'Data de Aniversário: ',
-            value: dateFormat.format(secretaryModel.birthday!),
-          ),
+          // AppTextTitleValue(
+          //   title: 'Data de Aniversário: ',
+          //   value: dateFormat.format(secretaryModel.birthday!),
+          // ),
           Wrap(
             children: [
               IconButton(

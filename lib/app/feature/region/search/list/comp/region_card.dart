@@ -16,10 +16,10 @@ class RegionCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          AppTextTitleValue(
-            title: 'Id: ',
-            value: model.id,
-          ),
+          // AppTextTitleValue(
+          //   title: 'Id: ',
+          //   value: model.id,
+          // ),
           AppTextTitleValue(
             title: 'Estado: ',
             value: model.uf,

@@ -74,12 +74,12 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
   bool _scheduleJustSchedule = false;
   final _scheduleLimitedSellersTEC = TextEditingController();
   // Config Speed
-  bool selectRegion = false;
-  bool selectAddress = false;
-  bool selectSecretary = false;
-  bool selectMedical = false;
-  bool selectClinic = false;
-  bool selectSchedule = false;
+  bool selectRegion = true;
+  bool selectAddress = true;
+  bool selectSecretary = true;
+  bool selectMedical = true;
+  bool selectClinic = true;
+  bool selectSchedule = true;
   @override
   void initState() {
     super.initState();
@@ -165,79 +165,80 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CheckboxListTile(
-                    title: const Text("Cadastrar uma região ?"),
-                    onChanged: (value) {
-                      setState(() {
-                        resetTEC();
-                        selectRegion = value ?? false;
-                      });
-                    },
-                    value: selectRegion,
-                  ),
-                  CheckboxListTile(
-                    title:
-                        const Text("Cadastrar um endereço (inclui região) ?"),
-                    onChanged: (value) {
-                      setState(() {
-                        resetTEC();
-                        selectRegion = value ?? false;
-                        selectAddress = value ?? false;
-                      });
-                    },
-                    value: selectAddress,
-                  ),
-                  CheckboxListTile(
-                    title: const Text("Cadastrar uma secretária ?"),
-                    onChanged: (value) {
-                      setState(() {
-                        resetTEC();
-                        selectSecretary = value ?? false;
-                      });
-                    },
-                    value: selectSecretary,
-                  ),
-                  CheckboxListTile(
-                    title: const Text("Cadastrar um médico ?"),
-                    onChanged: (value) {
-                      setState(() {
-                        resetTEC();
-                        selectMedical = value ?? false;
-                      });
-                    },
-                    value: selectMedical,
-                  ),
-                  CheckboxListTile(
-                    title: const Text(
-                        "Cadastrar uma consultorio (inclui região, endereço, secretaria e médico) ?"),
-                    onChanged: (value) {
-                      setState(() {
-                        resetTEC();
-                        selectRegion = value ?? false;
-                        selectMedical = value ?? false;
-                        selectAddress = value ?? false;
-                        selectSecretary = value ?? false;
-                        selectClinic = value ?? false;
-                      });
-                    },
-                    value: selectClinic,
-                  ),
-                  CheckboxListTile(
-                    title: const Text(
-                        "Cadastrar uma agenda (inclui região, endereço, secretaria, médico e clínica) ?"),
-                    onChanged: (value) {
-                      setState(() {
-                        resetTEC();
-                        selectRegion = value ?? false;
-                        selectMedical = value ?? false;
-                        selectAddress = value ?? false;
-                        selectSecretary = value ?? false;
-                        selectClinic = value ?? false;
-                        selectSchedule = value ?? false;
-                      });
-                    },
-                    value: selectSchedule,
-                  ),
+                  // CheckboxListTile(
+                  //   title: const Text("Cadastrar uma região ?"),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       resetTEC();
+                  //       selectRegion = value ?? false;
+                  //     });
+                  //   },
+                  //   value: selectRegion,
+                  // ),
+                  // CheckboxListTile(
+                  //   title:
+                  //       const Text("Cadastrar um endereço (inclui região) ?"),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       resetTEC();
+                  //       selectRegion = value ?? false;
+                  //       selectAddress = value ?? false;
+                  //     });
+                  //   },
+                  //   value: selectAddress,
+                  // ),
+                  // CheckboxListTile(
+                  //   title: const Text("Cadastrar uma secretária ?"),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       resetTEC();
+                  //       selectSecretary = value ?? false;
+                  //     });
+                  //   },
+                  //   value: selectSecretary,
+                  // ),
+                  // CheckboxListTile(
+                  //   title: const Text("Cadastrar um médico ?"),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       resetTEC();
+                  //       selectMedical = value ?? false;
+                  //     });
+                  //   },
+                  //   value: selectMedical,
+                  // ),
+                  // CheckboxListTile(
+                  //   title: const Text(
+                  //       "Cadastrar uma consultorio (inclui região, endereço, secretaria e médico) ?"),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       resetTEC();
+                  //       selectRegion = value ?? false;
+                  //       selectMedical = value ?? false;
+                  //       selectAddress = value ?? false;
+                  //       selectSecretary = value ?? false;
+                  //       selectClinic = value ?? false;
+                  //     });
+                  //   },
+                  //   value: selectClinic,
+                  // ),
+                  // CheckboxListTile(
+                  //   title: const Text(
+                  //       "Cadastrar uma agenda (inclui região, endereço, secretaria, médico e clínica) ?"),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       resetTEC();
+                  //       selectRegion = value ?? false;
+                  //       selectMedical = value ?? false;
+                  //       selectAddress = value ?? false;
+                  //       selectSecretary = value ?? false;
+                  //       selectClinic = value ?? false;
+                  //       selectSchedule = value ?? false;
+                  //     });
+                  //   },
+                  //   value: selectSchedule,
+                  // ),
+                  const Text('CADASTRANDO REGIÃO'),
                   Visibility(
                     visible: selectRegion,
                     child: SpeedRegion(
@@ -245,6 +246,7 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
                         regionCityTEC: _regionCityTEC,
                         regionNameTEC: _regionNameTEC),
                   ),
+                  const Text('CADASTRANDO ENDEREÇO'),
                   Visibility(
                     visible: selectAddress,
                     child: SpeedAddress(
@@ -252,6 +254,7 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
                         addressPhoneTEC: _addressPhoneTEC,
                         addressDescriptionTEC: _addressDescriptionTEC),
                   ),
+                  const Text('CADASTRANDO SECRETARIA'),
                   Visibility(
                     visible: selectSecretary,
                     child: SpeedSecretary(
@@ -259,6 +262,7 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
                         secretaryPhoneTEC: _secretaryPhoneTEC,
                         secretaryEmailTEC: _secretaryEmailTEC),
                   ),
+                  const Text('CADASTRANDO MÉDICO'),
                   Visibility(
                     visible: selectMedical,
                     child: SpeedMedical(
@@ -267,12 +271,14 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
                         medicalEmailTEC: _medicalEmailTEC,
                         medicalCrmTEC: _medicalCrmTEC),
                   ),
+                  const Text('CADASTRANDO CLÍNICA'),
                   Visibility(
                       visible: selectClinic,
                       child: SpeedClinic(
                           clinicNameTEC: _clinicNameTEC,
                           clinicPhoneTEC: _clinicPhoneTEC,
                           clinicRoomTEC: _clinicRoomTEC)),
+                  const Text('CADASTRANDO AGENDA'),
                   Visibility(
                     visible: selectSchedule,
                     child: Card(

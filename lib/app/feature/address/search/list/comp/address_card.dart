@@ -19,14 +19,14 @@ class AddressCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          AppTextTitleValue(
-            title: 'Id: ',
-            value: model.id,
-          ),
-          AppTextTitleValue(
-            title: 'Cadastrada pelo Representante: ',
-            value: model.seller?.name,
-          ),
+          // AppTextTitleValue(
+          //   title: 'Id: ',
+          //   value: model.id,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Cadastrada pelo Representante: ',
+          //   value: model.seller?.name,
+          // ),
           AppTextTitleValue(
             title: 'Nome: ',
             value: model.name,
@@ -35,20 +35,20 @@ class AddressCard extends StatelessWidget {
             title: 'Telefone: ',
             value: model.phone,
           ),
-          AppTextTitleValue(
-            title: 'Descrição: ',
-            value: model.description,
-          ),
-          AppTextTitleValue(
-            title: 'Região: ',
-            value: model.region?.name,
-            inColumn: true,
-          ),
-          AppTextTitleValue(
-            title: 'Geopoint: ',
-            value: model.parseGeoPoint.toString(),
-            inColumn: true,
-          ),
+          // AppTextTitleValue(
+          //   title: 'Descrição: ',
+          //   value: model.description,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Região: ',
+          //   value: model.region?.name,
+          //   inColumn: true,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Geopoint: ',
+          //   value: model.parseGeoPoint.toString(),
+          //   inColumn: true,
+          // ),
           Wrap(
             children: [
               IconButton(

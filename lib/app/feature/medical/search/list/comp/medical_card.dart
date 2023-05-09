@@ -19,18 +19,18 @@ class MedicalCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          AppTextTitleValue(
-            title: 'Id: ',
-            value: model.id,
-          ),
-          AppTextTitleValue(
-            title: 'Cadastrada pelo Representante: ',
-            value: model.seller?.name,
-          ),
-          AppTextTitleValue(
-            title: 'Email: ',
-            value: model.email,
-          ),
+          // AppTextTitleValue(
+          //   title: 'Id: ',
+          //   value: model.id,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Cadastrada pelo Representante: ',
+          //   value: model.seller?.name,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Email: ',
+          //   value: model.email,
+          // ),
           AppTextTitleValue(
             title: 'Nome: ',
             value: model.name,
@@ -43,14 +43,14 @@ class MedicalCard extends StatelessWidget {
             title: 'CRM: ',
             value: model.crm,
           ),
-          AppTextTitleValue(
-            title: 'Cadastrado no painel: ',
-            value: model.isBlocked ?? true ? 'Sim' : 'Não',
-          ),
-          AppTextTitleValue(
-            title: 'Data de Aniversário: ',
-            value: dateFormat.format(model.birthday!),
-          ),
+          // AppTextTitleValue(
+          //   title: 'Cadastrado no painel: ',
+          //   value: model.isBlocked ?? true ? 'Sim' : 'Não',
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Data de Aniversário: ',
+          //   value: dateFormat.format(model.birthday!),
+          // ),
           AppTextTitleValue(
             title: 'Especialidades: ',
             value: model.expertises?.map((e) => e.name).toList().join(', '),

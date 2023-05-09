@@ -82,10 +82,10 @@ class SpeedSecretary extends StatelessWidget {
                         ? Validatorless.number('Apenas números.')
                         : null,
                   ),
-                  AppTextFormField(
-                    label: 'email',
-                    controller: _secretaryEmailTEC,
-                  ),
+                  // AppTextFormField(
+                  //   label: 'email',
+                  //   controller: _secretaryEmailTEC,
+                  // ),
                 ],
               ),
             );

@@ -16,14 +16,14 @@ class ClinicCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          AppTextTitleValue(
-            title: 'Id: ',
-            value: model.id,
-          ),
-          AppTextTitleValue(
-            title: 'Cadastrada pelo Representante: ',
-            value: model.seller?.name,
-          ),
+          // AppTextTitleValue(
+          //   title: 'Id: ',
+          //   value: model.id,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Cadastrada pelo Representante: ',
+          //   value: model.seller?.name,
+          // ),
           AppTextTitleValue(
             title: 'Medico: ',
             value: model.medical?.name,
@@ -32,28 +32,28 @@ class ClinicCard extends StatelessWidget {
             title: 'Nome: ',
             value: model.name,
           ),
-          AppTextTitleValue(
-            title: 'Sala: ',
-            value: model.room,
-          ),
-          AppTextTitleValue(
-            title: 'Telefone: ',
-            value: model.phone,
-          ),
-          AppTextTitleValue(
-            title: 'Endereço: ',
-            value: model.address?.description,
-            inColumn: true,
-          ),
-          AppTextTitleValue(
-            title: 'Região: ',
-            value: model.address?.region?.name,
-            inColumn: true,
-          ),
-          AppTextTitleValue(
-            title: 'Secretarias: ',
-            value: model.secretaries?.map((e) => e.name).toList().join(', '),
-          ),
+          // AppTextTitleValue(
+          //   title: 'Sala: ',
+          //   value: model.room,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Telefone: ',
+          //   value: model.phone,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Endereço: ',
+          //   value: model.address?.description,
+          //   inColumn: true,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Região: ',
+          //   value: model.address?.region?.name,
+          //   inColumn: true,
+          // ),
+          // AppTextTitleValue(
+          //   title: 'Secretarias: ',
+          //   value: model.secretaries?.map((e) => e.name).toList().join(', '),
+          // ),
           Wrap(
             children: [
               IconButton(

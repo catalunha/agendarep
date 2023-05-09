@@ -35,7 +35,7 @@ class SecretarySearchState {
         error = '',
         secretaryModelList = [],
         page = 1,
-        limit = 2,
+        limit = 500,
         firstPage = true,
         lastPage = false,
         query =

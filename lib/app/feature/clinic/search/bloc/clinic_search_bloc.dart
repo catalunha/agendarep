@@ -42,7 +42,7 @@ class ClinicSearchBloc extends Bloc<ClinicSearchEvent, ClinicSearchState> {
           QueryBuilder<ParseObject>(ParseObject(ClinicEntity.className));
 
       if (event.nameContainsBool) {
-        query.whereContains(ClinicEntity.phone, event.nameContainsString);
+        query.whereContains(ClinicEntity.name, event.nameContainsString);
       }
       if (event.phoneEqualsToBool) {
         query.whereEqualTo(ClinicEntity.phone, event.phoneEqualsToString);
@@ -51,7 +51,7 @@ class ClinicSearchBloc extends Bloc<ClinicSearchEvent, ClinicSearchState> {
           ClinicEntity.seller,
           (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
               .toPointer());
-      query.orderByDescending('updatedAt');
+      query.orderByDescending(ClinicEntity.name);
       List<ClinicModel> clinicModelListGet = await _clinicRepository.list(
         query,
         Pagination(page: state.page, limit: state.limit),

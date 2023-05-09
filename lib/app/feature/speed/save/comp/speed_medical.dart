@@ -120,10 +120,10 @@ class SpeedMedical extends StatelessWidget {
                     controller: _medicalPhoneTEC,
                     validator: Validatorless.number('Apenas números.'),
                   ),
-                  AppTextFormField(
-                    label: 'email',
-                    controller: _medicalEmailTEC,
-                  ),
+                  // AppTextFormField(
+                  //   label: 'email',
+                  //   controller: _medicalEmailTEC,
+                  // ),
                   AppTextFormField(
                     label: 'CRM',
                     controller: _medicalCrmTEC,

@@ -64,7 +64,7 @@ class MedicalSearchBloc extends Bloc<MedicalSearchEvent, MedicalSearchState> {
           MedicalEntity.seller,
           (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
               .toPointer());
-      query.orderByDescending('updatedAt');
+      query.orderByDescending(MedicalEntity.name);
 
       List<MedicalModel> medicalModelListGet = await _medicalRepository.list(
         query,

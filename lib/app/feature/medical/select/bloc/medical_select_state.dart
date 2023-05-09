@@ -38,7 +38,7 @@ class MedicalSelectState {
         list = [],
         listFiltered = [],
         page = 1,
-        limit = 2,
+        limit = 500,
         firstPage = true,
         lastPage = false,
         query = QueryBuilder<ParseObject>(ParseObject(MedicalEntity.className));
