@@ -165,103 +165,6 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // CheckboxListTile(
-                  //   title: const Text("Cadastrar uma região ?"),
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       resetTEC();
-                  //       selectRegion = value ?? false;
-                  //     });
-                  //   },
-                  //   value: selectRegion,
-                  // ),
-                  // CheckboxListTile(
-                  //   title:
-                  //       const Text("Cadastrar um endereço (inclui região) ?"),
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       resetTEC();
-                  //       selectRegion = value ?? false;
-                  //       selectAddress = value ?? false;
-                  //     });
-                  //   },
-                  //   value: selectAddress,
-                  // ),
-                  // CheckboxListTile(
-                  //   title: const Text("Cadastrar uma secretária ?"),
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       resetTEC();
-                  //       selectSecretary = value ?? false;
-                  //     });
-                  //   },
-                  //   value: selectSecretary,
-                  // ),
-                  // CheckboxListTile(
-                  //   title: const Text("Cadastrar um médico ?"),
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       resetTEC();
-                  //       selectMedical = value ?? false;
-                  //     });
-                  //   },
-                  //   value: selectMedical,
-                  // ),
-                  // CheckboxListTile(
-                  //   title: const Text(
-                  //       "Cadastrar uma consultorio (inclui região, endereço, secretaria e médico) ?"),
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       resetTEC();
-                  //       selectRegion = value ?? false;
-                  //       selectMedical = value ?? false;
-                  //       selectAddress = value ?? false;
-                  //       selectSecretary = value ?? false;
-                  //       selectClinic = value ?? false;
-                  //     });
-                  //   },
-                  //   value: selectClinic,
-                  // ),
-                  // CheckboxListTile(
-                  //   title: const Text(
-                  //       "Cadastrar uma agenda (inclui região, endereço, secretaria, médico e clínica) ?"),
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       resetTEC();
-                  //       selectRegion = value ?? false;
-                  //       selectMedical = value ?? false;
-                  //       selectAddress = value ?? false;
-                  //       selectSecretary = value ?? false;
-                  //       selectClinic = value ?? false;
-                  //       selectSchedule = value ?? false;
-                  //     });
-                  //   },
-                  //   value: selectSchedule,
-                  // ),
-                  const Text('CADASTRANDO REGIÃO'),
-                  Visibility(
-                    visible: selectRegion,
-                    child: SpeedRegion(
-                        regionUfTEC: _regionUfTEC,
-                        regionCityTEC: _regionCityTEC,
-                        regionNameTEC: _regionNameTEC),
-                  ),
-                  const Text('CADASTRANDO ENDEREÇO'),
-                  Visibility(
-                    visible: selectAddress,
-                    child: SpeedAddress(
-                        addressNameTEC: _addressNameTEC,
-                        addressPhoneTEC: _addressPhoneTEC,
-                        addressDescriptionTEC: _addressDescriptionTEC),
-                  ),
-                  const Text('CADASTRANDO SECRETARIA'),
-                  Visibility(
-                    visible: selectSecretary,
-                    child: SpeedSecretary(
-                        secretaryNameTEC: _secretaryNameTEC,
-                        secretaryPhoneTEC: _secretaryPhoneTEC,
-                        secretaryEmailTEC: _secretaryEmailTEC),
-                  ),
                   const Text('CADASTRANDO MÉDICO'),
                   Visibility(
                     visible: selectMedical,
@@ -271,6 +174,14 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
                         medicalEmailTEC: _medicalEmailTEC,
                         medicalCrmTEC: _medicalCrmTEC),
                   ),
+                  const Text('CADASTRANDO SECRETARIA'),
+                  Visibility(
+                    visible: selectSecretary,
+                    child: SpeedSecretary(
+                        secretaryNameTEC: _secretaryNameTEC,
+                        secretaryPhoneTEC: _secretaryPhoneTEC,
+                        secretaryEmailTEC: _secretaryEmailTEC),
+                  ),
                   const Text('CADASTRANDO CLÍNICA'),
                   Visibility(
                       visible: selectClinic,
@@ -278,6 +189,22 @@ class _SpeedSaveViewState extends State<SpeedSaveView> {
                           clinicNameTEC: _clinicNameTEC,
                           clinicPhoneTEC: _clinicPhoneTEC,
                           clinicRoomTEC: _clinicRoomTEC)),
+                  const Text('CADASTRANDO ENDEREÇO'),
+                  Visibility(
+                    visible: selectAddress,
+                    child: SpeedAddress(
+                        addressNameTEC: _addressNameTEC,
+                        addressPhoneTEC: _addressPhoneTEC,
+                        addressDescriptionTEC: _addressDescriptionTEC),
+                  ),
+                  const Text('CADASTRANDO REGIÃO'),
+                  Visibility(
+                    visible: selectRegion,
+                    child: SpeedRegion(
+                        regionUfTEC: _regionUfTEC,
+                        regionCityTEC: _regionCityTEC,
+                        regionNameTEC: _regionNameTEC),
+                  ),
                   const Text('CADASTRANDO AGENDA'),
                   Visibility(
                     visible: selectSchedule,

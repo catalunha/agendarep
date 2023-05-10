@@ -1,4 +1,3 @@
-import 'package:agendarep/app/feature/speed/save/speed_save_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +26,7 @@ import 'app/feature/schedule/search/schedule_search_page.dart';
 import 'app/feature/secretary/save/secretary_save_page.dart';
 import 'app/feature/secretary/search/secretary_search_page.dart';
 import 'app/feature/secretary/select/secretary_select_page.dart';
+import 'app/feature/speed/save/speed_save_page.dart';
 import 'app/feature/splash/splash_page.dart';
 import 'app/feature/user/login/login_page.dart';
 import 'app/feature/user/register/email/user_register_email.page.dart';

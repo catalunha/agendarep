@@ -30,7 +30,7 @@ class SpeedMedical extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(children: [
-        const Text('Selecione ou adicione um médico'),
+        const Text('Selecione ou adicione um novo médico'),
         Row(
           children: [
             IconButton(
@@ -71,7 +71,7 @@ class SpeedMedical extends StatelessWidget {
               child: Column(
                 children: [
                   AppTextFormField(
-                    label: 'Nome *',
+                    label: '* Nome do médico',
                     controller: _medicalNameTEC,
                     validator: state.medical == null
                         ? Validatorless.required(
@@ -79,7 +79,7 @@ class SpeedMedical extends StatelessWidget {
                         : null,
                   ),
                   const Divider(height: 5),
-                  const Text('Selecione uma Especialidade'),
+                  const Text('Selecione a especialidade deste médico'),
                   Row(
                     children: [
                       IconButton(

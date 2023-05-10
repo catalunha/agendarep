@@ -67,7 +67,7 @@ class SpeedClinic extends StatelessWidget {
               child: Column(
                 children: [
                   AppTextFormField(
-                    label: 'Nome *',
+                    label: '* Nome',
                     controller: _clinicNameTEC,
                     validator: state.clinic == null
                         ? Validatorless.required(

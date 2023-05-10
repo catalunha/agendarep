@@ -67,12 +67,18 @@ class SpeedAddress extends StatelessWidget {
               child: Column(
                 children: [
                   AppTextFormField(
-                    label: 'Nome * (Hospital X, Edificio Médico Y, etc)',
+                    label: '* Nome (Hospital X, Edificio Médico Y, etc)',
                     controller: _addressNameTEC,
                     validator: state.address == null
                         ? Validatorless.required(
                             'Esta informação é obrigatória')
                         : null,
+                  ),
+                  AppTextFormField(
+                    label: '* Descrição (Rua X, )',
+                    controller: _addressDescriptionTEC,
+                    validator:
+                        Validatorless.required('Esta informação é obrigatória'),
                   ),
                   const Divider(height: 5),
                   AppTextFormField(
@@ -81,10 +87,6 @@ class SpeedAddress extends StatelessWidget {
                     validator: state.address == null
                         ? Validatorless.number('Apenas números.')
                         : null,
-                  ),
-                  AppTextFormField(
-                    label: 'Descrição (Rua X, )',
-                    controller: _addressDescriptionTEC,
                   ),
                 ],
               ),
