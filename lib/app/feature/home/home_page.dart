@@ -198,15 +198,15 @@ class HomePage extends StatelessWidget {
                 icon: Icons.list,
                 color: Colors.black87,
               ),
-              HomeCardModule(
-                title: 'Cadastro rápido',
-                access: const ['seller'],
-                onAction: () {
-                  Navigator.of(context).pushNamed('/speed/save');
-                },
-                icon: Icons.speed,
-                color: Colors.black87,
-              ),
+              // HomeCardModule(
+              //   title: 'Cadastro rápido',
+              //   access: const ['seller'],
+              //   onAction: () {
+              //     Navigator.of(context).pushNamed('/speed/save');
+              //   },
+              //   icon: Icons.speed,
+              //   color: Colors.black87,
+              // ),
             ],
           ),
         ),
