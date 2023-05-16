@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/models/medical_model.dart';
+import '../../../../../routes.dart';
 import '../../../../utils/app_text_title_value.dart';
 import '../../../save/medical_save_page.dart';
-import '../../../view/medical_view_page.dart';
 import '../../bloc/medical_search_bloc.dart';
 
 class MedicalCard extends StatelessWidget {
@@ -74,10 +75,14 @@ class MedicalCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => MedicalViewPage(medicalModel: model),
-                    ),
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (_) => MedicalViewPage(model: model),
+                  //   ),
+                  // );
+                  context.pushNamed(
+                    AppPage.medicalView.name,
+                    extra: model,
                   );
                 },
                 icon: const Icon(

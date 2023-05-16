@@ -120,13 +120,15 @@ class HomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/medical/save');
+                      // Navigator.of(context).pushNamed('/medical/save');
+                      context.goNamed(AppPage.medicalSave.name);
                     },
                     icon: const Icon(Icons.add),
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/medical/search');
+                      // Navigator.of(context).pushNamed('/medical/search');
+                      context.goNamed(AppPage.medicalSearch.name);
                     },
                     icon: const Icon(Icons.search),
                   )

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'app/core/authentication/bloc/authentication_bloc.dart';
 import 'app/core/models/address_model.dart';
+import 'app/core/models/medical_model.dart';
 import 'app/core/models/region_model.dart';
 import 'app/core/models/secretary_model.dart';
 import 'app/core/repositories/user_repository.dart';
@@ -17,6 +18,12 @@ import 'app/feature/address/search/list/address_search_list_page.dart';
 import 'app/feature/address/select/address_select_page.dart';
 import 'app/feature/address/view/address_view_page.dart';
 import 'app/feature/home/home_page.dart';
+import 'app/feature/medical/save/medical_save_page.dart';
+import 'app/feature/medical/search/bloc/medical_search_bloc.dart';
+import 'app/feature/medical/search/list/medical_search_list_page.dart';
+import 'app/feature/medical/search/medical_search_page.dart';
+import 'app/feature/medical/select/medical_select_page.dart';
+import 'app/feature/medical/view/medical_view_page.dart';
 import 'app/feature/region/save/region_save_page.dart';
 import 'app/feature/region/search/bloc/region_search_bloc.dart';
 import 'app/feature/region/search/list/region_search_list_page.dart';
@@ -228,91 +235,43 @@ class _AppViewState extends State<AppView> {
               ),
             ],
           ),
-
-/*
-          // Region
+          //Medical
           GoRoute(
-            name: AppPage.regionSave.name,
-            path: AppPage.regionSave.path,
-            builder: (context, state) => const RegionSavePage(),
+            name: AppPage.medicalSave.name,
+            path: AppPage.medicalSave.path,
+            builder: (context, state) => const MedicalSavePage(),
           ),
           GoRoute(
-            name: AppPage.regionSearch.name,
-            path: AppPage.regionSearch.path,
-            builder: (context, state) => const RegionSearchPage(),
+            name: AppPage.medicalSearch.name,
+            path: AppPage.medicalSearch.path,
+            builder: (context, state) => const MedicalSearchPage(),
+            routes: [
+              GoRoute(
+                name: AppPage.medicalSearchList.name,
+                path: AppPage.medicalSearchList.path,
+                builder: (context, state) {
+                  return BlocProvider.value(
+                    value: BlocProvider.of<MedicalSearchBloc>(
+                      state.extra as BuildContext,
+                    ),
+                    child: const MedicalSearchListPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppPage.medicalView.name,
+                path: AppPage.medicalView.path,
+                builder: (context, state) {
+                  return MedicalViewPage(model: state.extra! as MedicalModel);
+                },
+              ),
+              GoRoute(
+                name: AppPage.medicalSelect.name,
+                path: AppPage.medicalSelect.path,
+                builder: (context, state) => const MedicalSelectPage(),
+              ),
+            ],
           ),
-          GoRoute(
-            name: AppPage.regionSearchList.name,
-            path: AppPage.regionSearchList.path,
-            builder: (context, state) {
-              // return BlocProvider.value(
-              //   value: BlocProvider.of<RegionSearchBloc>(
-              //     state.extra as BuildContext,
-              //   ),
-              //   child: const RegionSearchListPage(),
-              // );
-              return const RegionSearchPage2();
-            },
-          ),
-          GoRoute(
-            name: AppPage.regionSelect.name,
-            path: AppPage.regionSelect.path,
-            builder: (context, state) => const RegionSelectPage(),
-          ),
-          GoRoute(
-            name: AppPage.regionView.name,
-            path: AppPage.regionView.path,
-            builder: (context, state) {
-              return RegionViewPage(model: state.extra as RegionModel);
-            },
-          ),
-          // Address
-          GoRoute(
-            name: AppPage.addressSave.name,
-            path: AppPage.addressSave.path,
-            builder: (context, state) => const AddressSavePage(),
-          ),
-          GoRoute(
-            name: AppPage.addressSearch.name,
-            path: AppPage.addressSearch.path,
-            builder: (context, state) => const AddressSearchPage(),
-          ),
-          GoRoute(
-            name: AppPage.addressSelect.name,
-            path: AppPage.addressSelect.path,
-            builder: (context, state) => const AddressSelectPage(),
-          ),
-          GoRoute(
-            name: AppPage.addressView.name,
-            path: AppPage.addressView.path,
-            builder: (context, state) {
-              return AddressViewPage(model: state.extra as AddressModel);
-            },
-          ),
-          // Secretary
-          GoRoute(
-            name: AppPage.secretarySave.name,
-            path: AppPage.secretarySave.path,
-            builder: (context, state) => const SecretarySavePage(),
-          ),
-          GoRoute(
-            name: AppPage.secretarySearch.name,
-            path: AppPage.secretarySearch.path,
-            builder: (context, state) => const SecretarySearchPage(),
-          ),
-          GoRoute(
-            name: AppPage.secretarySelect.name,
-            path: AppPage.secretarySelect.path,
-            builder: (context, state) => const SecretarySelectPage(),
-          ),
-          GoRoute(
-            name: AppPage.secretaryView.name,
-            path: AppPage.secretaryView.path,
-            builder: (context, state) {
-              return SecretaryViewPage(model: state.extra as SecretaryModel);
-            },
-          ),
-          */
         ],
       ),
     ],

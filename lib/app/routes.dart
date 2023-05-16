@@ -23,7 +23,13 @@ enum AppPage {
   secretarySearch('secretary_search', 'secretarySearch'),
   secretarySearchList('secretary_search_list', 'secretarySearchList'),
   secretarySelect('secretary-select', 'secretarySelect'),
-  secretaryView('secretary-view', 'secretaryView');
+  secretaryView('secretary-view', 'secretaryView'),
+
+  medicalSave('medical_save', 'medicalSave'),
+  medicalSearch('medical_search', 'medicalSearch'),
+  medicalSearchList('medical_search_list', 'medicalSearchList'),
+  medicalSelect('medical-select', 'medicalSelect'),
+  medicalView('medical-view', 'medicalView');
 
   final String path;
   final String name;
