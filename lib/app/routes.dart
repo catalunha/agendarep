@@ -35,7 +35,18 @@ enum AppPage {
   clinicSearch('clinic_search', 'clinicSearch'),
   clinicSearchList('clinic_search_list', 'clinicSearchList'),
   clinicSelect('clinic-select', 'clinicSelect'),
-  clinicView('clinic-view', 'clinicView');
+  clinicView('clinic-view', 'clinicView'),
+
+  expertiseSelect('expertise-select', 'expertiseSelect'),
+
+  cycleSave('cycle_save', 'cycleSave'),
+  cycleList('cycle_list', 'cycleList'),
+  cycleView('cycle-view', 'cycleView'),
+
+  scheduleSave('schedule_save', 'scheduleSave'),
+  scheduleSearch('schedule_search', 'scheduleSearch'),
+  scheduleSearchList('schedule_search_list', 'scheduleSearchList'),
+  scheduleView('schedule-view', 'scheduleView');
 
   final String path;
   final String name;

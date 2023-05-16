@@ -164,13 +164,15 @@ class HomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/schedule/save');
+                      // Navigator.of(context).pushNamed('/schedule/save');
+                      context.goNamed(AppPage.scheduleSave.name);
                     },
                     icon: const Icon(Icons.add),
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/schedule/search');
+                      // Navigator.of(context).pushNamed('/schedule/search');
+                      context.goNamed(AppPage.scheduleSearch.name);
                     },
                     icon: const Icon(Icons.search),
                   )
@@ -180,7 +182,8 @@ class HomePage extends StatelessWidget {
                 title: 'Ciclos',
                 access: const ['seller'],
                 onAction: () {
-                  Navigator.of(context).pushNamed('/cycle/list');
+                  // Navigator.of(context).pushNamed('/cycle/list');
+                  context.goNamed(AppPage.cycleList.name);
                 },
                 icon: Icons.cyclone_sharp,
                 color: Colors.black87,
@@ -189,7 +192,8 @@ class HomePage extends StatelessWidget {
                 title: 'Especialidades',
                 access: const ['seller'],
                 onAction: () {
-                  Navigator.of(context).pushNamed('/expertise/select');
+                  // Navigator.of(context).pushNamed('/expertise/select');
+                  context.goNamed(AppPage.expertiseSelect.name);
                 },
                 icon: Icons.list,
                 color: Colors.black87,

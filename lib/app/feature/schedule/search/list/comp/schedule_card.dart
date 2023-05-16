@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../core/models/schedule_models.dart';
+import '../../../../../routes.dart';
 import '../../../../utils/app_text_title_value.dart';
 import '../../../save/schedule_save_page.dart';
-import '../../../view/schedule_view_page.dart';
 import '../../bloc/schedule_search_bloc.dart';
 
 class ScheduleCard extends StatelessWidget {
@@ -106,10 +107,14 @@ class ScheduleCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => ScheduleViewPage(model: model),
-                    ),
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (_) => ScheduleViewPage(model: model),
+                  //   ),
+                  // );
+                  context.pushNamed(
+                    AppPage.scheduleView.name,
+                    extra: model,
                   );
                 },
                 icon: const Icon(

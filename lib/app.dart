@@ -7,8 +7,10 @@ import 'package:go_router/go_router.dart';
 import 'app/core/authentication/bloc/authentication_bloc.dart';
 import 'app/core/models/address_model.dart';
 import 'app/core/models/clinic_model.dart';
+import 'app/core/models/cycle_model.dart';
 import 'app/core/models/medical_model.dart';
 import 'app/core/models/region_model.dart';
+import 'app/core/models/schedule_models.dart';
 import 'app/core/models/secretary_model.dart';
 import 'app/core/repositories/user_repository.dart';
 import 'app/data/b4a/table/user_b4a.dart';
@@ -24,6 +26,10 @@ import 'app/feature/clinic/search/clinic_search_page.dart';
 import 'app/feature/clinic/search/list/clinic_search_list_page.dart';
 import 'app/feature/clinic/select/clinic_select_page.dart';
 import 'app/feature/clinic/view/clinic_view_page.dart';
+import 'app/feature/cycle/list/cycle_list_page.dart';
+import 'app/feature/cycle/save/cycle_save_page.dart';
+import 'app/feature/cycle/view/cycle_view_page.dart';
+import 'app/feature/expertise/select/expertise_select_page.dart';
 import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/save/medical_save_page.dart';
 import 'app/feature/medical/search/bloc/medical_search_bloc.dart';
@@ -37,6 +43,11 @@ import 'app/feature/region/search/list/region_search_list_page.dart';
 import 'app/feature/region/search/region_search_page.dart';
 import 'app/feature/region/select/region_select_page.dart';
 import 'app/feature/region/view/region_view_page.dart';
+import 'app/feature/schedule/save/schedule_save_page.dart';
+import 'app/feature/schedule/search/bloc/schedule_search_bloc.dart';
+import 'app/feature/schedule/search/list/schedule_search_list_page.dart';
+import 'app/feature/schedule/search/schedule_search_page.dart';
+import 'app/feature/schedule/view/schedule_view_page.dart';
 import 'app/feature/secretary/save/secretary_save_page.dart';
 import 'app/feature/secretary/search/bloc/secretary_search_bloc.dart';
 import 'app/feature/secretary/search/list/secretary_search_list_page.dart';
@@ -130,6 +141,12 @@ class _AppViewState extends State<AppView> {
         path: AppPage.home.path,
         builder: (context, state) => const HomePage(),
         routes: [
+          //Expertise
+          GoRoute(
+            name: AppPage.expertiseSelect.name,
+            path: AppPage.expertiseSelect.path,
+            builder: (context, state) => const ExpertiseSelectPage(),
+          ),
           //Region
           GoRoute(
             name: AppPage.regionSave.name,
@@ -313,6 +330,58 @@ class _AppViewState extends State<AppView> {
                 name: AppPage.clinicSelect.name,
                 path: AppPage.clinicSelect.path,
                 builder: (context, state) => const ClinicSelectPage(),
+              ),
+            ],
+          ),
+          //Cycle
+          GoRoute(
+            name: AppPage.cycleSave.name,
+            path: AppPage.cycleSave.path,
+            builder: (context, state) => const CycleSavePage(),
+          ),
+          GoRoute(
+            name: AppPage.cycleList.name,
+            path: AppPage.cycleList.path,
+            builder: (context, state) => const CycleListPage(),
+            routes: [
+              GoRoute(
+                name: AppPage.cycleView.name,
+                path: AppPage.cycleView.path,
+                builder: (context, state) {
+                  return CycleViewPage(model: state.extra! as CycleModel);
+                },
+              ),
+            ],
+          ),
+          //Schedule
+          GoRoute(
+            name: AppPage.scheduleSave.name,
+            path: AppPage.scheduleSave.path,
+            builder: (context, state) => const ScheduleSavePage(),
+          ),
+          GoRoute(
+            name: AppPage.scheduleSearch.name,
+            path: AppPage.scheduleSearch.path,
+            builder: (context, state) => const ScheduleSearchPage(),
+            routes: [
+              GoRoute(
+                name: AppPage.scheduleSearchList.name,
+                path: AppPage.scheduleSearchList.path,
+                builder: (context, state) {
+                  return BlocProvider.value(
+                    value: BlocProvider.of<ScheduleSearchBloc>(
+                      state.extra as BuildContext,
+                    ),
+                    child: const ScheduleSearchListPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppPage.scheduleView.name,
+                path: AppPage.scheduleView.path,
+                builder: (context, state) {
+                  return ScheduleViewPage(model: state.extra! as ScheduleModel);
+                },
               ),
             ],
           ),

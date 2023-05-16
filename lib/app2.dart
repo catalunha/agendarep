@@ -107,7 +107,7 @@ class _AppViewState extends State<AppView> {
         '/': (_) => const SplashPage(),
         '/register/email': (_) => const UserRegisterEmailPage(),
         '/userProfile/edit': (context) {
-          UserModel user =
+          final UserModel user =
               ModalRoute.of(context)!.settings.arguments as UserModel;
 
           return UserProfileEditPage(

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/models/cycle_model.dart';
+import '../../../../routes.dart';
 import '../../../utils/app_text_title_value.dart';
 import '../../save/cycle_save_page.dart';
-import '../../view/cycle_view_page.dart';
 import '../bloc/cycle_list_bloc.dart';
 
 class CycleCard extends StatelessWidget {
@@ -63,10 +64,14 @@ class CycleCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => CycleViewPage(model: model),
-                    ),
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (_) => CycleViewPage(model: model),
+                  //   ),
+                  // );
+                  context.pushNamed(
+                    AppPage.cycleView.name,
+                    extra: model,
                   );
                 },
                 icon: const Icon(

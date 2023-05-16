@@ -219,7 +219,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                                     context.read<ClinicSaveBloc>();
                                 final SecretaryModel? result =
                                     await context.pushNamed<SecretaryModel?>(
-                                        AppPage.secretaryView.name);
+                                        AppPage.secretarySelect.name);
                                 // SecretaryModel? result =
                                 //     await Navigator.of(context)
                                 //             .pushNamed('/secretary/select')
