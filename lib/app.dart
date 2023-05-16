@@ -104,7 +104,6 @@ class _AppViewState extends State<AppView> {
     String path = '/';
     final AuthenticationStatus statusLoggin =
         context.read<AuthenticationBloc>().state.status;
-    log('Status inicial: ');
     if (statusLoggin == AuthenticationStatus.authenticated) {
       path = '/home';
     } else if (statusLoggin == AuthenticationStatus.unauthenticated) {
@@ -112,6 +111,7 @@ class _AppViewState extends State<AppView> {
     } else {
       path = '/';
     }
+    log('redirect to $path');
 
     return path;
   }
