@@ -15,30 +15,35 @@ import 'secretary_search_state.dart';
 class SecretarySearchBloc
     extends Bloc<SecretarySearchEvent, SecretarySearchState> {
   final SecretaryRepository _secretaryRepository;
-  SecretarySearchBloc(
-      {required SecretaryRepository secretaryRepository,
-      required UserProfileModel seller})
-      : _secretaryRepository = secretaryRepository,
+  SecretarySearchBloc({
+    required SecretaryRepository secretaryRepository,
+    required UserProfileModel seller,
+  })  : _secretaryRepository = secretaryRepository,
         super(SecretarySearchState.initial(seller: seller)) {
     on<SecretarySearchEventFormSubmitted>(_onSecretarySearchEventFormSubmitted);
     on<SecretarySearchEventPreviousPage>(_onSecretarySearchEventPreviousPage);
     on<SecretarySearchEventNextPage>(_onUserProfileSearchEventNextPage);
     on<SecretarySearchEventUpdateList>(_onSecretarySearchEventUpdateList);
     on<SecretarySearchEventRemoveFromList>(
-        _onSecretarySearchEventRemoveFromList);
+      _onSecretarySearchEventRemoveFromList,
+    );
   }
 
   FutureOr<void> _onSecretarySearchEventFormSubmitted(
-      SecretarySearchEventFormSubmitted event,
-      Emitter<SecretarySearchState> emit) async {
-    emit(state.copyWith(
-      status: SecretarySearchStateStatus.loading,
-      firstPage: true,
-      lastPage: false,
-      page: 1,
-      secretaryModelList: [],
-      query: QueryBuilder<ParseObject>(ParseObject(SecretaryEntity.className)),
-    ));
+    SecretarySearchEventFormSubmitted event,
+    Emitter<SecretarySearchState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        status: SecretarySearchStateStatus.loading,
+        firstPage: true,
+        lastPage: false,
+        page: 1,
+        secretaryModelList: [],
+        query:
+            QueryBuilder<ParseObject>(ParseObject(SecretaryEntity.className)),
+      ),
+    );
     try {
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(SecretaryEntity.className));
@@ -56,9 +61,10 @@ class SecretarySearchBloc
         query.whereEqualTo(SecretaryEntity.birthday, event.birthdayEqualsTo);
       }
       query.whereEqualTo(
-          SecretaryEntity.seller,
-          (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
-              .toPointer());
+        SecretaryEntity.seller,
+        (ParseObject(UserProfileEntity.className)..objectId = state.seller.id)
+            .toPointer(),
+      );
       query.orderByDescending(SecretaryEntity.name);
       List<SecretaryModel> secretaryModelListGet =
           await _secretaryRepository.list(
@@ -66,24 +72,28 @@ class SecretarySearchBloc
         Pagination(page: state.page, limit: state.limit),
       );
 
-      emit(state.copyWith(
-        status: SecretarySearchStateStatus.success,
-        secretaryModelList: secretaryModelListGet,
-        query: query,
-      ));
+      emit(
+        state.copyWith(
+          status: SecretarySearchStateStatus.success,
+          secretaryModelList: secretaryModelListGet,
+          query: query,
+        ),
+      );
     } catch (e) {
       print(e);
       emit(
         state.copyWith(
-            status: SecretarySearchStateStatus.error,
-            error: 'Erro na montagem da busca'),
+          status: SecretarySearchStateStatus.error,
+          error: 'Erro na montagem da busca',
+        ),
       );
     }
   }
 
   FutureOr<void> _onSecretarySearchEventPreviousPage(
-      SecretarySearchEventPreviousPage event,
-      Emitter<SecretarySearchState> emit) async {
+    SecretarySearchEventPreviousPage event,
+    Emitter<SecretarySearchState> emit,
+  ) async {
     emit(
       state.copyWith(
         status: SecretarySearchStateStatus.loading,
@@ -109,22 +119,27 @@ class SecretarySearchBloc
           ),
         );
       }
-      emit(state.copyWith(
-        status: SecretarySearchStateStatus.success,
-        secretaryModelList: secretaryModelListGet,
-        lastPage: false,
-      ));
+      emit(
+        state.copyWith(
+          status: SecretarySearchStateStatus.success,
+          secretaryModelList: secretaryModelListGet,
+          lastPage: false,
+        ),
+      );
     } else {
-      emit(state.copyWith(
-        status: SecretarySearchStateStatus.success,
-        lastPage: false,
-      ));
+      emit(
+        state.copyWith(
+          status: SecretarySearchStateStatus.success,
+          lastPage: false,
+        ),
+      );
     }
   }
 
   FutureOr<void> _onUserProfileSearchEventNextPage(
-      SecretarySearchEventNextPage event,
-      Emitter<SecretarySearchState> emit) async {
+    SecretarySearchEventNextPage event,
+    Emitter<SecretarySearchState> emit,
+  ) async {
     emit(
       state.copyWith(status: SecretarySearchStateStatus.loading),
     );
@@ -134,25 +149,30 @@ class SecretarySearchBloc
       Pagination(page: state.page + 1, limit: state.limit),
     );
     if (secretaryModelListGet.isEmpty) {
-      emit(state.copyWith(
-        status: SecretarySearchStateStatus.success,
-        // firstPage: false,
-        lastPage: true,
-      ));
+      emit(
+        state.copyWith(
+          status: SecretarySearchStateStatus.success,
+          // firstPage: false,
+          lastPage: true,
+        ),
+      );
     } else {
-      emit(state.copyWith(
-        status: SecretarySearchStateStatus.success,
-        secretaryModelList: secretaryModelListGet,
-        page: state.page + 1,
-        firstPage: false,
-      ));
+      emit(
+        state.copyWith(
+          status: SecretarySearchStateStatus.success,
+          secretaryModelList: secretaryModelListGet,
+          page: state.page + 1,
+          firstPage: false,
+        ),
+      );
     }
   }
 
   FutureOr<void> _onSecretarySearchEventUpdateList(
-      SecretarySearchEventUpdateList event,
-      Emitter<SecretarySearchState> emit) {
-    int index = state.secretaryModelList
+    SecretarySearchEventUpdateList event,
+    Emitter<SecretarySearchState> emit,
+  ) {
+    final int index = state.secretaryModelList
         .indexWhere((model) => model.id == event.secretaryModel.id);
     if (index >= 0) {
       List<SecretaryModel> secretaryModelListTemp = [
@@ -165,9 +185,10 @@ class SecretarySearchBloc
   }
 
   FutureOr<void> _onSecretarySearchEventRemoveFromList(
-      SecretarySearchEventRemoveFromList event,
-      Emitter<SecretarySearchState> emit) {
-    int index = state.secretaryModelList
+    SecretarySearchEventRemoveFromList event,
+    Emitter<SecretarySearchState> emit,
+  ) {
+    final int index = state.secretaryModelList
         .indexWhere((model) => model.id == event.modelId);
     if (index >= 0) {
       List<SecretaryModel> secretaryModelListTemp = [
