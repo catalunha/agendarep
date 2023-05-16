@@ -2,7 +2,6 @@ catalunha@pop-os:~/myapp$ flutter create --project-name=agendarep --org to.brint
 
 cd ~/myapp/agendarep && flutter build web && cd back4app/agendarep/ && b4a deploy
 
-
 joelberparriao@gmail.com
 J@elber81
 
