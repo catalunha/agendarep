@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../core/models/address_model.dart';
+import '../../../../../routes.dart';
 import '../../../../utils/app_text_title_value.dart';
 import '../../../save/address_save_page.dart';
-import '../../../view/address_view_page.dart';
 import '../../bloc/address_search_bloc.dart';
 
 class AddressCard extends StatelessWidget {
@@ -14,7 +14,7 @@ class AddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd/MM/y');
+    // final dateFormat = DateFormat('dd/MM/y');
 
     return Card(
       child: Column(
@@ -68,11 +68,13 @@ class AddressCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => AddressViewPage(model: model),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (_) => AddressViewPage(model: model),
+                  //   ),
+                  // );
+                  // context.go('/home/address/view', extra: model);
+                  context.pushNamed(AppPage.addressView.name, extra: model);
                 },
                 icon: const Icon(
                   Icons.assignment_ind_outlined,

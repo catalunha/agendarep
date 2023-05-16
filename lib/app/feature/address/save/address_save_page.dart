@@ -1,12 +1,14 @@
-import 'package:agendarep/app/core/models/region_model.dart';
+import '../../../core/models/region_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/models/address_model.dart';
 import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/address_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_textformfield.dart';
 import '../search/bloc/address_search_bloc.dart';
 import '../search/bloc/address_search_event.dart';
@@ -25,14 +27,15 @@ class AddressSavePage extends StatelessWidget {
       create: (context) => AddressRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
           return AddressSaveBloc(
-              model: model,
-              addressRepository:
-                  RepositoryProvider.of<AddressRepository>(context),
-              seller: userProfile);
+            model: model,
+            addressRepository:
+                RepositoryProvider.of<AddressRepository>(context),
+            seller: userProfile,
+          );
         },
         child: AddressSaveView(
           model: model,
@@ -62,10 +65,10 @@ class _AddressSaveViewState extends State<AddressSaveView> {
   @override
   void initState() {
     super.initState();
-    _nameTEC.text = widget.model?.name ?? "";
-    _phoneTEC.text = widget.model?.phone ?? "";
-    _descriptionTEC.text = widget.model?.description ?? "";
-    _latitudeTEC.text = widget.model?.parseGeoPoint?.latitude.toString() ?? "0";
+    _nameTEC.text = widget.model?.name ?? '';
+    _phoneTEC.text = widget.model?.phone ?? '';
+    _descriptionTEC.text = widget.model?.description ?? '';
+    _latitudeTEC.text = widget.model?.parseGeoPoint?.latitude.toString() ?? '0';
     _longitudeTEC.text =
         widget.model?.parseGeoPoint?.longitude.toString() ?? '0';
     regionModel = widget.model?.region;
@@ -88,7 +91,8 @@ class _AddressSaveViewState extends State<AddressSaveView> {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
-                  const SnackBar(content: Text('Selecione uma região.')));
+                const SnackBar(content: Text('Selecione uma região.')),
+              );
           } else {
             final formValid = _formKey.currentState?.validate() ?? false;
             if (formValid) {
@@ -155,18 +159,25 @@ class _AddressSaveViewState extends State<AddressSaveView> {
                       Row(
                         children: [
                           IconButton(
-                              onPressed: () async {
-                                RegionModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/region/select')
-                                        as RegionModel?;
-                                if (result != null) {
-                                  setState(() {
-                                    regionModel = result;
-                                  });
-                                }
-                              },
-                              icon: const Icon(Icons.search)),
+                            onPressed: () async {
+                              final RegionModel? result =
+                                  await context.pushNamed<RegionModel?>(
+                                      AppPage.regionSelect.name);
+                              // final RegionModel? result =
+                              //     await context.push<RegionModel?>(
+                              //         AppPage.regionSelect.name);
+                              // RegionModel? result =
+                              //     await Navigator.of(context)
+                              //             .pushNamed('/region/select')
+                              //         as RegionModel?;
+                              if (result != null) {
+                                setState(() {
+                                  regionModel = result;
+                                });
+                              }
+                            },
+                            icon: const Icon(Icons.search),
+                          ),
                           Text('${regionModel?.name}'),
                           const SizedBox(
                             width: 15,
@@ -188,32 +199,38 @@ class _AddressSaveViewState extends State<AddressSaveView> {
                         label: 'Descrição (Rua X, )',
                         controller: _descriptionTEC,
                       ),
-                      Wrap(
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            child: AppTextFormField(
-                              label: 'Latitude',
-                              controller: _latitudeTEC,
-                              validator: Validatorless.numbersBetweenInterval(
-                                  -90.0, 90.0, 'Latitudes entre -90 e 90.'),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 150,
-                            child: AppTextFormField(
-                              label: 'Longitude',
-                              controller: _longitudeTEC,
-                              validator: Validatorless.numbersBetweenInterval(
-                                  -180.0, 180.0, 'Longitude entre -180 e 180.'),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Wrap(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 150,
+                      //       child: AppTextFormField(
+                      //         label: 'Latitude',
+                      //         controller: _latitudeTEC,
+                      //         validator: Validatorless.numbersBetweenInterval(
+                      //           -90.0,
+                      //           90.0,
+                      //           'Latitudes entre -90 e 90.',
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 150,
+                      //       child: AppTextFormField(
+                      //         label: 'Longitude',
+                      //         controller: _longitudeTEC,
+                      //         validator: Validatorless.numbersBetweenInterval(
+                      //           -180.0,
+                      //           180.0,
+                      //           'Longitude entre -180 e 180.',
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       if (widget.model != null)
                         CheckboxListTile(
                           tileColor: delete ? Colors.red : null,
-                          title: const Text("Apagar este cadastro ?"),
+                          title: const Text('Apagar este cadastro ?'),
                           onChanged: (value) {
                             setState(() {
                               delete = value ?? false;

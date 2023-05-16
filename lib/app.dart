@@ -5,11 +5,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'app/core/authentication/bloc/authentication_bloc.dart';
+import 'app/core/models/address_model.dart';
+import 'app/core/models/region_model.dart';
+import 'app/core/models/secretary_model.dart';
 import 'app/core/repositories/user_repository.dart';
 import 'app/data/b4a/table/user_b4a.dart';
+import 'app/feature/address/save/address_save_page.dart';
+import 'app/feature/address/search/address_search_page.dart';
+import 'app/feature/address/search/bloc/address_search_bloc.dart';
+import 'app/feature/address/search/list/address_search_list_page.dart';
+import 'app/feature/address/select/address_select_page.dart';
+import 'app/feature/address/view/address_view_page.dart';
 import 'app/feature/home/home_page.dart';
+import 'app/feature/region/save/region_save_page.dart';
+import 'app/feature/region/search/bloc/region_search_bloc.dart';
+import 'app/feature/region/search/list/region_search_list_page.dart';
+import 'app/feature/region/search/region_search_page.dart';
+import 'app/feature/region/select/region_select_page.dart';
+import 'app/feature/region/view/region_view_page.dart';
+import 'app/feature/secretary/save/secretary_save_page.dart';
+import 'app/feature/secretary/search/bloc/secretary_search_bloc.dart';
+import 'app/feature/secretary/search/list/secretary_search_list_page.dart';
+import 'app/feature/secretary/search/secretary_search_page.dart';
+import 'app/feature/secretary/select/secretary_select_page.dart';
+import 'app/feature/secretary/view/secretary_view_page.dart';
 import 'app/feature/splash/splash_page.dart';
 import 'app/feature/user/login/login_page.dart';
+import 'app/routes.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -83,16 +105,215 @@ class _AppViewState extends State<AppView> {
     debugLogDiagnostics: true,
     routes: [
       GoRoute(
-        path: '/',
+        path: AppPage.splash.path,
         builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
-        path: '/login',
+        path: AppPage.login.path,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/home',
+        path: AppPage.home.path,
         builder: (context, state) => const HomePage(),
+        routes: [
+          //Region
+          GoRoute(
+            name: AppPage.regionSave.name,
+            path: AppPage.regionSave.path,
+            builder: (context, state) => const RegionSavePage(),
+          ),
+          GoRoute(
+            name: AppPage.regionSearch.name,
+            path: AppPage.regionSearch.path,
+            builder: (context, state) => const RegionSearchPage(),
+            routes: [
+              GoRoute(
+                name: AppPage.regionSearchList.name,
+                path: AppPage.regionSearchList.path,
+                builder: (context, state) {
+                  return BlocProvider.value(
+                    value: BlocProvider.of<RegionSearchBloc>(
+                      state.extra as BuildContext,
+                    ),
+                    child: const RegionSearchListPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppPage.regionView.name,
+                path: AppPage.regionView.path,
+                builder: (context, state) {
+                  return RegionViewPage(model: state.extra! as RegionModel);
+                },
+              ),
+              GoRoute(
+                name: AppPage.regionSelect.name,
+                path: AppPage.regionSelect.path,
+                builder: (context, state) => const RegionSelectPage(),
+              ),
+            ],
+          ),
+          //Address
+          GoRoute(
+            name: AppPage.addressSave.name,
+            path: AppPage.addressSave.path,
+            builder: (context, state) => const AddressSavePage(),
+          ),
+          GoRoute(
+            name: AppPage.addressSearch.name,
+            path: AppPage.addressSearch.path,
+            builder: (context, state) => const AddressSearchPage(),
+            routes: [
+              GoRoute(
+                name: AppPage.addressSearchList.name,
+                path: AppPage.addressSearchList.path,
+                builder: (context, state) {
+                  return BlocProvider.value(
+                    value: BlocProvider.of<AddressSearchBloc>(
+                      state.extra as BuildContext,
+                    ),
+                    child: const AddressSearchListPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppPage.addressView.name,
+                path: AppPage.addressView.path,
+                builder: (context, state) {
+                  return AddressViewPage(model: state.extra! as AddressModel);
+                },
+              ),
+              GoRoute(
+                name: AppPage.addressSelect.name,
+                path: AppPage.addressSelect.path,
+                builder: (context, state) => const AddressSelectPage(),
+              ),
+            ],
+          ),
+          //Secretary
+          GoRoute(
+            name: AppPage.secretarySave.name,
+            path: AppPage.secretarySave.path,
+            builder: (context, state) => const SecretarySavePage(),
+          ),
+          GoRoute(
+            name: AppPage.secretarySearch.name,
+            path: AppPage.secretarySearch.path,
+            builder: (context, state) => const SecretarySearchPage(),
+            routes: [
+              GoRoute(
+                name: AppPage.secretarySearchList.name,
+                path: AppPage.secretarySearchList.path,
+                builder: (context, state) {
+                  return BlocProvider.value(
+                    value: BlocProvider.of<SecretarySearchBloc>(
+                      state.extra as BuildContext,
+                    ),
+                    child: const SecretarySearchListPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppPage.secretaryView.name,
+                path: AppPage.secretaryView.path,
+                builder: (context, state) {
+                  return SecretaryViewPage(
+                      model: state.extra! as SecretaryModel);
+                },
+              ),
+              GoRoute(
+                name: AppPage.secretarySelect.name,
+                path: AppPage.secretarySelect.path,
+                builder: (context, state) => const SecretarySelectPage(),
+              ),
+            ],
+          ),
+
+/*
+          // Region
+          GoRoute(
+            name: AppPage.regionSave.name,
+            path: AppPage.regionSave.path,
+            builder: (context, state) => const RegionSavePage(),
+          ),
+          GoRoute(
+            name: AppPage.regionSearch.name,
+            path: AppPage.regionSearch.path,
+            builder: (context, state) => const RegionSearchPage(),
+          ),
+          GoRoute(
+            name: AppPage.regionSearchList.name,
+            path: AppPage.regionSearchList.path,
+            builder: (context, state) {
+              // return BlocProvider.value(
+              //   value: BlocProvider.of<RegionSearchBloc>(
+              //     state.extra as BuildContext,
+              //   ),
+              //   child: const RegionSearchListPage(),
+              // );
+              return const RegionSearchPage2();
+            },
+          ),
+          GoRoute(
+            name: AppPage.regionSelect.name,
+            path: AppPage.regionSelect.path,
+            builder: (context, state) => const RegionSelectPage(),
+          ),
+          GoRoute(
+            name: AppPage.regionView.name,
+            path: AppPage.regionView.path,
+            builder: (context, state) {
+              return RegionViewPage(model: state.extra as RegionModel);
+            },
+          ),
+          // Address
+          GoRoute(
+            name: AppPage.addressSave.name,
+            path: AppPage.addressSave.path,
+            builder: (context, state) => const AddressSavePage(),
+          ),
+          GoRoute(
+            name: AppPage.addressSearch.name,
+            path: AppPage.addressSearch.path,
+            builder: (context, state) => const AddressSearchPage(),
+          ),
+          GoRoute(
+            name: AppPage.addressSelect.name,
+            path: AppPage.addressSelect.path,
+            builder: (context, state) => const AddressSelectPage(),
+          ),
+          GoRoute(
+            name: AppPage.addressView.name,
+            path: AppPage.addressView.path,
+            builder: (context, state) {
+              return AddressViewPage(model: state.extra as AddressModel);
+            },
+          ),
+          // Secretary
+          GoRoute(
+            name: AppPage.secretarySave.name,
+            path: AppPage.secretarySave.path,
+            builder: (context, state) => const SecretarySavePage(),
+          ),
+          GoRoute(
+            name: AppPage.secretarySearch.name,
+            path: AppPage.secretarySearch.path,
+            builder: (context, state) => const SecretarySearchPage(),
+          ),
+          GoRoute(
+            name: AppPage.secretarySelect.name,
+            path: AppPage.secretarySelect.path,
+            builder: (context, state) => const SecretarySelectPage(),
+          ),
+          GoRoute(
+            name: AppPage.secretaryView.name,
+            path: AppPage.secretaryView.path,
+            builder: (context, state) {
+              return SecretaryViewPage(model: state.extra as SecretaryModel);
+            },
+          ),
+          */
+        ],
       ),
     ],
     initialLocation: '/',
@@ -101,18 +322,22 @@ class _AppViewState extends State<AppView> {
   );
 
   String? _obsLogged(BuildContext context, GoRouterState state) {
-    String path = '/';
     final AuthenticationStatus statusLoggin =
         context.read<AuthenticationBloc>().state.status;
-    if (statusLoggin == AuthenticationStatus.authenticated) {
-      path = '/home';
-    } else if (statusLoggin == AuthenticationStatus.unauthenticated) {
-      path = '/login';
-    } else {
-      path = '/';
-    }
-    log('redirect to $path');
+    log('+++ _obsLogged');
+    log('state.fullPath: ${state.fullPath}');
+    log('state.location: ${state.location}');
+    log('state.matchedLocation: ${state.matchedLocation}');
+    log('state.name: ${state.name}');
+    log('state.path: ${state.path}');
 
-    return path;
+    if (statusLoggin == AuthenticationStatus.unauthenticated) {
+      return '/login';
+    }
+    if (statusLoggin == AuthenticationStatus.authenticated &&
+        (state.matchedLocation == '/login' || state.matchedLocation == '/')) {
+      return '/home';
+    }
+    return null;
   }
 }

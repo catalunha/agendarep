@@ -1,15 +1,16 @@
-import 'package:agendarep/app/core/models/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/authentication/authentication.dart';
+import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/region_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_icon.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/region_search_bloc.dart';
 import 'bloc/region_search_event.dart';
 import 'bloc/region_search_state.dart';
-import 'list/region_search_list_page.dart';
 
 class RegionSearchPage extends StatelessWidget {
   const RegionSearchPage({
@@ -22,7 +23,7 @@ class RegionSearchPage extends StatelessWidget {
       create: (context) => RegionRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return RegionSearchBloc(
             regionRepository: RepositoryProvider.of<RegionRepository>(context),
@@ -78,6 +79,11 @@ class _SearchPageState extends State<RegionSearchView> {
           }
           if (state.status == RegionSearchStateStatus.success) {
             Navigator.of(context).pop();
+
+            context.goNamed(
+              AppPage.regionSearchList.name,
+              extra: context,
+            );
           }
           if (state.status == RegionSearchStateStatus.loading) {
             await showDialog(
@@ -186,22 +192,28 @@ class _SearchPageState extends State<RegionSearchView> {
         onPressed: () async {
           final formValid = _formKey.currentState?.validate() ?? false;
           if (formValid) {
-            context.read<RegionSearchBloc>().add(RegionSearchEventFormSubmitted(
-                  ufContainsBool: _ufContainsBool,
-                  ufContainsString: _ufContainsTEC.text,
-                  cityContainsBool: _cityContainsBool,
-                  cityContainsString: _cityContainsTEC.text,
-                  nameContainsBool: _nameContainsBool,
-                  nameContainsString: _nameContainsTEC.text,
-                ));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<RegionSearchBloc>(context),
-                  child: const RegionSearchListPage(),
-                ),
-              ),
-            );
+            context.read<RegionSearchBloc>().add(
+                  RegionSearchEventFormSubmitted(
+                    ufContainsBool: _ufContainsBool,
+                    ufContainsString: _ufContainsTEC.text,
+                    cityContainsBool: _cityContainsBool,
+                    cityContainsString: _cityContainsTEC.text,
+                    nameContainsBool: _nameContainsBool,
+                    nameContainsString: _nameContainsTEC.text,
+                  ),
+                );
+
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => BlocProvider.value(
+            //       value: BlocProvider.of<RegionSearchBloc>(context),
+            //       child: const RegionSearchListPage(),
+            //     ),
+            //   ),
+            // );
+
+            // context.goNamed(AppPage.regionSearchList.name, extra: context);
+            // context.push(AppPage.regionSearchList.name, extra: context);
           }
         },
       ),
@@ -303,3 +315,12 @@ class SearchCardBool extends StatelessWidget {
     );
   }
 }
+
+// class ExtraObject {
+//   final BuildContext? context;
+//   final RegionModel? regionModel;
+//   ExtraObject({
+//     this.context,
+//     this.regionModel,
+//   });
+// }

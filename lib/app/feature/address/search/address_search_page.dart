@@ -1,9 +1,11 @@
-import 'package:agendarep/app/core/models/user_profile_model.dart';
+import '../../../core/models/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/repositories/address_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_icon.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/address_search_bloc.dart';
@@ -22,7 +24,7 @@ class AddressSearchPage extends StatelessWidget {
       create: (context) => AddressRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return AddressSearchBloc(
             addressRepository:
@@ -76,6 +78,10 @@ class _SearchPageState extends State<AddressSearchView> {
           }
           if (state.status == AddressSearchStateStatus.success) {
             Navigator.of(context).pop();
+            context.goNamed(
+              AppPage.addressSearchList.name,
+              extra: context,
+            );
           }
           if (state.status == AddressSearchStateStatus.loading) {
             await showDialog(
@@ -167,14 +173,14 @@ class _SearchPageState extends State<AddressSearchView> {
                   phoneEqualsToBool: _phoneEqualsToBool,
                   phoneEqualsToString: _phoneEqualsToTEC.text,
                 ));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<AddressSearchBloc>(context),
-                  child: const AddressSearchListPage(),
-                ),
-              ),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => BlocProvider.value(
+            //       value: BlocProvider.of<AddressSearchBloc>(context),
+            //       child: const AddressSearchListPage(),
+            //     ),
+            //   ),
+            // );
           }
         },
       ),

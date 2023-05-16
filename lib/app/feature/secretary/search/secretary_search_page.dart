@@ -1,16 +1,18 @@
-import 'package:agendarep/app/core/models/user_profile_model.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/models/user_profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/repositories/secretary_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_icon.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/secretary_search_bloc.dart';
 import 'bloc/secretary_search_event.dart';
 import 'bloc/secretary_search_state.dart';
-import 'list/secretary_search_list_page.dart';
 
 class SecretarySearchPage extends StatelessWidget {
   const SecretarySearchPage({
@@ -23,7 +25,7 @@ class SecretarySearchPage extends StatelessWidget {
       create: (context) => SecretaryRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return SecretarySearchBloc(
             secretaryRepository:
@@ -82,6 +84,10 @@ class _SearchPageState extends State<SecretarySearchView> {
           }
           if (state.status == SecretarySearchStateStatus.success) {
             Navigator.of(context).pop();
+            context.goNamed(
+              AppPage.secretarySearchList.name,
+              extra: context,
+            );
           }
           if (state.status == SecretarySearchStateStatus.loading) {
             await showDialog(
@@ -235,14 +241,14 @@ class _SearchPageState extends State<SecretarySearchView> {
                   birthdayEqualsToBool: _birthdayDtSelected,
                   birthdayEqualsTo: _birthdayDtValue,
                 ));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<SecretarySearchBloc>(context),
-                  child: const SecretarySearchListPage(),
-                ),
-              ),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => BlocProvider.value(
+            //       value: BlocProvider.of<SecretarySearchBloc>(context),
+            //       child: const SecretarySearchListPage(),
+            //     ),
+            //   ),
+            // );
           }
         },
       ),

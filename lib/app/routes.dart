@@ -1,59 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+enum AppPage {
+  splash('/', 'splash'),
+  login('/login', 'login'),
+  home('/home', 'splash'),
+  // /home/region_save (segue path com go)
+  regionSave('region_save', 'regionSave'),
+  // /home/region_search (segue path com go)
+  regionSearch('region_search', 'regionSearch'),
+  // /home/region_search/list (segue path com go)
+  regionSearchList('region_search_list', 'regionSearchList'),
+  // ...region-select (aleatorio com push)
+  regionSelect('region-select', 'regionSelect'),
+  // ...region-view (aleatorio com push)
+  regionView('region-view', 'regionView'),
 
-import 'core/authentication/authentication.dart';
-import 'feature/home/home_page.dart';
-import 'feature/splash/splash_page.dart';
-import 'feature/user/login/login_page.dart';
+  addressSave('address_save', 'addressSave'),
+  addressSearch('address_search', 'addressSearch'),
+  addressSearchList('address_search_list', 'addressSearchList'),
+  addressSelect('address-select', 'addressSelect'),
+  addressView('address-view', 'addressView'),
 
-final goRouter = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const SplashPage(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginPage(),
-    ),
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => const HomePage(),
-    ),
-  ],
-  initialLocation: '/',
-  redirect: _obsLogged,
-  // refreshListenable: context.read<AuthenticationBloc>()
-);
+  secretarySave('secretary_save', 'secretarySave'),
+  secretarySearch('secretary_search', 'secretarySearch'),
+  secretarySearchList('secretary_search_list', 'secretarySearchList'),
+  secretarySelect('secretary-select', 'secretarySelect'),
+  secretaryView('secretary-view', 'secretaryView');
 
-String? _obsLogged(BuildContext context, GoRouterState state) {
-  String path = '/';
-  final AuthenticationStatus statusLoggin =
-      context.read<AuthenticationBloc>().state.status;
-
-  if (statusLoggin == AuthenticationStatus.authenticated) {
-    path = '/home';
-  } else if (statusLoggin == AuthenticationStatus.unauthenticated) {
-    path = '/login';
-  } else {
-    path = '/';
-  }
-
-  return path;
+  final String path;
+  final String name;
+  const AppPage(this.path, this.name);
 }
-
-// class AuthStateNotifier extends ChangeNotifier {
-//   late final StreamSubscription<AuthenticationBloc> _blocStream;
-//   AuthStateProvider(AuthenticationBloc bloc) {
-//     _blocStream = bloc.stream.listen((event) {
-//       notifyListeners();
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     _blocStream.cancel();
-//     super.dispose();
-//   }
-// }

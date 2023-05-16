@@ -15,9 +15,9 @@ import 'bloc/secretary_save_event.dart';
 import 'bloc/secretary_save_state.dart';
 
 class SecretarySavePage extends StatelessWidget {
-  final SecretaryModel? secretaryModel;
+  final SecretaryModel? model;
 
-  const SecretarySavePage({super.key, this.secretaryModel});
+  const SecretarySavePage({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +25,17 @@ class SecretarySavePage extends StatelessWidget {
       create: (context) => SecretaryRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
           return SecretarySaveBloc(
-              secretaryModel: secretaryModel,
+              model: model,
               secretaryRepository:
                   RepositoryProvider.of<SecretaryRepository>(context),
               seller: userProfile);
         },
         child: SecretarySaveView(
-          secretaryModel: secretaryModel,
+          model: model,
         ),
       ),
     );
@@ -43,9 +43,8 @@ class SecretarySavePage extends StatelessWidget {
 }
 
 class SecretarySaveView extends StatefulWidget {
-  final SecretaryModel? secretaryModel;
-  const SecretarySaveView({Key? key, required this.secretaryModel})
-      : super(key: key);
+  final SecretaryModel? model;
+  const SecretarySaveView({Key? key, required this.model}) : super(key: key);
 
   @override
   State<SecretarySaveView> createState() => _SecretarySaveViewState();
@@ -61,10 +60,10 @@ class _SecretarySaveViewState extends State<SecretarySaveView> {
   @override
   void initState() {
     super.initState();
-    _emailTEC.text = widget.secretaryModel?.email ?? "";
-    _nameTEC.text = widget.secretaryModel?.name ?? "";
-    _phoneTEC.text = widget.secretaryModel?.phone ?? "";
-    _birthday = widget.secretaryModel?.birthday ?? DateTime.now();
+    _emailTEC.text = widget.model?.email ?? '';
+    _nameTEC.text = widget.model?.name ?? '';
+    _phoneTEC.text = widget.model?.phone ?? '';
+    _birthday = widget.model?.birthday ?? DateTime.now();
   }
 
   @override
@@ -108,15 +107,15 @@ class _SecretarySaveViewState extends State<SecretarySaveView> {
           }
           if (state.status == SecretarySaveStateStatus.success) {
             Navigator.of(context).pop();
-            if (widget.secretaryModel != null) {
+            if (widget.model != null) {
               if (delete) {
-                context.read<SecretarySearchBloc>().add(
-                    SecretarySearchEventRemoveFromList(
-                        state.secretaryModel!.id!));
+                context
+                    .read<SecretarySearchBloc>()
+                    .add(SecretarySearchEventRemoveFromList(state.model!.id!));
               } else {
                 context
                     .read<SecretarySearchBloc>()
-                    .add(SecretarySearchEventUpdateList(state.secretaryModel!));
+                    .add(SecretarySearchEventUpdateList(state.model!));
               }
             }
             Navigator.of(context).pop();
@@ -170,10 +169,10 @@ class _SecretarySaveViewState extends State<SecretarySaveView> {
                           },
                         ),
                       ),
-                      if (widget.secretaryModel != null)
+                      if (widget.model != null)
                         CheckboxListTile(
                           tileColor: delete ? Colors.red : null,
-                          title: const Text("Apagar este cadastro ?"),
+                          title: const Text('Apagar este cadastro ?'),
                           onChanged: (value) {
                             setState(() {
                               delete = value ?? false;

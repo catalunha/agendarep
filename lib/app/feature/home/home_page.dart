@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/authentication/bloc/authentication_bloc.dart';
+import '../../routes.dart';
 import 'comp/home_card_module.dart';
 import 'comp/home_popmenu.dart';
 
@@ -19,7 +21,8 @@ class HomePage extends StatelessWidget {
         title: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
             return Text(
-                "Olá, ${state.user?.userProfile?.name ?? 'Atualize seu perfil.'}.");
+              "Olá, ${state.user?.userProfile?.name ?? 'Atualize seu perfil.'}.",
+            );
           },
         ),
         actions: const [
@@ -47,13 +50,17 @@ class HomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/region/save');
+                      // Navigator.of(context).pushNamed('/region/save');
+                      context.goNamed(AppPage.regionSave.name);
                     },
                     icon: const Icon(Icons.add),
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/region/search');
+                      // Navigator.of(context).pushNamed('/region/search');
+                      // context.go('/home/region/search');
+                      context.goNamed(AppPage.regionSearch.name);
+                      // context.pushNamed(AppPage.regionSearch.name);
                     },
                     icon: const Icon(Icons.search),
                   )
@@ -67,13 +74,17 @@ class HomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/address/save');
+                      // Navigator.of(context).pushNamed('/address/save');
+                      // context.go('/home/address/save');
+                      context.goNamed(AppPage.addressSave.name);
                     },
                     icon: const Icon(Icons.add),
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/address/search');
+                      // Navigator.of(context).pushNamed('/address/search');
+                      // context.go('/home/address/search');
+                      context.goNamed(AppPage.addressSearch.name);
                     },
                     icon: const Icon(Icons.search),
                   )
@@ -87,13 +98,15 @@ class HomePage extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/secretary/save');
+                      // Navigator.of(context).pushNamed('/secretary/save');
+                      context.goNamed(AppPage.secretarySave.name);
                     },
                     icon: const Icon(Icons.add),
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/secretary/search');
+                      // Navigator.of(context).pushNamed('/secretary/search');
+                      context.goNamed(AppPage.secretarySearch.name);
                     },
                     icon: const Icon(Icons.search),
                   )
