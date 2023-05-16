@@ -1,10 +1,12 @@
-import 'package:agendarep/app/core/models/user_profile_model.dart';
+import '../../../core/models/user_profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/repositories/medical_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_icon.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/medical_search_bloc.dart';
@@ -23,7 +25,7 @@ class MedicalSearchPage extends StatelessWidget {
       create: (context) => MedicalRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return MedicalSearchBloc(
             medicalRepository:
@@ -87,6 +89,10 @@ class _SearchPageState extends State<MedicalSearchView> {
           }
           if (state.status == MedicalSearchStateStatus.success) {
             Navigator.of(context).pop();
+            context.goNamed(
+              AppPage.medicalSearchList.name,
+              extra: context,
+            );
           }
           if (state.status == MedicalSearchStateStatus.loading) {
             await showDialog(
@@ -224,7 +230,7 @@ class _SearchPageState extends State<MedicalSearchView> {
                                 child: CheckboxListTile(
                                   tileColor:
                                       _isBlockedSelected ? Colors.red : null,
-                                  title: const Text("Bloquear este cadastro ?"),
+                                  title: const Text('Bloquear este cadastro ?'),
                                   onChanged: (value) {
                                     setState(() {
                                       _isBlockedSelected = value ?? false;
@@ -301,14 +307,14 @@ class _SearchPageState extends State<MedicalSearchView> {
                   birthdayEqualsToBool: _birthdayDtSelected,
                   birthdayEqualsTo: _birthdayDtValue,
                 ));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<MedicalSearchBloc>(context),
-                  child: const MedicalSearchListPage(),
-                ),
-              ),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => BlocProvider.value(
+            //       value: BlocProvider.of<MedicalSearchBloc>(context),
+            //       child: const MedicalSearchListPage(),
+            //     ),
+            //   ),
+            // );
           }
         },
       ),

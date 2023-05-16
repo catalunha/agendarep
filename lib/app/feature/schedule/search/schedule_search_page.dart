@@ -1,15 +1,16 @@
-import 'package:agendarep/app/core/models/user_profile_model.dart';
+import '../../../core/models/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/repositories/schedule_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_icon.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/schedule_search_bloc.dart';
 import 'bloc/schedule_search_event.dart';
 import 'bloc/schedule_search_state.dart';
-import 'list/schedule_search_list_page.dart';
 
 class ScheduleSearchPage extends StatelessWidget {
   const ScheduleSearchPage({
@@ -22,7 +23,7 @@ class ScheduleSearchPage extends StatelessWidget {
       create: (context) => ScheduleRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return ScheduleSearchBloc(
             scheduleRepository:
@@ -70,6 +71,10 @@ class _SearchPageState extends State<ScheduleSearchView> {
           }
           if (state.status == ScheduleSearchStateStatus.success) {
             Navigator.of(context).pop();
+            context.goNamed(
+              AppPage.scheduleSearchList.name,
+              extra: context,
+            );
           }
           if (state.status == ScheduleSearchStateStatus.loading) {
             await showDialog(
@@ -87,8 +92,8 @@ class _SearchPageState extends State<ScheduleSearchView> {
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
-                child: Column(
-                  children: const [
+                child: const Column(
+                  children: [
                     Text('Apenas click na lupa para ver todos'),
                     SizedBox(height: 70)
                   ],
@@ -107,14 +112,14 @@ class _SearchPageState extends State<ScheduleSearchView> {
             context
                 .read<ScheduleSearchBloc>()
                 .add(ScheduleSearchEventFormSubmitted());
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<ScheduleSearchBloc>(context),
-                  child: const ScheduleSearchListPage(),
-                ),
-              ),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => BlocProvider.value(
+            //       value: BlocProvider.of<ScheduleSearchBloc>(context),
+            //       child: const ScheduleSearchListPage(),
+            //     ),
+            //   ),
+            // );
           }
         },
       ),

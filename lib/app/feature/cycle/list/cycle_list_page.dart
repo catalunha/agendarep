@@ -21,7 +21,7 @@ class CycleListPage extends StatelessWidget {
       create: (context) => CycleRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return CycleListBloc(
             cycleRepository: RepositoryProvider.of<CycleRepository>(context),
@@ -127,7 +127,7 @@ class CycleListView extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 600),
                 child: BlocBuilder<CycleListBloc, CycleListState>(
                   builder: (context, state) {
-                    var list = state.cycleModelList;
+                    final list = state.cycleModelList;
 
                     return ListView.builder(
                       itemCount: list.length,

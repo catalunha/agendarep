@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/models/clinic_model.dart';
@@ -9,6 +10,7 @@ import '../../../core/models/schedule_models.dart';
 import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/clinic_repository.dart';
 import '../../../core/repositories/schedule_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_textformfield.dart';
 import '../search/bloc/schedule_search_bloc.dart';
 import '../search/bloc/schedule_search_event.dart';
@@ -34,7 +36,7 @@ class ScheduleSavePage extends StatelessWidget {
       ],
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
           return ScheduleSaveBloc(
@@ -70,8 +72,8 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
   @override
   void initState() {
     super.initState();
-    _limitedSellersTEC.text = widget.model?.limitedSellers?.toString() ?? "";
-    _descriptionTEC.text = widget.model?.description ?? "";
+    _limitedSellersTEC.text = widget.model?.limitedSellers?.toString() ?? '';
+    _descriptionTEC.text = widget.model?.description ?? '';
   }
 
   @override
@@ -155,12 +157,11 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                         children: [
                           IconButton(
                               onPressed: () async {
-                                var contextTemp =
+                                final contextTemp =
                                     context.read<ScheduleSaveBloc>();
                                 MedicalModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/medical/select')
-                                        as MedicalModel?;
+                                    await context.pushNamed<MedicalModel?>(
+                                        AppPage.medicalSelect.name);
                                 if (result != null) {
                                   contextTemp
                                       .add(ScheduleSaveEventAddMedical(result));
@@ -179,12 +180,15 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                         children: [
                           IconButton(
                               onPressed: () async {
-                                var contextTemp =
+                                final contextTemp =
                                     context.read<ScheduleSaveBloc>();
-                                ExpertiseModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/expertise/select')
-                                        as ExpertiseModel?;
+                                // ExpertiseModel? result =
+                                //     await Navigator.of(context)
+                                //             .pushNamed('/expertise/select')
+                                //         as ExpertiseModel?;
+                                final ExpertiseModel? result =
+                                    await context.pushNamed<ExpertiseModel?>(
+                                        AppPage.expertiseSelect.name);
                                 if (result != null) {
                                   contextTemp.add(
                                       ScheduleSaveEventAddExpertise(result));
@@ -226,12 +230,15 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                         children: [
                           IconButton(
                               onPressed: () async {
-                                var contextTemp =
+                                final contextTemp =
                                     context.read<ScheduleSaveBloc>();
-                                ClinicModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/clinic/select')
-                                        as ClinicModel?;
+                                // ClinicModel? result =
+                                //     await Navigator.of(context)
+                                //             .pushNamed('/clinic/select')
+                                //         as ClinicModel?;
+                                final ClinicModel? result =
+                                    await context.pushNamed<ClinicModel?>(
+                                        AppPage.clinicSelect.name);
                                 if (result != null) {
                                   contextTemp
                                       .add(ScheduleSaveEventAddClinic(result));
@@ -279,7 +286,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                       CheckboxListTile(
                         // tileColor: _justSchedule ? Colors.red : null,
                         title: const Text(
-                            "Só recebe representante por agendamento ?"),
+                            'Só recebe representante por agendamento ?'),
                         onChanged: (value) {
                           setState(() {
                             _justSchedule = value ?? false;
@@ -294,7 +301,7 @@ class _ScheduleSaveViewState extends State<ScheduleSaveView> {
                       if (widget.model != null)
                         CheckboxListTile(
                           tileColor: delete ? Colors.red : null,
-                          title: const Text("Apagar este cadastro ?"),
+                          title: const Text('Apagar este cadastro ?'),
                           onChanged: (value) {
                             setState(() {
                               delete = value ?? false;

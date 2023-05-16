@@ -5,8 +5,8 @@ import '../../../core/models/medical_model.dart';
 import '../../utils/app_text_title_value.dart';
 
 class MedicalViewPage extends StatelessWidget {
-  final MedicalModel medicalModel;
-  MedicalViewPage({super.key, required this.medicalModel});
+  final MedicalModel model;
+  MedicalViewPage({super.key, required this.model});
   final dateFormat = DateFormat('dd/MM/y');
 
   @override
@@ -23,53 +23,50 @@ class MedicalViewPage extends StatelessWidget {
               children: [
                 AppTextTitleValue(
                   title: 'Id: ',
-                  value: medicalModel.id,
+                  value: model.id,
                 ),
                 AppTextTitleValue(
                   title: 'Rep: ',
-                  value: medicalModel.seller?.name,
+                  value: model.seller?.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Email: ',
-                  value: medicalModel.email,
+                  value: model.email,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Nome: ',
-                  value: medicalModel.name,
+                  value: model.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Telefone: ',
-                  value: medicalModel.phone,
+                  value: model.phone,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'CRM: ',
-                  value: medicalModel.crm,
+                  value: model.crm,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Bloqueado: ',
-                  value: medicalModel.isBlocked ?? false
-                      ? 'Bloqueado'
-                      : 'Desbloqueado',
+                  value:
+                      model.isBlocked ?? false ? 'Bloqueado' : 'Desbloqueado',
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Aniversário: ',
-                  value: medicalModel.birthday == null
+                  value: model.birthday == null
                       ? '...'
-                      : dateFormat.format(medicalModel.birthday!),
+                      : dateFormat.format(model.birthday!),
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Especialidades: ',
-                  value: medicalModel.expertises
-                      ?.map((e) => e.name)
-                      .toList()
-                      .join(', '),
+                  value:
+                      model.expertises?.map((e) => e.name).toList().join(', '),
                   inColumn: true,
                 ),
               ],

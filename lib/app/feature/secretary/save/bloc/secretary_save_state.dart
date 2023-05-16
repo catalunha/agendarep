@@ -5,24 +5,24 @@ enum SecretarySaveStateStatus { initial, loading, success, error }
 class SecretarySaveState {
   final SecretarySaveStateStatus status;
   final String? error;
-  final SecretaryModel? secretaryModel;
+  final SecretaryModel? model;
   SecretarySaveState({
     required this.status,
     this.error,
-    this.secretaryModel,
+    this.model,
   });
-  SecretarySaveState.initial(this.secretaryModel)
+  SecretarySaveState.initial(this.model)
       : status = SecretarySaveStateStatus.initial,
         error = '';
   SecretarySaveState copyWith({
     SecretarySaveStateStatus? status,
     String? error,
-    SecretaryModel? secretaryModel,
+    SecretaryModel? model,
   }) {
     return SecretarySaveState(
       status: status ?? this.status,
       error: error ?? this.error,
-      secretaryModel: secretaryModel ?? this.secretaryModel,
+      model: model ?? this.model,
     );
   }
 
@@ -33,11 +33,11 @@ class SecretarySaveState {
     return other is SecretarySaveState &&
         other.status == status &&
         other.error == error &&
-        other.secretaryModel == secretaryModel;
+        other.model == model;
   }
 
   @override
   int get hashCode {
-    return status.hashCode ^ error.hashCode ^ secretaryModel.hashCode;
+    return status.hashCode ^ error.hashCode ^ model.hashCode;
   }
 }

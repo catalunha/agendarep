@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-import 'package:agendarep/app/core/models/user_profile_model.dart';
-
 import '../../../../core/models/region_model.dart';
+import '../../../../core/models/user_profile_model.dart';
 import '../../../../data/b4a/entity/region_entity.dart';
 
 enum RegionSearchStateStatus { initial, loading, success, error }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 // import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
@@ -12,22 +13,24 @@ import '../utils/parse_error_translate.dart';
 import 'user_profile_b4a.dart';
 
 class UserB4a {
-  Future<UserModel?> register(
-      {required String email, required String password}) async {
+  Future<UserModel?> register({
+    required String email,
+    required String password,
+  }) async {
     ParseResponse? parseResponse;
 
     try {
       final user = ParseUser.createUser(email, password, email);
       parseResponse = await user.signUp();
       if (parseResponse.success && parseResponse.results != null) {
-        UserModel userModel =
+        final UserModel userModel =
             await UserEntity().fromParse(parseResponse.results!.first);
         return userModel;
       } else {
         throw Exception();
       }
     } catch (e) {
-      var errorTranslated =
+      final errorTranslated =
           ParseErrorTranslate.translate(parseResponse!.error!);
       throw B4aException(
         errorTranslated,
@@ -53,7 +56,7 @@ class UserB4a {
         throw Exception();
       }
     } catch (e) {
-      var errorTranslated =
+      final errorTranslated =
           ParseErrorTranslate.translate(parseResponse!.error!);
       throw B4aException(
         errorTranslated,
@@ -64,8 +67,10 @@ class UserB4a {
     }
   }
 
-  Future<UserModel?> login(
-      {required String email, required String password}) async {
+  Future<UserModel?> login({
+    required String email,
+    required String password,
+  }) async {
     UserModel userModel;
     ParseResponse? parseResponse;
     try {
@@ -73,7 +78,7 @@ class UserB4a {
 
       parseResponse = await user.login();
       if (parseResponse.success) {
-        ParseUser parseUser = parseResponse.results!.first;
+        final ParseUser parseUser = parseResponse.results!.first;
 
         UserProfileModel? userProfileModel = await readUserProfile(parseUser);
 
@@ -92,7 +97,7 @@ class UserB4a {
               '${parseResponse.error!.code} - ${parseResponse.error!.message}',
         );
       } else {
-        var errorTranslated =
+        final errorTranslated =
             ParseErrorTranslate.translate(parseResponse.error!);
         throw B4aException(
           errorTranslated,
@@ -110,7 +115,8 @@ class UserB4a {
     final ParseUser user = ParseUser(null, null, email);
     final ParseResponse parseResponse = await user.requestPasswordReset();
     if (!parseResponse.success) {
-      var errorTranslated = ParseErrorTranslate.translate(parseResponse.error!);
+      final errorTranslated =
+          ParseErrorTranslate.translate(parseResponse.error!);
       throw B4aException(
         errorTranslated,
         where: 'UserRepositoryB4a.requestPasswordReset',
@@ -122,7 +128,7 @@ class UserB4a {
 
   Future<bool> logout() async {
     final user = await ParseUser.currentUser() as ParseUser;
-    var parseResponse = await user.logout();
+    final parseResponse = await user.logout();
     if (parseResponse.success) {
       return true;
     } else {
@@ -131,10 +137,12 @@ class UserB4a {
   }
 
   Future<UserModel?> hasUserLogged() async {
-    var parseUser = await ParseUser.currentUser() as ParseUser?;
+    log('+++ hasUserLogged');
+    final parseUser = await ParseUser.currentUser() as ParseUser?;
     if (parseUser == null) {
       return null;
     }
+    log('Check session token is valid');
     //Checks whether the user's session token is valid
     final ParseResponse? parseResponse =
         await ParseUser.getCurrentUserFromServer(parseUser.sessionToken!);
@@ -148,7 +156,7 @@ class UserB4a {
         UserProfileModel? userProfileModel = await readUserProfile(parseUser);
 
         if (userProfileModel != null) {
-          UserModel userModel = UserModel(
+          final UserModel userModel = UserModel(
             id: parseUser.objectId!,
             email: parseUser.emailAddress!,
             userProfile: userProfileModel,
@@ -170,9 +178,9 @@ class UserB4a {
 
   Future<UserProfileModel?> readUserProfile(ParseUser parseUser) async {
     try {
-      var profileField = parseUser.get(UserEntity.userProfile);
-      var profileRepositoryB4a = UserProfileB4a();
-      var profileModel =
+      final profileField = parseUser.get(UserEntity.userProfile);
+      final profileRepositoryB4a = UserProfileB4a();
+      final profileModel =
           await profileRepositoryB4a.readById(profileField.objectId);
       return profileModel;
     } catch (_) {

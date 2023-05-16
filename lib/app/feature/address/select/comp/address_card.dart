@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/models/address_model.dart';
 
@@ -10,7 +11,8 @@ class AddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text('${model.name}'),
-      onTap: () => Navigator.of(context).pop(model),
+      // onTap: () => Navigator.of(context).pop(model),
+      onTap: () => context.pop(model),
     );
   }
 }

@@ -37,25 +37,27 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
     on<ScheduleSaveEventAddClinic>(_onScheduleSaveEventAddClinic);
     on<ScheduleSaveEventRemoveClinic>(_onScheduleSaveEventRemoveClinic);
     on<ScheduleSaveEventUpdateHourInWeekday>(
-        _onScheduleSaveEventUpdateHourInWeekday);
+      _onScheduleSaveEventUpdateHourInWeekday,
+    );
   }
 
   FutureOr<void> _onScheduleSaveEventFormSubmitted(
-      ScheduleSaveEventFormSubmitted event,
-      Emitter<ScheduleSaveState> emit) async {
+    ScheduleSaveEventFormSubmitted event,
+    Emitter<ScheduleSaveState> emit,
+  ) async {
     emit(state.copyWith(status: ScheduleSaveStateStatus.loading));
     try {
       print('state.expertises.length: ${state.expertises.length}');
       print('state.clinics.length: ${state.clinics.length}');
       if (state.expertises.length == 1 && state.clinics.length == 1) {
         ScheduleModel scheduleModel;
-        var mondayHours = state.mondayHours;
-        var tuesdayHours = state.tuesdayHours;
-        var wednesdayHours = state.wednesdayHours;
-        var thursdayHours = state.thursdayHours;
-        var fridayHours = state.fridayHours;
-        var saturdayHours = state.saturdayHours;
-        var sundayHours = state.sundayHours;
+        final mondayHours = state.mondayHours;
+        final tuesdayHours = state.tuesdayHours;
+        final wednesdayHours = state.wednesdayHours;
+        final thursdayHours = state.thursdayHours;
+        final fridayHours = state.fridayHours;
+        final saturdayHours = state.saturdayHours;
+        final sundayHours = state.sundayHours;
         mondayHours.sort();
         tuesdayHours.sort();
         wednesdayHours.sort();
@@ -97,70 +99,95 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
             sundayHours: sundayHours,
           );
         }
-        String scheduleModelId =
+        final String scheduleModelId =
             await _scheduleRepository.update(scheduleModel);
 
         scheduleModel = scheduleModel.copyWith(id: scheduleModelId);
 
-        emit(state.copyWith(
-            model: scheduleModel, status: ScheduleSaveStateStatus.success));
+        emit(
+          state.copyWith(
+            model: scheduleModel,
+            status: ScheduleSaveStateStatus.success,
+          ),
+        );
       } else {
-        emit(state.copyWith(
+        emit(
+          state.copyWith(
             status: ScheduleSaveStateStatus.error,
-            error: 'Especialidade ou consultorio devem haver apenas um'));
+            error: 'Especialidade ou consultorio devem haver apenas um',
+          ),
+        );
       }
     } catch (e) {
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           status: ScheduleSaveStateStatus.error,
-          error: 'Erro ao salvar schedule'));
+          error: 'Erro ao salvar schedule',
+        ),
+      );
     }
   }
 
   FutureOr<void> _onScheduleSaveEventDelete(
-      ScheduleSaveEventDelete event, Emitter<ScheduleSaveState> emit) async {
+    ScheduleSaveEventDelete event,
+    Emitter<ScheduleSaveState> emit,
+  ) async {
     try {
       emit(state.copyWith(status: ScheduleSaveStateStatus.loading));
       await _scheduleRepository.delete(state.model!.id!);
       emit(state.copyWith(status: ScheduleSaveStateStatus.success));
     } catch (e) {
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           status: ScheduleSaveStateStatus.error,
-          error: 'Erro ao salvar schedule'));
+          error: 'Erro ao salvar schedule',
+        ),
+      );
     }
   }
 
   FutureOr<void> _onScheduleSaveEventAddMedical(
-      ScheduleSaveEventAddMedical event,
-      Emitter<ScheduleSaveState> emit) async {
+    ScheduleSaveEventAddMedical event,
+    Emitter<ScheduleSaveState> emit,
+  ) async {
     try {
       emit(state.copyWith(status: ScheduleSaveStateStatus.loading));
       QueryBuilder<ParseObject> query =
           QueryBuilder<ParseObject>(ParseObject(ClinicEntity.className));
       query.whereEqualTo(
-          ClinicEntity.medical,
-          (ParseObject(MedicalEntity.className)..objectId = event.model.id)
-              .toPointer());
+        ClinicEntity.medical,
+        (ParseObject(MedicalEntity.className)..objectId = event.model.id)
+            .toPointer(),
+      );
       query.orderByDescending('updatedAt');
       List<ClinicModel> clinicModelListGet = await _clinicRepository.list(
         query,
         Pagination(page: 1, limit: 10),
       );
       print('clinicModelListGet: $clinicModelListGet');
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           status: ScheduleSaveStateStatus.updated,
           medical: event.model,
           expertises: event.model.expertises,
-          clinics: clinicModelListGet));
+          clinics: clinicModelListGet,
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           status: ScheduleSaveStateStatus.error,
-          error: 'Erro ao buscar medico'));
+          error: 'Erro ao buscar medico',
+        ),
+      );
     }
   }
 
   FutureOr<void> _onScheduleSaveEventAddExpertise(
-      ScheduleSaveEventAddExpertise event, Emitter<ScheduleSaveState> emit) {
-    int index =
+    ScheduleSaveEventAddExpertise event,
+    Emitter<ScheduleSaveState> emit,
+  ) {
+    final int index =
         state.expertises.indexWhere((model) => model.id == event.model.id);
     if (index < 0) {
       List<ExpertiseModel> temp = [...state.expertises];
@@ -170,15 +197,19 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
   }
 
   FutureOr<void> _onScheduleSaveEventRemoveExpertise(
-      ScheduleSaveEventRemoveExpertise event, Emitter<ScheduleSaveState> emit) {
+    ScheduleSaveEventRemoveExpertise event,
+    Emitter<ScheduleSaveState> emit,
+  ) {
     List<ExpertiseModel> temp = [...state.expertises];
     temp.removeWhere((element) => element.id == event.model.id);
     emit(state.copyWith(expertises: temp));
   }
 
   FutureOr<void> _onScheduleSaveEventAddClinic(
-      ScheduleSaveEventAddClinic event, Emitter<ScheduleSaveState> emit) {
-    int index =
+    ScheduleSaveEventAddClinic event,
+    Emitter<ScheduleSaveState> emit,
+  ) {
+    final int index =
         state.expertises.indexWhere((model) => model.id == event.model.id);
     if (index < 0) {
       List<ClinicModel> temp = [...state.clinics];
@@ -188,17 +219,21 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
   }
 
   FutureOr<void> _onScheduleSaveEventRemoveClinic(
-      ScheduleSaveEventRemoveClinic event, Emitter<ScheduleSaveState> emit) {
+    ScheduleSaveEventRemoveClinic event,
+    Emitter<ScheduleSaveState> emit,
+  ) {
     List<ClinicModel> temp = [...state.clinics];
     temp.removeWhere((element) => element.id == event.model.id);
     emit(state.copyWith(clinics: temp));
   }
 
   FutureOr<void> _onScheduleSaveEventUpdateHourInWeekday(
-      ScheduleSaveEventUpdateHourInWeekday event,
-      Emitter<ScheduleSaveState> emit) {
+    ScheduleSaveEventUpdateHourInWeekday event,
+    Emitter<ScheduleSaveState> emit,
+  ) {
     if (event.weekday == 1) {
-      int index = state.sundayHours.indexWhere((hour) => hour == event.hour);
+      final int index =
+          state.sundayHours.indexWhere((hour) => hour == event.hour);
       List<int> temp = [...state.sundayHours];
       if (index < 0) {
         temp.add(event.hour);
@@ -209,7 +244,8 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       }
     }
     if (event.weekday == 2) {
-      int index = state.mondayHours.indexWhere((hour) => hour == event.hour);
+      final int index =
+          state.mondayHours.indexWhere((hour) => hour == event.hour);
       List<int> temp = [...state.mondayHours];
       if (index < 0) {
         temp.add(event.hour);
@@ -220,7 +256,8 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       }
     }
     if (event.weekday == 3) {
-      int index = state.tuesdayHours.indexWhere((hour) => hour == event.hour);
+      final int index =
+          state.tuesdayHours.indexWhere((hour) => hour == event.hour);
       List<int> temp = [...state.tuesdayHours];
       if (index < 0) {
         temp.add(event.hour);
@@ -231,7 +268,8 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       }
     }
     if (event.weekday == 4) {
-      int index = state.wednesdayHours.indexWhere((hour) => hour == event.hour);
+      final int index =
+          state.wednesdayHours.indexWhere((hour) => hour == event.hour);
       List<int> temp = [...state.wednesdayHours];
       if (index < 0) {
         temp.add(event.hour);
@@ -242,7 +280,8 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       }
     }
     if (event.weekday == 5) {
-      int index = state.thursdayHours.indexWhere((hour) => hour == event.hour);
+      final int index =
+          state.thursdayHours.indexWhere((hour) => hour == event.hour);
       List<int> temp = [...state.thursdayHours];
       if (index < 0) {
         temp.add(event.hour);
@@ -253,7 +292,8 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       }
     }
     if (event.weekday == 6) {
-      int index = state.fridayHours.indexWhere((hour) => hour == event.hour);
+      final int index =
+          state.fridayHours.indexWhere((hour) => hour == event.hour);
       List<int> temp = [...state.fridayHours];
       if (index < 0) {
         temp.add(event.hour);
@@ -264,7 +304,8 @@ class ScheduleSaveBloc extends Bloc<ScheduleSaveEvent, ScheduleSaveState> {
       }
     }
     if (event.weekday == 7) {
-      int index = state.saturdayHours.indexWhere((hour) => hour == event.hour);
+      final int index =
+          state.saturdayHours.indexWhere((hour) => hour == event.hour);
       List<int> temp = [...state.saturdayHours];
       if (index < 0) {
         temp.add(event.hour);

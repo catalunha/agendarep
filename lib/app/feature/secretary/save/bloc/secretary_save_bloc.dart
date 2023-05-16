@@ -12,12 +12,12 @@ class SecretarySaveBloc extends Bloc<SecretarySaveEvent, SecretarySaveState> {
   final SecretaryRepository _secretaryRepository;
   final UserProfileModel _seller;
   SecretarySaveBloc({
-    required SecretaryModel? secretaryModel,
+    required SecretaryModel? model,
     required SecretaryRepository secretaryRepository,
     required UserProfileModel seller,
   })  : _secretaryRepository = secretaryRepository,
         _seller = seller,
-        super(SecretarySaveState.initial(secretaryModel)) {
+        super(SecretarySaveState.initial(model)) {
     on<SecretarySaveEventFormSubmitted>(_onSecretarySaveEventFormSubmitted);
     on<SecretarySaveEventDelete>(_onSecretarySaveEventDelete);
   }
@@ -28,7 +28,7 @@ class SecretarySaveBloc extends Bloc<SecretarySaveEvent, SecretarySaveState> {
     emit(state.copyWith(status: SecretarySaveStateStatus.loading));
     try {
       SecretaryModel secretaryModel;
-      if (state.secretaryModel == null) {
+      if (state.model == null) {
         secretaryModel = SecretaryModel(
           seller: _seller,
           email: event.email,
@@ -37,21 +37,20 @@ class SecretarySaveBloc extends Bloc<SecretarySaveEvent, SecretarySaveState> {
           birthday: event.birthday,
         );
       } else {
-        secretaryModel = state.secretaryModel!.copyWith(
+        secretaryModel = state.model!.copyWith(
           email: event.email,
           name: event.name,
           phone: event.phone,
           birthday: event.birthday,
         );
       }
-      String secretaryModelId =
+      final String secretaryModelId =
           await _secretaryRepository.update(secretaryModel);
 
       secretaryModel = secretaryModel.copyWith(id: secretaryModelId);
 
       emit(state.copyWith(
-          secretaryModel: secretaryModel,
-          status: SecretarySaveStateStatus.success));
+          model: secretaryModel, status: SecretarySaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(
           status: SecretarySaveStateStatus.error,
@@ -63,7 +62,7 @@ class SecretarySaveBloc extends Bloc<SecretarySaveEvent, SecretarySaveState> {
       SecretarySaveEventDelete event, Emitter<SecretarySaveState> emit) async {
     try {
       emit(state.copyWith(status: SecretarySaveStateStatus.loading));
-      await _secretaryRepository.delete(state.secretaryModel!.id!);
+      await _secretaryRepository.delete(state.model!.id!);
       emit(state.copyWith(status: SecretarySaveStateStatus.success));
     } catch (e) {
       emit(state.copyWith(

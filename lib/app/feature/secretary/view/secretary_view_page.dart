@@ -5,8 +5,8 @@ import '../../../core/models/secretary_model.dart';
 import '../../utils/app_text_title_value.dart';
 
 class SecretaryViewPage extends StatelessWidget {
-  final SecretaryModel secretaryModel;
-  SecretaryViewPage({super.key, required this.secretaryModel});
+  final SecretaryModel model;
+  SecretaryViewPage({super.key, required this.model});
   final dateFormat = DateFormat('dd/MM/y');
 
   @override
@@ -23,33 +23,33 @@ class SecretaryViewPage extends StatelessWidget {
               children: [
                 AppTextTitleValue(
                   title: 'Id: ',
-                  value: secretaryModel.id,
+                  value: model.id,
                 ),
                 AppTextTitleValue(
                   title: 'Rep: ',
-                  value: secretaryModel.seller?.name,
+                  value: model.seller?.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Email: ',
-                  value: secretaryModel.email,
+                  value: model.email,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Nome: ',
-                  value: secretaryModel.name,
+                  value: model.name,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Telefone: ',
-                  value: secretaryModel.phone,
+                  value: model.phone,
                   inColumn: true,
                 ),
                 AppTextTitleValue(
                   title: 'Aniversário: ',
-                  value: secretaryModel.birthday == null
+                  value: model.birthday == null
                       ? '...'
-                      : dateFormat.format(secretaryModel.birthday!),
+                      : dateFormat.format(model.birthday!),
                   inColumn: true,
                 ),
               ],

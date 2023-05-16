@@ -17,7 +17,7 @@ class SecretaryList extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = cautionList[index];
         return SecretaryCard(
-          secretaryModel: item,
+          model: item,
         );
       },
     );

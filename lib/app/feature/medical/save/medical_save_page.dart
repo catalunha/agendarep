@@ -1,13 +1,15 @@
-import 'package:agendarep/app/core/models/expertise_model.dart';
+import '../../../core/models/expertise_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/models/medical_model.dart';
 import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/medical_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_textformfield.dart';
 import '../search/bloc/medical_search_bloc.dart';
 import '../search/bloc/medical_search_event.dart';
@@ -26,7 +28,7 @@ class MedicalSavePage extends StatelessWidget {
       create: (context) => MedicalRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
           return MedicalSaveBloc(
@@ -64,10 +66,10 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
   @override
   void initState() {
     super.initState();
-    _emailTEC.text = widget.medicalModel?.email ?? "";
-    _nameTEC.text = widget.medicalModel?.name ?? "";
-    _phoneTEC.text = widget.medicalModel?.phone ?? "";
-    _crmTEC.text = widget.medicalModel?.crm ?? "";
+    _emailTEC.text = widget.medicalModel?.email ?? '';
+    _nameTEC.text = widget.medicalModel?.name ?? '';
+    _phoneTEC.text = widget.medicalModel?.phone ?? '';
+    _crmTEC.text = widget.medicalModel?.crm ?? '';
     _birthday = widget.medicalModel?.birthday ?? DateTime.now();
     isBlocked = widget.medicalModel?.isBlocked ?? false;
   }
@@ -153,17 +155,20 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                         validator: Validatorless.required('Nome é obrigatório'),
                       ),
                       const Divider(height: 5),
-                      const Text('Selecione uma Especialidade'),
+                      const Text('Selecione as Especialidades'),
                       Row(
                         children: [
                           IconButton(
                               onPressed: () async {
-                                var contextTemp =
+                                final contextTemp =
                                     context.read<MedicalSaveBloc>();
-                                ExpertiseModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/expertise/select')
-                                        as ExpertiseModel?;
+                                final ExpertiseModel? result =
+                                    await context.pushNamed<ExpertiseModel?>(
+                                        AppPage.expertiseSelect.name);
+                                // ExpertiseModel? result =
+                                //     await Navigator.of(context)
+                                //             .pushNamed('/expertise/select')
+                                //         as ExpertiseModel?;
                                 if (result != null) {
                                   contextTemp.add(
                                       MedicalSaveEventAddExpertise(result));
@@ -211,7 +216,7 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                         controller: _crmTEC,
                       ),
                       CheckboxListTile(
-                        title: const Text("Cadastrado no painel ?"),
+                        title: const Text('Cadastrado no painel ?'),
                         onChanged: (value) {
                           setState(() {
                             isBlocked = value ?? false;
@@ -235,7 +240,7 @@ class _MedicalSaveViewState extends State<MedicalSaveView> {
                       if (widget.medicalModel != null)
                         CheckboxListTile(
                           tileColor: delete ? Colors.red : null,
-                          title: const Text("Apagar este cadastro ?"),
+                          title: const Text('Apagar este cadastro ?'),
                           onChanged: (value) {
                             setState(() {
                               delete = value ?? false;
