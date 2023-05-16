@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../../core/authentication/authentication.dart';
@@ -9,6 +10,7 @@ import '../../../core/models/medical_model.dart';
 import '../../../core/models/secretary_model.dart';
 import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/clinic_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_textformfield.dart';
 import '../search/bloc/clinic_search_bloc.dart';
 import '../search/bloc/clinic_search_event.dart';
@@ -27,7 +29,7 @@ class ClinicSavePage extends StatelessWidget {
       create: (context) => ClinicRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
 
           return ClinicSaveBloc(
@@ -61,9 +63,9 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
   @override
   void initState() {
     super.initState();
-    _nameTEC.text = widget.model?.name ?? "";
-    _roomTEC.text = widget.model?.room ?? "";
-    _phoneTEC.text = widget.model?.phone ?? "";
+    _nameTEC.text = widget.model?.name ?? '';
+    _roomTEC.text = widget.model?.room ?? '';
+    _phoneTEC.text = widget.model?.phone ?? '';
   }
 
   @override
@@ -144,12 +146,15 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                         children: [
                           IconButton(
                               onPressed: () async {
-                                var contextTemp =
+                                final contextTemp =
                                     context.read<ClinicSaveBloc>();
-                                MedicalModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/medical/select')
-                                        as MedicalModel?;
+                                final MedicalModel? result =
+                                    await context.pushNamed<MedicalModel?>(
+                                        AppPage.medicalSelect.name);
+                                // MedicalModel? result =
+                                //     await Navigator.of(context)
+                                //             .pushNamed('/medical/select')
+                                //         as MedicalModel?;
                                 if (result != null) {
                                   contextTemp
                                       .add(ClinicSaveEventAddMedical(result));
@@ -183,12 +188,15 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                         children: [
                           IconButton(
                               onPressed: () async {
-                                var contextTemp =
+                                final contextTemp =
                                     context.read<ClinicSaveBloc>();
-                                AddressModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/address/select')
-                                        as AddressModel?;
+                                final AddressModel? result =
+                                    await context.pushNamed<AddressModel?>(
+                                        AppPage.addressSelect.name);
+                                // AddressModel? result =
+                                //     await Navigator.of(context)
+                                //             .pushNamed('/address/select')
+                                //         as AddressModel?;
                                 if (result != null) {
                                   contextTemp
                                       .add(ClinicSaveEventAddAddress(result));
@@ -207,12 +215,15 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                         children: [
                           IconButton(
                               onPressed: () async {
-                                var contextTemp =
+                                final contextTemp =
                                     context.read<ClinicSaveBloc>();
-                                SecretaryModel? result =
-                                    await Navigator.of(context)
-                                            .pushNamed('/secretary/select')
-                                        as SecretaryModel?;
+                                final SecretaryModel? result =
+                                    await context.pushNamed<SecretaryModel?>(
+                                        AppPage.secretaryView.name);
+                                // SecretaryModel? result =
+                                //     await Navigator.of(context)
+                                //             .pushNamed('/secretary/select')
+                                //         as SecretaryModel?;
                                 if (result != null) {
                                   contextTemp
                                       .add(ClinicSaveEventAddSecretary(result));
@@ -252,7 +263,7 @@ class _ClinicSaveViewState extends State<ClinicSaveView> {
                       if (widget.model != null)
                         CheckboxListTile(
                           tileColor: delete ? Colors.red : null,
-                          title: const Text("Apagar este cadastro ?"),
+                          title: const Text('Apagar este cadastro ?'),
                           onChanged: (value) {
                             setState(() {
                               delete = value ?? false;

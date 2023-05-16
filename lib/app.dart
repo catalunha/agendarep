@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'app/core/authentication/bloc/authentication_bloc.dart';
 import 'app/core/models/address_model.dart';
+import 'app/core/models/clinic_model.dart';
 import 'app/core/models/medical_model.dart';
 import 'app/core/models/region_model.dart';
 import 'app/core/models/secretary_model.dart';
@@ -17,6 +18,12 @@ import 'app/feature/address/search/bloc/address_search_bloc.dart';
 import 'app/feature/address/search/list/address_search_list_page.dart';
 import 'app/feature/address/select/address_select_page.dart';
 import 'app/feature/address/view/address_view_page.dart';
+import 'app/feature/clinic/save/clinic_save_page.dart';
+import 'app/feature/clinic/search/bloc/clinic_search_bloc.dart';
+import 'app/feature/clinic/search/clinic_search_page.dart';
+import 'app/feature/clinic/search/list/clinic_search_list_page.dart';
+import 'app/feature/clinic/select/clinic_select_page.dart';
+import 'app/feature/clinic/view/clinic_view_page.dart';
 import 'app/feature/home/home_page.dart';
 import 'app/feature/medical/save/medical_save_page.dart';
 import 'app/feature/medical/search/bloc/medical_search_bloc.dart';
@@ -269,6 +276,43 @@ class _AppViewState extends State<AppView> {
                 name: AppPage.medicalSelect.name,
                 path: AppPage.medicalSelect.path,
                 builder: (context, state) => const MedicalSelectPage(),
+              ),
+            ],
+          ),
+          //Clinic
+          GoRoute(
+            name: AppPage.clinicSave.name,
+            path: AppPage.clinicSave.path,
+            builder: (context, state) => const ClinicSavePage(),
+          ),
+          GoRoute(
+            name: AppPage.clinicSearch.name,
+            path: AppPage.clinicSearch.path,
+            builder: (context, state) => const ClinicSearchPage(),
+            routes: [
+              GoRoute(
+                name: AppPage.clinicSearchList.name,
+                path: AppPage.clinicSearchList.path,
+                builder: (context, state) {
+                  return BlocProvider.value(
+                    value: BlocProvider.of<ClinicSearchBloc>(
+                      state.extra as BuildContext,
+                    ),
+                    child: const ClinicSearchListPage(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppPage.clinicView.name,
+                path: AppPage.clinicView.path,
+                builder: (context, state) {
+                  return ClinicViewPage(model: state.extra! as ClinicModel);
+                },
+              ),
+              GoRoute(
+                name: AppPage.clinicSelect.name,
+                path: AppPage.clinicSelect.path,
+                builder: (context, state) => const ClinicSelectPage(),
               ),
             ],
           ),

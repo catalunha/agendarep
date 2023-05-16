@@ -1,15 +1,16 @@
-import 'package:agendarep/app/core/models/user_profile_model.dart';
+import '../../../core/models/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/authentication/authentication.dart';
 import '../../../core/repositories/clinic_repository.dart';
+import '../../../routes.dart';
 import '../../utils/app_icon.dart';
 import '../../utils/app_textformfield.dart';
 import 'bloc/clinic_search_bloc.dart';
 import 'bloc/clinic_search_event.dart';
 import 'bloc/clinic_search_state.dart';
-import 'list/clinic_search_list_page.dart';
 
 class ClinicSearchPage extends StatelessWidget {
   const ClinicSearchPage({
@@ -22,7 +23,7 @@ class ClinicSearchPage extends StatelessWidget {
       create: (context) => ClinicRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return ClinicSearchBloc(
             clinicRepository: RepositoryProvider.of<ClinicRepository>(context),
@@ -75,6 +76,10 @@ class _SearchPageState extends State<ClinicSearchView> {
           }
           if (state.status == ClinicSearchStateStatus.success) {
             Navigator.of(context).pop();
+            context.goNamed(
+              AppPage.clinicSearchList.name,
+              extra: context,
+            );
           }
           if (state.status == ClinicSearchStateStatus.loading) {
             await showDialog(
@@ -164,14 +169,14 @@ class _SearchPageState extends State<ClinicSearchView> {
                   phoneEqualsToBool: _phoneEqualsToBool,
                   phoneEqualsToString: _phoneEqualsToTEC.text,
                 ));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: BlocProvider.of<ClinicSearchBloc>(context),
-                  child: const ClinicSearchListPage(),
-                ),
-              ),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => BlocProvider.value(
+            //       value: BlocProvider.of<ClinicSearchBloc>(context),
+            //       child: const ClinicSearchListPage(),
+            //     ),
+            //   ),
+            // );
           }
         },
       ),

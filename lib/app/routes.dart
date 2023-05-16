@@ -29,7 +29,13 @@ enum AppPage {
   medicalSearch('medical_search', 'medicalSearch'),
   medicalSearchList('medical_search_list', 'medicalSearchList'),
   medicalSelect('medical-select', 'medicalSelect'),
-  medicalView('medical-view', 'medicalView');
+  medicalView('medical-view', 'medicalView'),
+
+  clinicSave('clinic_save', 'clinicSave'),
+  clinicSearch('clinic_search', 'clinicSearch'),
+  clinicSearchList('clinic_search_list', 'clinicSearchList'),
+  clinicSelect('clinic-select', 'clinicSelect'),
+  clinicView('clinic-view', 'clinicView');
 
   final String path;
   final String name;
