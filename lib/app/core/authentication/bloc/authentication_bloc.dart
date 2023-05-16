@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 
 import '../../../data/b4a/b4a_exception.dart';
 import '../../../data/b4a/init_back4app.dart';
@@ -11,8 +12,8 @@ import '../../repositories/user_repository.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>
+    with ChangeNotifier {
   final UserRepository _userRepository;
   AuthenticationBloc({required UserRepository userRepository})
       : _userRepository = userRepository,
@@ -38,7 +39,7 @@ class AuthenticationBloc
         emit(const AuthenticationState.unauthenticated());
       }
       emit(const AuthenticationState.unauthenticated());
-      // notifyListeners();
+      notifyListeners();
     } catch (_) {
       emit(const AuthenticationState.unauthenticated());
     }
@@ -50,7 +51,7 @@ class AuthenticationBloc
   ) {
     print('onAuthenticationEventReceiveUser');
     emit(AuthenticationState.authenticated(event.user));
-    // notifyListeners();
+    notifyListeners();
   }
 
   FutureOr<void> _onAuthenticationEventInitial(
@@ -72,7 +73,7 @@ class AuthenticationBloc
             log('+++ AuthenticationEventInitial 5');
             emit(AuthenticationState.authenticated(user));
             log('Já logado ${user.email}');
-            // notifyListeners();
+            notifyListeners();
           } else {
             log('+++ AuthenticationEventInitial 7');
 
@@ -96,7 +97,7 @@ class AuthenticationBloc
           );
         }
       }
-      // notifyListeners();
+      notifyListeners();
     } on B4aException catch (e) {
       print('+++ _onAuthenticationEventInitial');
       print(e);

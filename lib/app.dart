@@ -97,7 +97,7 @@ class _AppViewState extends State<AppView> {
     ],
     initialLocation: '/',
     redirect: _obsLogged,
-    // refreshListenable: context.read<AuthenticationBloc>(),
+    refreshListenable: context.read<AuthenticationBloc>(),
   );
 
   String? _obsLogged(BuildContext context, GoRouterState state) {
