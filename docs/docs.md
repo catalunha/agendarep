@@ -14,3 +14,9 @@ pq nao buscou dados do end do medico ao listar medido e editar o medico.
 Nao veio a especialidade do adriando quando cadastrou a agenda dele.
 bloquear a escolha de esp e consultorio na agenda. que nao sejam ja cadastrados.
 retirar geopoint
+
+
+
+# gou router
+https://www.youtube.com/watch?v=W8d-2acPXKA
+https://www.youtube.com/watch?v=IqT4AfogjOA
