@@ -15,7 +15,7 @@ class InitBack4app {
         autoSendSessionId: true,
         debug: true,
       );
-      ParseResponse healthCheck = (await Parse().healthCheck());
+      final ParseResponse healthCheck = (await Parse().healthCheck());
       if (healthCheck.success) {
         return true;
       }

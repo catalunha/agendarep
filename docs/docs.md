@@ -5,6 +5,7 @@ cd ~/myapp/agendarep && flutter build web && cd back4app/agendarep/ && b4a deplo
 joelberparriao@gmail.com
 J@elber81
 
+https://dartcode.org/docs/using-dart-define-in-flutter/
 
 # reuniao do dia 20230416
 retirar email da secretaria
