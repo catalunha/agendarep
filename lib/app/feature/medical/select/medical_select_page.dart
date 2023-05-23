@@ -21,7 +21,7 @@ class MedicalSelectPage extends StatelessWidget {
       create: (context) => MedicalRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return MedicalSelectBloc(
             medicalRepository:
@@ -120,65 +120,65 @@ class _MedicalSelectViewState extends State<MedicalSelectView> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BlocBuilder<MedicalSelectBloc, MedicalSelectState>(
-                  builder: (context, state) {
-                    return InkWell(
-                      onTap: state.firstPage
-                          ? null
-                          : () {
-                              context
-                                  .read<MedicalSelectBloc>()
-                                  .add(MedicalSelectEventPreviousPage());
-                            },
-                      child: Card(
-                        color: state.firstPage ? Colors.black : Colors.black45,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: state.firstPage
-                                ? const Text('Primeira página')
-                                : const Text('Página anterior'),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                BlocBuilder<MedicalSelectBloc, MedicalSelectState>(
-                  builder: (context, state) {
-                    return InkWell(
-                      onTap: state.lastPage
-                          ? null
-                          : () {
-                              context
-                                  .read<MedicalSelectBloc>()
-                                  .add(MedicalSelectEventNextPage());
-                            },
-                      child: Card(
-                        color: state.lastPage ? Colors.black : Colors.black45,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: state.lastPage
-                                ? const Text('Última página')
-                                : const Text('Próxima página'),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     BlocBuilder<MedicalSelectBloc, MedicalSelectState>(
+            //       builder: (context, state) {
+            //         return InkWell(
+            //           onTap: state.firstPage
+            //               ? null
+            //               : () {
+            //                   context
+            //                       .read<MedicalSelectBloc>()
+            //                       .add(MedicalSelectEventPreviousPage());
+            //                 },
+            //           child: Card(
+            //             color: state.firstPage ? Colors.black : Colors.black45,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Center(
+            //                 child: state.firstPage
+            //                     ? const Text('Primeira página')
+            //                     : const Text('Página anterior'),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //     BlocBuilder<MedicalSelectBloc, MedicalSelectState>(
+            //       builder: (context, state) {
+            //         return InkWell(
+            //           onTap: state.lastPage
+            //               ? null
+            //               : () {
+            //                   context
+            //                       .read<MedicalSelectBloc>()
+            //                       .add(MedicalSelectEventNextPage());
+            //                 },
+            //           child: Card(
+            //             color: state.lastPage ? Colors.black : Colors.black45,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Center(
+            //                 child: state.lastPage
+            //                     ? const Text('Última página')
+            //                     : const Text('Próxima página'),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ],
+            // ),
             Expanded(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 600),
                 child: BlocBuilder<MedicalSelectBloc, MedicalSelectState>(
                   builder: (context, state) {
-                    var list = state.listFiltered;
+                    final list = state.listFiltered;
                     return ListView.builder(
                       itemCount: list.length,
                       itemBuilder: (context, index) {

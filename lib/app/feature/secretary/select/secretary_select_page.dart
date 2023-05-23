@@ -21,7 +21,7 @@ class SecretarySelectPage extends StatelessWidget {
       create: (context) => SecretaryRepository(),
       child: BlocProvider(
         create: (context) {
-          UserProfileModel userProfile =
+          final UserProfileModel userProfile =
               context.read<AuthenticationBloc>().state.user!.userProfile!;
           return SecretarySelectBloc(
             secretaryRepository:
@@ -119,65 +119,65 @@ class _SecretarySelectViewState extends State<SecretarySelectView> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BlocBuilder<SecretarySelectBloc, SecretarySelectState>(
-                  builder: (context, state) {
-                    return InkWell(
-                      onTap: state.firstPage
-                          ? null
-                          : () {
-                              context
-                                  .read<SecretarySelectBloc>()
-                                  .add(SecretarySelectEventPreviousPage());
-                            },
-                      child: Card(
-                        color: state.firstPage ? Colors.black : Colors.black45,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: state.firstPage
-                                ? const Text('Primeira página')
-                                : const Text('Página anterior'),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                BlocBuilder<SecretarySelectBloc, SecretarySelectState>(
-                  builder: (context, state) {
-                    return InkWell(
-                      onTap: state.lastPage
-                          ? null
-                          : () {
-                              context
-                                  .read<SecretarySelectBloc>()
-                                  .add(SecretarySelectEventNextPage());
-                            },
-                      child: Card(
-                        color: state.lastPage ? Colors.black : Colors.black45,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: state.lastPage
-                                ? const Text('Última página')
-                                : const Text('Próxima página'),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     BlocBuilder<SecretarySelectBloc, SecretarySelectState>(
+            //       builder: (context, state) {
+            //         return InkWell(
+            //           onTap: state.firstPage
+            //               ? null
+            //               : () {
+            //                   context
+            //                       .read<SecretarySelectBloc>()
+            //                       .add(SecretarySelectEventPreviousPage());
+            //                 },
+            //           child: Card(
+            //             color: state.firstPage ? Colors.black : Colors.black45,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Center(
+            //                 child: state.firstPage
+            //                     ? const Text('Primeira página')
+            //                     : const Text('Página anterior'),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //     BlocBuilder<SecretarySelectBloc, SecretarySelectState>(
+            //       builder: (context, state) {
+            //         return InkWell(
+            //           onTap: state.lastPage
+            //               ? null
+            //               : () {
+            //                   context
+            //                       .read<SecretarySelectBloc>()
+            //                       .add(SecretarySelectEventNextPage());
+            //                 },
+            //           child: Card(
+            //             color: state.lastPage ? Colors.black : Colors.black45,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Center(
+            //                 child: state.lastPage
+            //                     ? const Text('Última página')
+            //                     : const Text('Próxima página'),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ],
+            // ),
             Expanded(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 600),
                 child: BlocBuilder<SecretarySelectBloc, SecretarySelectState>(
                   builder: (context, state) {
-                    var list = state.listFiltered;
+                    final list = state.listFiltered;
                     return ListView.builder(
                       itemCount: list.length,
                       itemBuilder: (context, index) {

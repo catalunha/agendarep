@@ -6,7 +6,6 @@ import '../../../core/models/user_profile_model.dart';
 import '../../../core/repositories/cycle_repository.dart';
 import '../save/cycle_save_page.dart';
 import 'bloc/cycle_list_bloc.dart';
-import 'bloc/cycle_list_event.dart';
 import 'bloc/cycle_list_state.dart';
 import 'comp/cycle_card.dart';
 
@@ -69,59 +68,59 @@ class CycleListView extends StatelessWidget {
         },
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BlocBuilder<CycleListBloc, CycleListState>(
-                  builder: (context, state) {
-                    return InkWell(
-                      onTap: state.firstPage
-                          ? null
-                          : () {
-                              context
-                                  .read<CycleListBloc>()
-                                  .add(CycleListEventPreviousPage());
-                            },
-                      child: Card(
-                        color: state.firstPage ? Colors.black : Colors.black45,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: state.firstPage
-                                ? const Text('Primeira página')
-                                : const Text('Página anterior'),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                BlocBuilder<CycleListBloc, CycleListState>(
-                  builder: (context, state) {
-                    return InkWell(
-                      onTap: state.lastPage
-                          ? null
-                          : () {
-                              context
-                                  .read<CycleListBloc>()
-                                  .add(CycleListEventNextPage());
-                            },
-                      child: Card(
-                        color: state.lastPage ? Colors.black : Colors.black45,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: state.lastPage
-                                ? const Text('Última página')
-                                : const Text('Próxima página'),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     BlocBuilder<CycleListBloc, CycleListState>(
+            //       builder: (context, state) {
+            //         return InkWell(
+            //           onTap: state.firstPage
+            //               ? null
+            //               : () {
+            //                   context
+            //                       .read<CycleListBloc>()
+            //                       .add(CycleListEventPreviousPage());
+            //                 },
+            //           child: Card(
+            //             color: state.firstPage ? Colors.black : Colors.black45,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Center(
+            //                 child: state.firstPage
+            //                     ? const Text('Primeira página')
+            //                     : const Text('Página anterior'),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //     BlocBuilder<CycleListBloc, CycleListState>(
+            //       builder: (context, state) {
+            //         return InkWell(
+            //           onTap: state.lastPage
+            //               ? null
+            //               : () {
+            //                   context
+            //                       .read<CycleListBloc>()
+            //                       .add(CycleListEventNextPage());
+            //                 },
+            //           child: Card(
+            //             color: state.lastPage ? Colors.black : Colors.black45,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Center(
+            //                 child: state.lastPage
+            //                     ? const Text('Última página')
+            //                     : const Text('Próxima página'),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ],
+            // ),
             Expanded(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 600),

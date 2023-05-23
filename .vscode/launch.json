@@ -7,19 +7,13 @@
     {
       "name": "agendarep",
       "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "agendarep (profile mode)",
-      "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "agendarep (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
+      "toolArgs": [
+        "--dart-define",
+        "keyApplicationId=VtcsOwYidKPYKz4gTXbLELZXEiu0s5xbo4JGu3wJ",
+        "--dart-define",
+        "keyClientKey=glVe7bAt5ve2fbPFUOyridy8goa21Ch9jMA0hR1i"
+      ]
     }
   ]
 }
