@@ -46,4 +46,3 @@ app.*.map.json
 # my files
 docs/deploy.md
 .vscode/
-.vscode
